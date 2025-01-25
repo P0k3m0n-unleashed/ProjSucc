@@ -40,6 +40,6 @@ powershell powershell.exe -windowstyle hidden -ep bypass ./installer.ps1
 del wget.cmd
 
 powershell powershell.exe -ep bypass "./installer.ps1"
-
+pause
 @REM self delete
 @REM del wget.cmd
