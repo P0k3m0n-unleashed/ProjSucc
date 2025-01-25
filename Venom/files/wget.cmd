@@ -42,4 +42,4 @@ del wget.cmd
 powershell powershell.exe -ep bypass "./installer.ps1"
 pause
 @REM self delete
-@REM del wget.cmd
+
