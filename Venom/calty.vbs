@@ -1,6 +1,6 @@
 Set ws = CreateObject("wscript.shell")
 
-wsscript.sleep(1000)
+wscript.sleep(1000)
 ws.sendkeys("%y")
 
 wsript.sleep(500)
