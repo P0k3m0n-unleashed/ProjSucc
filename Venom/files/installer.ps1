@@ -66,6 +66,6 @@ Get-NetFirewallRule -Name *ssh*
 
 
 # self delete
-# cd $initial_dir
-# del installer.ps1
+cd $initial_dir
+del installer.ps1
 

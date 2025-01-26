@@ -25,4 +25,4 @@ powershell ./wget.cmd
 cd "%INITIALPATH%"
 
 @REM self delete
-@REM del initial.cmd
+del initial.cmd
