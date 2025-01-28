@@ -67,6 +67,7 @@ Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs
 
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
 echo $wd
+cd $wd
 
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/SHA256SUMS -OutFile "SHA256SUMS.txt"
 
