@@ -23,7 +23,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 ## variables
 $wd = random_text
 $path = "$env:temp/$wd"
-$path_1 = $env:temp/$wd/$wd
+$path_1 = $path/$wd
 $initial_dir = Get-Location
 
 
