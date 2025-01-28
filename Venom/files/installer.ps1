@@ -119,7 +119,7 @@ foreach ($job in $jobs) {
 
 
 
-
+pause
 #.\attempt1.exe; ./calty2
     # Install the attempt1.exe file
 #powershell Start-Process -FilePath $path .\attempt1.exe -ArgumentList "/silent" -Wait
