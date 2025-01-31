@@ -56,7 +56,7 @@ Get-NetFirewallRule -Name *ssh*
 #install the registry
 ./wrev.reg; ./calty
 
-#Create Folder within Folder
+#Create rig Folder within Folder
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
 echo $wd
 cd $wd
