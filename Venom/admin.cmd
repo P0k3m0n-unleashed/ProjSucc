@@ -32,4 +32,4 @@ if '%errorlevel%' NEQ '0' (
 @REM disable defender
 
 @REM you can remove the 'powershell to get an admin cmd
-powershell Start-Process powershell.exe
+Start-Process powershell.exe

