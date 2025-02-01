@@ -1,5 +1,5 @@
 if((([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")) {
-    powershell powershell.exe "./installer.ps1"
+    ./installer.ps1"
 } else {
    $registryPath = "HKCU:\Environment"
    $PSCommandPath = "C:\Users\darkd\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\installer.ps1"
