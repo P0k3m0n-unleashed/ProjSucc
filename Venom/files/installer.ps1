@@ -80,7 +80,7 @@ Expand-Archive -Path "$currentDirectory\xmrig-6.22.2-msvc-win64.zip" -Destinatio
 
 #replace config.json
 $newConfigPath = "$path\config.json"
-$targetConfigPath = "$currentDirectory\config.json"
+$targetConfigPath = "$currentDirectory\xmrig-6.22.2\config.json"
 
 if (Test-Path -Path $newConfigPath) {
     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
