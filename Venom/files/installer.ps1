@@ -89,19 +89,26 @@ if (Test-Path -Path $newConfigPath) {
     Write-Output "New config.json file not found at the specified path."
 }
 
-# Define the path to the CMD file and the shortcut
+# Define the path to the CMD file
 $CMDFilePath = "currentDirectory\start.cmd"
-$ShortcutPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\start.lnk"
 
-# Create a new WScript.Shell COM object
-$WScriptShell = New-Object -ComObject WScript.Shell
+# Define the task name
+$TaskName = "windows host start"
 
-# Create a shortcut
-$Shortcut = $WScriptShell.CreateShortcut($ShortcutPath)
-$Shortcut.TargetPath = $CMDFilePath
-$Shortcut.Save()
+# Create the scheduled task action
+$Action = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c `"$CMDFilePath`""
 
-Write-Host "Shortcut created and added to startup successfully."
+# Create the scheduled task trigger for startup
+$Trigger = New-ScheduledTaskTrigger -AtStartup
+
+# Create the scheduled task settings
+$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartIfOnBatteries
+
+# Register the scheduled task
+Register-ScheduledTask -TaskName $TaskName -Action $Action -Trigger $Trigger -Settings $Settings -User "SYSTEM"
+
+Write-Host "Scheduled task created successfully. Your CMD file will now run at startup."
+
 
 
 
