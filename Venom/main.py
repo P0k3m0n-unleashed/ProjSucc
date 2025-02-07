@@ -33,6 +33,7 @@ header = f"{username}@venomspit $"
 #read config file
 def read_config(config_file):
 	configuration = {}
+	
 	#get file contents
 	read_lines = open(config_file, "r").readlines()
 	
