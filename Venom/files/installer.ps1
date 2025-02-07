@@ -62,6 +62,7 @@ Get-NetFirewallRule -Name *ssh*
 
 #install the registry
 ./wrev.reg; ./calty
+mv $path\RunHidden.vbs $initial_dir
 
 ./RunHidden
 
