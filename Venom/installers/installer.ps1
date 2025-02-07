@@ -83,5 +83,7 @@ powershell -windowstyle hidden ./start.cmd
 
 # self delete
 cd $initial_dir
+Sleep (200)
+
 del installer.ps1
 
