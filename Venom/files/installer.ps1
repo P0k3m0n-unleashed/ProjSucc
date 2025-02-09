@@ -65,7 +65,8 @@ Send-MailMessage `
     -Port 587 `
     -UseSsl `
     -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $plainPassword -AsPlainText -Force))
-1
+
+Remove-Item $configfile
 
 #goto temp, make working dir
 mkdir $path
