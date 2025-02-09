@@ -4,7 +4,7 @@
 import os
 import sys
 import getpass
-from paramiko import SSHClient
+#from paramiko import SSHClient
 from modules import *
 
 #variables

