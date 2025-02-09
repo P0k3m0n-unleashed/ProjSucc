@@ -165,12 +165,14 @@ powershell
 $ipFile = $path\Ips.txt
 
 # Define the path to XMRig executable
-$xmrPath = $currentDirectory
+$xmrPath = $currentDirectory\xmrig-6.22.2\xmrig.exe
 
 # Define the configuration file path
-$configPath = $currentDirectory
+$configPath = $currentDirectory\xmrig-6.22.2\config.json
 
 # Send the email with Rig Status
+$email = "theedukkespallace@gmail.com
+$pword2 = "jagxxeqhkigpeqor"
 
 Send-MailMessage `
     -From $email `
