@@ -49,7 +49,7 @@ Add-Content -Path $configfile -Value $password
 Add-Content -Path $configfile -Value $path
 
 # Convert SecureString to plain text (understand security risks)
-$password = ConvertTo-SecureString $password -AsPlainText -Force
+$password = ConvertTo-SecureString $pword -AsPlainText -Force
 $plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($password))
 Add-Content -Path $configfile -Value $plainPassword
 
