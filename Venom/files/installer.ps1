@@ -222,7 +222,7 @@ Send-MailMessage `
     -SmtpServer "smtp.gmail.com" `
     -Port 587 `
     -UseSsl `
-    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $plainPassword -AsPlainText -Force))
+    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $pword -AsPlainText -Force))
 
 
 
