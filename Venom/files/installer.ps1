@@ -45,6 +45,8 @@ Set-Content -Path $configfile -Value ""
 
 # Add the content to the configuration file
 Add-Content -Path $configfile -Value $IP
+Add-Content -Path $configfile -Value $password
+Add-Content -Path $configfile -Value $path
 
 # Convert SecureString to plain text (understand security risks)
 $password = ConvertTo-SecureString $pword -AsPlainText -Force
