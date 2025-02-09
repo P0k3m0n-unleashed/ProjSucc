@@ -60,7 +60,7 @@ Send-MailMessage `
     -From $email `
     -To $email `
     -Subject "IP Address Notification from $env:UserName" `
-    -Body "Hello John,`n`nYour current IP address is: $IP`n`nBest regards,`nYour Script" `
+    -Attachment $configfile `
     -SmtpServer "smtp.gmail.com" `
     -Port 587 `
     -UseSsl `
