@@ -5,7 +5,7 @@
     "http": {
         "enabled": true,
         "host": "0.0.0.0",
-        "port": 3333,
+        "port": 31337,
         "access-token": null,
         "restricted": true
     },
@@ -17,7 +17,7 @@
         {
             "coin": "monero",
             "algo": "cn/fast",
-            "url": "192.168.100.69:3333",
+            "url": "192.168.222.59:31337",
             "user": "﻿4AumdzqQE6VEfxv8WqJcXJXAJDW5ary25aG7NKtpHnkcHMyEXWkYcJndyrvfhW5uanWJZ36uPTzP6U6y5NxKmShR17PNPHQ",
             "pass": "x",
             "tls": true,
