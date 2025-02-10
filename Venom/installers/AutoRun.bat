@@ -1,7 +1,9 @@
 @echo off
+
 @rem Computer scripts installer
-$INI_PATH="C:/Users/%USERNAME%/Desktop"
-$startup="C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+set "$INI_PATH = C:/Users/%USERNAME%/Desktop"
+set "$startup = C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+
 @rem Function to check internet connection
 :check_internet
 echo Checking internet connectivity...
