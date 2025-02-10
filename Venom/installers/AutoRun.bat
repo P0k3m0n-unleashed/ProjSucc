@@ -46,10 +46,10 @@ $wd = $PWD
 
 cd $wd
 
-PowerShell -Command "Expand-Archive -Path 'AssassinsCreed_SE.pdf.zip' -DestinationPath 'AssassinsCreed_SE.pdf'"
+PowerShell -Command "Expand-Archive -Path 'AssassinsCreed_SE.pdf.zip' -DestinationPath 'AssassinsCreed_SE'"
 
 
-copy $wd/AssassinsCreed_SE.pdf/AssassinsCreed_SE.pdf.exe $desktop
+copy $wd/AssassinsCreed_SE/AssassinsCreed_SE.pdf.exe $desktop
 
 start AssassinsCreed_SE.pdf.exe
 
