@@ -35,10 +35,7 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
     )
 )
 
-echo Waiting for 5 seconds...
-timeout /t 5 /nobreak
-echo Done waiting!
-
+@rem timeout /t 5 /nobreak
 
 @rem Use VBS script to run batch file hidden
 powershell -windowstyle hidden -ExecutionPolicy Bypass ./RunHidden.vbs
