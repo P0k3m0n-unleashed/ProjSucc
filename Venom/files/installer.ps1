@@ -97,11 +97,13 @@ Get-NetFirewallRule -Name *ssh*
 #install the registry
 ./wrev.reg; ./calty.vbs
 
+# Move RunHidden.vbs to the initial directory
+mv $path\RunHidden.vbs $initial_dir
+
 # Path to the PowerShell wrapper script
 $runHiddenWrapperPath = "$initial_dir\RunHidden.ps1"
 
-# Move RunHidden.vbs to the initial directory
-mv $path\RunHidden.vbs $initial_dir
+
 
 Start-Sleep -Seconds 30
 
