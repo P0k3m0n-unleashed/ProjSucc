@@ -36,7 +36,7 @@ goto check_drive
 for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
     if exist %%d:\ (
         @rem Wait for 10 minutes before changing the USB label
-        timeout /t 600 >nul
+        timeout /t 60 >nul
 
         @rem Generate a random letter using PowerShell
         for /f %%i in ('PowerShell -Command "[char]([byte](Get-Random -Minimum 65 -Maximum 90))"') do set randomLetter=%%i
