@@ -2,7 +2,7 @@
 WScript.Sleep 1000
 
 ' Set the period between executions in milliseconds (2 hours = 7200000 milliseconds)
-Const period = 7200
+Const period = 7200000
 
 ' Path of the current script
 'Set fso = CreateObject("Scripting.FileSystemObject")

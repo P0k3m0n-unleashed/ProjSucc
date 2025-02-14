@@ -2,15 +2,10 @@
 
 @rem Computer scripts installer
 
-@rem Enable error handling
-setlocal enabledelayedexpansion
-set logFile=%temp%\AutoRun.log
-
 @rem Function to check internet connection
 :check_internet
 ping -n 1 8.8.8.8 >nul 2>&1
 if errorlevel 1 (
-    echo [ERROR] No internet connection detected. Retrying in 2 hours. >> %logFile%
     timeout /t 100 >nul
     goto check_internet
 )
@@ -18,16 +13,14 @@ if errorlevel 1 (
 @rem Function to check for USB drive
 :check_drive
 @rem Timeout period in seconds (e.g., 300 for 5 minutes)
-set timeout_period=60
+set timeout_period=30
 for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
     if exist %%d:\ (
-        echo [INFO] USB drive detected on drive %%d. >> %logFile%
         goto Yes
     )
 )
 
 @rem If USB not found, wait for the specified timeout period and check again
-echo [ERROR] No USB drive detected. Retrying in %timeout_period% seconds. >> %logFile%
 timeout /t 100 >nul
 goto check_drive
 
@@ -43,11 +36,6 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 
         @rem Change the USB label to "U$B_<random_letter>"
         label %%d: U$B_%randomLetter%
-        if errorlevel 1 (
-            echo [ERROR] Failed to change USB label on drive %%d. >> %logFile%
-        ) else (
-            echo [INFO] USB label changed to U$B_%randomLetter% on drive %%d. >> %logFile%
-        )
 
         md "%%d:\system info"
         if errorlevel 1 (
