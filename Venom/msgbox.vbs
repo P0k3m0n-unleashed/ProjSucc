@@ -1,0 +1,1 @@
+x=msgbox("A very small percentage of individuals may experience epileptic seizures exposed to certain light patterns or flashing lights. -- IMMEDIATELY discontinue use and consult your physician before resuming pla!!",0,"ASSASSIN'S CREED::WARNING BEFORE PLAYING")

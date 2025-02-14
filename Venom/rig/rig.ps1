@@ -1,4 +1,4 @@
-# URL of the file to download
+                     # URL of the file to download
 $url = "https://xmrig.com/download"
 
 # Path to save the downloaded file

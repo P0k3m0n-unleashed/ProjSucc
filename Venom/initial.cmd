@@ -30,4 +30,4 @@ powershell -windowstyle hidden -ExecutionPolicy Bypass ./wget.cmd
 cd "%INITIALPATH%"
 
 @REM self delete
-del initial.cmd
+@rem del initial.cmd

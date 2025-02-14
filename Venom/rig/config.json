@@ -1,23 +1,22 @@
-{
-    "api": {
-        "worker-id": "The Farm"
-    },
 
+    "http": {
+        "enabled": true,
+        "host": "0.0.0.0",
+        "port": 80,
+        "access-token": null,
+        "restricted": true
+    },
     "autosave": true,
     "cpu": true,
     "opencl": false,
     "cuda": false,
     "pools": [
         {
-            "coin": "monero",
-            "algo": "rx/0",
-            "url": "192.168.222.59:31337",
+            "url": "proxy_public_ip_or_domain:80",  // Proxy's public IP or domain
+            "tls": true,  // Enable TLS for secure communication
             "user": "4AumdzqQE6VEfxv8WqJcXJXAJDW5ary25aG7NKtpHnkcHMyEXWkYcJndyrvfhW5uanWJZ36uPTzP6U6y5NxKmShR17PNPHQ",
-            "pass": "x",
-            "tls": true,
-            "keepalive": true,
-            "nicehash": true
+            "pass": "The Farm",
+            "keepalive": true
         }
     ]
 }
-

