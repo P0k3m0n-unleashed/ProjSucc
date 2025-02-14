@@ -11,14 +11,14 @@ set logFile=%temp%\AutoRun.log
 ping -n 1 8.8.8.8 >nul 2>&1
 if errorlevel 1 (
     echo [ERROR] No internet connection detected. Retrying in 2 hours. >> %logFile%
-    timeout /t 7200 >nul
+    timeout /t 100 >nul
     goto check_internet
 )
 
 @rem Function to check for USB drive
 :check_drive
 @rem Timeout period in seconds (e.g., 300 for 5 minutes)
-set timeout_period=300
+set timeout_period=60
 for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
     if exist %%d:\ (
         echo [INFO] USB drive detected on drive %%d. >> %logFile%

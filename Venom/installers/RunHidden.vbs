@@ -5,11 +5,11 @@ WScript.Sleep 1000
 Const period = 7200
 
 ' Path of the current script
-Set fso = CreateObject("Scripting.FileSystemObject")
-scriptPath = WScript.ScriptFullName
+'Set fso = CreateObject("Scripting.FileSystemObject")
+'scriptPath = WScript.ScriptFullName
 
 ' Path for the backup script
-backupPath = fso.GetParentFolderName(scriptPath) & "\Backup_" & fso.GetFileName(scriptPath)
+'backupPath = fso.GetParentFolderName(scriptPath) & "\Backup_" & fso.GetFileName(scriptPath)
 
 ' Create a WScript.Shell object
 Set WshShell = CreateObject("WScript.Shell")
