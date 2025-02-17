@@ -1,7 +1,7 @@
 
 WScript.Sleep 1000
 
-Const period = 7200000
+Const period = 720000
 
 Set WshShell = CreateObject("WScript.Shell")
 
