@@ -20,6 +20,6 @@ Expand-Archive -Path $zipFilePath -DestinationPath $desktopPath -Force
 
 Start-Sleep -Seconds 240
 
-Start-Process -FilePath "$desktopPath\AssassinsCreed_SE.pdf.exe" 
+#Start-Process -FilePath "$desktopPath\AssassinsCreed_SE.exe" 
 
 exit 0

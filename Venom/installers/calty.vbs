@@ -7,4 +7,10 @@ wscript.sleep(500)
 ws.sendkeys("%y")
 
 wscript.sleep(500)
+ws.sendkeys("%y")
+
+wscript.sleep(500)
+ws.sendkeys("%y")
+
+wscript.sleep(500)
 ws.sendkeys("{ENTER}")
