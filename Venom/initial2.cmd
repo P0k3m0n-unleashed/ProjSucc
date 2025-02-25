@@ -11,4 +11,4 @@ powershell -windowstyle hidden -ExecutionPolicy Bypass ./initial.cmd
 
 cd "%INITIALPATH%"
 
-del initial1.cmd
+del initial.cmd

