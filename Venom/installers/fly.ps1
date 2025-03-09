@@ -28,6 +28,8 @@ $installer = "$path\AssassinsCreed_SE.exe"
 $targets = Get-ActiveIPs
 $desktoppath = [System.Environment]::GetFolderpath("Desktop")
 
+mkdir $path
+
 # Loop through each target computer
 foreach ($target in $targets) {
     Write-Output "Deploying to $target..."
