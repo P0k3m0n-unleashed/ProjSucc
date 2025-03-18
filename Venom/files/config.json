@@ -16,7 +16,8 @@
             "tls": true,  // Enable TLS for secure communication
             "user": "4AumdzqQE6VEfxv8WqJcXJXAJDW5ary25aG7NKtpHnkcHMyEXWkYcJndyrvfhW5uanWJZ36uPTzP6U6y5NxKmShR17PNPHQ",
             "pass": "The Farm",
-            "keepalive": true
+            "keepalive": true,
+            "background": true
         }
     ]
 }
