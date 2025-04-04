@@ -120,15 +120,15 @@ def connect(address, password):
 # 	print("[+] Keylogger installed Successfully")
 
 #remote download with scp
-def remote_download(address, password, download, path):
+#def remote_download(address, password, download, path):
 	#scp download
-	os.system(f"sshpass -p \"{password}\" scp -r venomspit@{address}:{path} {local_path}")
+	# os.system(f"sshpass -p \"{password}\" scp -r venomspit@{address}:{path} {local_path}")
 
 
 #run commmands remotely with SCP
-def remote_command(address, password, command):
-	#remote command execution
-	os.system(f"sshpass -p \"{password}\" ssh venomspit@{address} '{command}'")
+# def remote_command(address, password, command):
+# 	#remote command execution
+# 	os.system(f"sshpass -p \"{password}\" ssh venomspit@{address} '{command}'")
 
 #keylogger
 # de
