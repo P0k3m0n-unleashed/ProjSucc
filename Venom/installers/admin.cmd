@@ -1,7 +1,4 @@
-@REM TODO: add UAC bypass dumbass
 
-@REM change me
-@REM set "EcSjRhAguo=45.61.56.252"
 
 @echo off
 
@@ -45,7 +42,4 @@ if '%errorlevel%' NEQ '0' (
     CD /D "%~dp0" 
 
 
-@REM disable defender
-
-@REM you can remove the 'powershell to get an admin cmd
 Start-Process powershell.exe
