@@ -1,3 +1,17 @@
+#admin prompt
+# Check if running as Administrator, loop until granted
+while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
+    # Attempt to elevate
+    $process = Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs -PassThru
+    
+    if (-not $process) {
+        Write-Host "Administrator permission is required. Retrying in 3 seconds..."
+        Start-Sleep -Seconds 3  # Prevent immediate respawn
+    } else {
+        Exit  # Close non-elevated instance if elevation succeeds
+    }
+}
+
 Set-ExecutionPolicy Unrestricted -Force
 
 Set-Variable -Name textPath -Value ("$env:TEMP")
