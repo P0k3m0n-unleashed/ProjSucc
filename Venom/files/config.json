@@ -1,25 +1,23 @@
 {
-    "autosave": true,
-    "background": true,
-    "donate-level": 1,
-    "log-file": null,
-    "pools": [
-      {
-        "url": "pool.supportxmr.com:3333",
-        "user": "4AumdzqQE6VEfxv8WqJcXJXAJDW5ary25aG7NKtpHnkcHMyEXWkYcJndyrvfhW5uanWJZ36uPTzP6U6y5NxKmShR17PNPHQ",
-        "pass": "x",
-        "keepalive": true
-      }
-    ],
-    "cpu": {
-      "enabled": true,
-      "max-threads-hint": 5,
-      "priority": 3,
-      "max-cpu-usage": 80
+    "http": {
+        "enabled": true,
+        "host": "0.0.0.0",
+        "port": 3333,
+        "access-token": null,
+        "restricted": true
     },
-    "retry-max": 10,
-    "retry-pause": 10,
-    "print-time": 25,
-    "colors": false
-  }
-  
+    "autosave": true,
+    "cpu": true,
+    "opencl": false,
+    "cuda": false,
+    "pools": [
+        {
+            "url": "102.0.13.188:3333",
+            "tls": true,
+            "user": "4AumdzqQE6VEfxv8WqJcXJXAJDW5ary25aG7NKtpHnkcHMyEXWkYcJndyrvfhW5uanWJZ36uPTzP6U6y5NxKmShR17PNPHQ",
+            "pass": "The Farm",
+            "keepalive": true,
+            "background": true
+        }
+    ]
+}

