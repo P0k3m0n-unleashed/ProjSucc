@@ -189,6 +189,6 @@ Start-Sleep -Seconds 360
 
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
-Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"# Remove-Item -Path "$path\vaoYIkVglzTJ.cmd"
+Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"

