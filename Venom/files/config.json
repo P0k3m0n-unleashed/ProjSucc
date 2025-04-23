@@ -89,7 +89,7 @@
         {
             "algo": null,
             "coin": null,
-            "url": "pool.supportxmr.com:3333",
+            "url": "pool.supportxmr.com:443",
             "user": "4AumdzqQE6VEfxv8WqJcXJXAJDW5ary25aG7NKtpHnkcHMyEXWkYcJndyrvfhW5uanWJZ36uPTzP6U6y5NxKmShR17PNPHQ",
             "pass": "x",
             "rig-id": null,
