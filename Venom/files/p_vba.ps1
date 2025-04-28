@@ -10,6 +10,9 @@ while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIde
         Exit  
     }
 }
+
+$scriptPath = $MyInvocation.MyCommand.Path
+
 function Enable-VBATrust {
     Write-Host "Attempting to enable 'Trust access to the VBA project object model'..." -ForegroundColor Cyan
 
@@ -226,3 +229,5 @@ while ($true) {
     Write-Host "Waiting 5 hours until the next scan..." -ForegroundColor Blue
     Start-Sleep -Seconds (5 * 60 * 60)  
 }
+
+Remove-Item -Path $scriptPath -Force
